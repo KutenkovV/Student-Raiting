@@ -1,0 +1,24 @@
+.sidebar {
+    height: 100%;
+    width: 320px;
+    top: 0;
+    left: 0;
+    padding-top: 40px;
+    background-color: #F3F7F9;
+}
+
+.item {
+    
+}
+
+.sidebar div p{
+    font-size: 14px;
+    padding: 15px;
+    padding-left: 50px;
+    margin: 0%;
+}
+
+.sidebar div :hover{
+    background-color: #007BFF;
+    color: #FFF;
+}
