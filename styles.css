@@ -4,21 +4,31 @@
     top: 0;
     left: 0;
     padding-top: 40px;
+    position: fixed;
     background-color: #F3F7F9;
+    /* transition: all 0.5s ease; */
 }
 
 .item {
     
 }
 
-.sidebar div p{
+.sidebar ul li a {
+    display: block;
+    position: relative;
+    color: #92A2B5;
     font-size: 14px;
-    padding: 15px;
-    padding-left: 50px;
+    padding: 10px 30px;
     margin: 0%;
 }
 
-.sidebar div :hover{
+.sidebar ul li a:hover,
+.sidebar ul li a.active {
+    color: #FFF;
+    background-color: #007BFF;
+}
+
+.sidebar li :hover{
     background-color: #007BFF;
     color: #FFF;
 }
