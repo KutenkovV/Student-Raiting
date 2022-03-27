@@ -15,14 +15,23 @@
 
 /* Здесь начинается сайдбар */
 
+.sidebar ul {
+    padding: 0%;
+}
+
+.sidebar b {
+    padding-left: 30px;
+}
+
 .sidebar ul li a {
-    text-decoration: none;
     display: block;
+    text-decoration: none;
     position: relative;
     color: #92A2B5;
     font-size: 14px;
     padding: 10px 30px;
     margin: 0%;
+    transition: all 0.1s ease;
 }
 
 .sidebar ul li a .icon{
@@ -36,5 +45,7 @@
 }
 
 .sidebar li :hover{
-    text-decoration:underline;
+    color: #FFF;
+    background-color: #007BFF;
+    transition: all 0.2s ease;
 }
