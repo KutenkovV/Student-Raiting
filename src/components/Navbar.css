@@ -1,5 +1,6 @@
+/* сам блок сайдбара */
 .nav-menu-items {
-    position: fixed;
+    position: fixed; 
     top: 0;
     left: 0;
     width: 320px;
@@ -10,43 +11,46 @@
     background-color: #F3F7F9;
 }
 
-
+/* лейблы, ну которые "РАБОТА СО СПИСКАМИ" и тд */
 .nav-menu-items b {
     font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     color: #576372;
-    padding-left: 50px;
+    padding-left: 40px;
 }
 
-.nav-menu-items li a {
-    display: block;
-    text-decoration: none;
-    position: relative;
-    color: #92A2B5;
-    font-size: 14px;
-    padding: 10px 50px;
-    margin: 0%;
-    transition: all 0.1s ease;
-}
-
-.nav-menu-items .nav-text a .icon{
-    width: 40px;
-    display: block;
-}
-
-.nav-text a.active {
+/* активная ячейка */
+.nav-text .active {
     color: #FFF;
     background-color: #007BFF;
 }
 
-.nav-text :hover{
+/* наводим на ячейку*/
+.nav-menu-items .nav-text :hover{
     color: #FFF;
     background-color: #007BFF;
     transition: all 0.2s ease;
 }
 
-.span-item {
+
+.nav-menu-items a {
     display: flex;
-    flex-direction: row;
     align-items: center;
+    text-decoration: none;
+    color: #92A2B5;
+    font-size: 14px;
+    padding: 10px 40px;
+    margin: 0%;
+}
+
+/* 
+классы ниже лютая дрисная и так делать не надо,
+ а как делать надо я не знаю
+ */
+.icon {
+    width: 30px;
+}
+
+.item {
+    padding-left: 20px;
 }

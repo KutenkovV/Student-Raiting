@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 // Вот тут отдельно подгружаются иконки. И да это параша мне тоже не нравится
 import { 
-    faFile, faPen, 
+    faFileArrowUp, faPen, 
     faAtom, faGraduationCap, faBrush, faMedal, faGuitar, 
     faAddressBook, faList, faFileLines
 } from '@fortawesome/free-solid-svg-icons';
@@ -13,7 +13,7 @@ export const SidebarlistWork = [
     {
         title: 'ЗАГРУЗИТЬ СПИСКИ',
         path: '/listload',
-        icon: <FontAwesomeIcon icon={faFile} size="2x"/>,
+        icon: <FontAwesomeIcon icon={faFileArrowUp} size="2x"/>,
         cName: 'nav-text'
     },
     {

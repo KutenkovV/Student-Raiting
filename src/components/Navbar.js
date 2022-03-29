@@ -11,64 +11,58 @@ function Navbar() {
 
     return (
         <>
-            {/* это блок с гамбургером. Ну у нас сайдбар, а он работает типа как дроп лист
-            тыкнули и выскочило, пока оставлю это здесь 
-            я вообще пишу комментарии по приколу */}
-            <div className='navbar'>
+            {/* это блок с гамбургером. Т.к. у нас сайдбар, то по науке он работает как дроп лист
+            тыкнули и выскочили все айтемы
+            пока оставлю это здесь, нам и так сойдет, т.е. статично */}
+            {/* <div className='navbar'>
                 <Link to='#' className='menu-bars'>
                     <FontAwesomeIcon onClick={showSidebar} icon="fa-solid fa-file-arrow-up" />
                 </Link>
-            </div>
+            </div> */}
 
-            <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-                <ul className='nav-menu-items'>
+            <ul className='nav-menu-items'>
 
-                    {/* ЗАГРУЗКА СПИСКОВ */}
-                    <b>РАБОТА СО СПИСКАМИ</b>
-                    {SidebarlistWork.map((item, index) => {
-                        return (
-                            <li key={index} className={item.cName}>
-                                <Link to={item.path}>
-                                    <div className='span-item'>
-                                        <span class="icon">{item.icon}</span>
-                                        <span>{item.title}</span>
-                                    </div>
-                                </Link>
-                            </li>
-                        )
-                    })}
+                {/* ЗАГРУЗКА СПИСКОВ */}
+                <b>РАБОТА СО СПИСКАМИ</b>
+                {SidebarlistWork.map((item, index) => {
+                    return (
+                        <li key={index} className={item.cName}>
+                            <Link to={item.path}>
+                                <span class="icon">{item.icon}</span>
+                                <span class="item">{item.title}</span>
+                            </Link>
+                        </li>
+                    )
+                })}
 
-                    {/* РЕЙТИНГОВЫЕ СПИСКИ */}
-                    <b>СПИСКИ ПО НАПРАВЛЕНИЯМ</b>
-                    {SidebarRaitingList.map((item, index) => {
-                        return (
-                            <li key={index} className={item.cName}>
-                                <Link to={item.path}>
-                                    <div className='span-item'>
-                                        <span class="icon">{item.icon}</span>
-                                        <span>{item.title}</span>
-                                    </div>
-                                </Link>
-                            </li>
-                        )
-                    })}
+                {/* РЕЙТИНГОВЫЕ СПИСКИ */}
+                <br />
+                <b>СПИСКИ ПО НАПРАВЛЕНИЯМ</b>
+                {SidebarRaitingList.map((item, index) => {
+                    return (
+                        <li key={index} className={item.cName}>
+                            <Link to={item.path}>
+                                <span class="icon">{item.icon}</span>
+                                <span class="item">{item.title}</span>
+                            </Link>
+                        </li>
+                    )
+                })}
 
-                    {/* ОТЧЕТ ИЛИ ИТОГОВЫЕ СПИСКИ */}
-                    <b>ОТЧЕТЫ</b>
-                    {SidebarReports.map((item, index) => {
-                        return (
-                            <li key={index} className={item.cName}>
-                                <Link to={item.path}>
-                                    <div className='span-item'>
-                                        <span class="icon">{item.icon}</span>
-                                        <span>{item.title}</span>
-                                    </div>
-                                </Link>
-                            </li>
-                        )
-                    })}
-                </ul>
-            </nav>
+                {/* ОТЧЕТ ИЛИ ИТОГОВЫЕ СПИСКИ */}
+                <br />
+                <b>ОТЧЕТЫ</b>
+                {SidebarReports.map((item, index) => {
+                    return (
+                        <li key={index} className={item.cName}>
+                            <Link to={item.path}>
+                                <span class="icon">{item.icon}</span>
+                                <span class="item">{item.title}</span>
+                            </Link>
+                        </li>
+                    )
+                })}
+            </ul>
         </>
     )
 }
