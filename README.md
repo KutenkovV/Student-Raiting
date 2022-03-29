@@ -1,4 +1,5 @@
-# Getting Started with Create React App
+# МНЕ ЛЕНЬ ДУМАТЬ СЮДА ОПИСАНИЕ
+# You're pretty good
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
