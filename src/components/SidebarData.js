@@ -13,13 +13,13 @@ export const SidebarlistWork = [
     {
         title: 'ЗАГРУЗИТЬ СПИСКИ',
         path: '/listload',
-        icon: <FontAwesomeIcon icon={faFile} />,
+        icon: <FontAwesomeIcon icon={faFile} size="2x"/>,
         cName: 'nav-text'
     },
     {
         title: 'НАСТРОЙКА РЕЙТИНГА',
         path: '/settings',
-        icon: <FontAwesomeIcon icon={faPen} />,
+        icon: <FontAwesomeIcon icon={faPen} size="2x"/>,
         cName: 'nav-text'
     }
 ]
@@ -29,31 +29,31 @@ export const SidebarRaitingList = [
     {
         title: 'НАУЧНАЯ',
         path: '/nid',
-        icon: <FontAwesomeIcon icon={faAtom} />,
+        icon: <FontAwesomeIcon icon={faAtom} size="2x"/>,
         cName: 'nav-text'
     },
     {
         title: 'УЧЕБНАЯ',
         path: '/ud',
-        icon: <FontAwesomeIcon icon={faGraduationCap} />,
+        icon: <FontAwesomeIcon icon={faGraduationCap} size="2x"/>,
         cName: 'nav-text'
     },
     {
         title: 'ОБЩЕСТВЕННАЯ',
         path: '/od',
-        icon: <FontAwesomeIcon icon={faBrush} />,
+        icon: <FontAwesomeIcon icon={faBrush} size="2x"/>,
         cName: 'nav-text'
     },
     {
         title: 'СПОРТИВНАЯ',
         path: '/sd',
-        icon: <FontAwesomeIcon icon={faMedal} />,
+        icon: <FontAwesomeIcon icon={faMedal} size="2x"/>,
         cName: 'nav-text'
     },
     {
         title: 'КУЛЬТУРНО-ТВОРЧЕСКАЯ',
         path: '/ktd',
-        icon: <FontAwesomeIcon icon={faGuitar} />,
+        icon: <FontAwesomeIcon icon={faGuitar} size="2x"/>,
         cName: 'nav-text'
     }
 ]
@@ -63,19 +63,19 @@ export const SidebarReports = [
     {
         title: 'СВОДКА',
         path: '/summary',
-        icon: <FontAwesomeIcon icon={faAddressBook} />,
+        icon: <FontAwesomeIcon icon={faAddressBook} size="2x"/>,
         cName: 'nav-text'
     },
     {
         title: 'ПОДАВШИЕ В НЕСКОЛЬКО НАПРАВЛЕНИЙ',
         path: '/severalDirectionsList',
-        icon: <FontAwesomeIcon icon={faList} />,
+        icon: <FontAwesomeIcon icon={faList} size="2x"/>,
         cName: 'nav-text'
     },
     {
         title: 'ИТОГОВЫЙ СПИСОК',
         path: '/finalList',
-        icon: <FontAwesomeIcon icon={faFileLines} />,
+        icon: <FontAwesomeIcon icon={faFileLines} size="2x"/>,
         cName: 'nav-text'
     }
 ]

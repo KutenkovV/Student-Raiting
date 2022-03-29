@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { SidebarlistWork, SidebarRaitingList, SidebarReports } from './SidebarData'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCake } from '@fortawesome/free-solid-svg-icons';
+import './Navbar.css';
 
 function Navbar() {
     const [sidebar, setSidebar] = useState(false)
@@ -22,7 +23,7 @@ function Navbar() {
 
                     {/* блять я заебался */}
                     {/* ЗАГРУЗКА СПИСКОВ */}
-                    <a>РАБОТА СО СПИСКАМИ</a>
+                    <b>РАБОТА СО СПИСКАМИ</b>
                     {SidebarlistWork.map((item, index) => {
                         return (
                             <li key={index} className={item.cName}>
@@ -35,7 +36,7 @@ function Navbar() {
                     })}
 
                     {/* РЕЙТИНГОВЫЕ СПИСКИ */}
-                    <a>СПИСКИ ПО НАПРАВЛЕНИЯМ</a>
+                    <b>СПИСКИ ПО НАПРАВЛЕНИЯМ</b>
                     {SidebarRaitingList.map((item, index) => {
                         return (
                             <li key={index} className={item.cName}>
@@ -48,7 +49,7 @@ function Navbar() {
                     })}
 
                     {/* ОТЧЕТ ИЛИ ИТОГОВЫЕ СПИСКИ */}
-                    <a>ОТЧЕТЫ</a>
+                    <b>ОТЧЕТЫ</b>
                     {SidebarReports.map((item, index) => {
                         return (
                             <li key={index} className={item.cName}>
