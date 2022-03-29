@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SidebarlistWork, SidebarRaitingList, SidebarReports } from './SidebarData'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCake } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css';
 
 function Navbar() {
@@ -12,6 +11,9 @@ function Navbar() {
 
     return (
         <>
+            {/* это блок с гамбургером. Ну у нас сайдбар, а он работает типа как дроп лист
+            тыкнули и выскочило, пока оставлю это здесь 
+            я вообще пишу комментарии по приколу */}
             <div className='navbar'>
                 <Link to='#' className='menu-bars'>
                     <FontAwesomeIcon onClick={showSidebar} icon="fa-solid fa-file-arrow-up" />
@@ -21,15 +23,16 @@ function Navbar() {
             <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
                 <ul className='nav-menu-items'>
 
-                    {/* блять я заебался */}
                     {/* ЗАГРУЗКА СПИСКОВ */}
                     <b>РАБОТА СО СПИСКАМИ</b>
                     {SidebarlistWork.map((item, index) => {
                         return (
                             <li key={index} className={item.cName}>
                                 <Link to={item.path}>
-                                    {item.icon}
-                                    <span>{item.title}</span>
+                                    <div className='span-item'>
+                                        <span class="icon">{item.icon}</span>
+                                        <span>{item.title}</span>
+                                    </div>
                                 </Link>
                             </li>
                         )
@@ -41,8 +44,10 @@ function Navbar() {
                         return (
                             <li key={index} className={item.cName}>
                                 <Link to={item.path}>
-                                    {item.icon}
-                                    <span>{item.title}</span>
+                                    <div className='span-item'>
+                                        <span class="icon">{item.icon}</span>
+                                        <span>{item.title}</span>
+                                    </div>
                                 </Link>
                             </li>
                         )
@@ -54,8 +59,10 @@ function Navbar() {
                         return (
                             <li key={index} className={item.cName}>
                                 <Link to={item.path}>
-                                    {item.icon}
-                                    <span>{item.title}</span>
+                                    <div className='span-item'>
+                                        <span class="icon">{item.icon}</span>
+                                        <span>{item.title}</span>
+                                    </div>
                                 </Link>
                             </li>
                         )
