@@ -1,14 +1,23 @@
 /* сам блок сайдбара */
 .nav-menu-items {
-    position: fixed; 
     top: 0;
     left: 0;
     width: 320px;
-    height: 100%;
     padding-top: 40px;
     padding-left: 0%;
     margin: 0%;
     background-color: #F3F7F9;
+}
+
+/* сами блоки, ну которые "загрузить списки", "настройка рейтинга" итд */
+.nav-text a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #92A2B5;
+    font-size: 14px;
+    padding: 10px 40px;
+    margin: 0%;
 }
 
 /* лейблы, ну которые "РАБОТА СО СПИСКАМИ" и тд */
@@ -20,31 +29,20 @@
 }
 
 /* активная ячейка */
-.nav-text .active {
+.active a {
     color: #FFF;
     background-color: #007BFF;
 }
 
 /* наводим на ячейку*/
-.nav-menu-items .nav-text :hover{
+.nav-text a:hover{
     color: #FFF;
     background-color: #007BFF;
     transition: all 0.2s ease;
 }
 
-
-.nav-menu-items a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: #92A2B5;
-    font-size: 14px;
-    padding: 10px 40px;
-    margin: 0%;
-}
-
 /* 
-классы ниже лютая дрисная и так делать не надо,
+классы ниже лютая дрисня и так делать не надо,
  а как делать надо я не знаю
  */
 .icon {

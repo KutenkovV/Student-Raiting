@@ -4,6 +4,7 @@ import { SidebarlistWork, SidebarRaitingList, SidebarReports } from './SidebarDa
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './Navbar.css';
 
+
 function Navbar() {
     const [sidebar, setSidebar] = useState(false)
 

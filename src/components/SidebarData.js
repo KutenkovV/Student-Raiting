@@ -14,7 +14,7 @@ export const SidebarlistWork = [
         title: 'ЗАГРУЗИТЬ СПИСКИ',
         path: '/listload',
         icon: <FontAwesomeIcon icon={faFileArrowUp} size="2x"/>,
-        cName: 'nav-text'
+        cName: 'active nav-text'
     },
     {
         title: 'НАСТРОЙКА РЕЙТИНГА',
