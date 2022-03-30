@@ -21,51 +21,49 @@ function Navbar() {
                 </Link>
             </div> */}
 
-            <div className='sidebar'>
-                <ul className='nav-menu-items'>
-    
-                    {/* ЗАГРУЗКА СПИСКОВ */}
-                    <b>РАБОТА СО СПИСКАМИ</b>
-                    {SidebarlistWork.map((item, index) => {
-                        return (
-                            <li key={index} className={item.cName}>
-                                <Link to={item.path}>
-                                    <span class="icon">{item.icon}</span>
-                                    <span class="item">{item.title}</span>
-                                </Link>
-                            </li>
-                        )
-                    })}
-    
-                    {/* РЕЙТИНГОВЫЕ СПИСКИ */}
-                    <br />
-                    <b>СПИСКИ ПО НАПРАВЛЕНИЯМ</b>
-                    {SidebarRaitingList.map((item, index) => {
-                        return (
-                            <li key={index} className={item.cName}>
-                                <Link to={item.path}>
-                                    <span class="icon">{item.icon}</span>
-                                    <span class="item">{item.title}</span>
-                                </Link>
-                            </li>
-                        )
-                    })}
-    
-                    {/* ОТЧЕТ ИЛИ ИТОГОВЫЕ СПИСКИ */}
-                    <br />
-                    <b>ОТЧЕТЫ</b>
-                    {SidebarReports.map((item, index) => {
-                        return (
-                            <li key={index} className={item.cName}>
-                                <Link to={item.path}>
-                                    <span class="icon">{item.icon}</span>
-                                    <span class="item">{item.title}</span>
-                                </Link>
-                            </li>
-                        )
-                    })}
-                </ul>
-            </div>
+            <ul className='nav-menu-items'>
+
+                {/* ЗАГРУЗКА СПИСКОВ */}
+                <b>РАБОТА СО СПИСКАМИ</b>
+                {SidebarlistWork.map((item, index) => {
+                    return (
+                        <li key={index} className={item.cName}>
+                            <Link to={item.path}>
+                                <span class="icon">{item.icon}</span>
+                                <span class="item">{item.title}</span>
+                            </Link>
+                        </li>
+                    )
+                })}
+
+                {/* РЕЙТИНГОВЫЕ СПИСКИ */}
+                <br />
+                <b>СПИСКИ ПО НАПРАВЛЕНИЯМ</b>
+                {SidebarRaitingList.map((item, index) => {
+                    return (
+                        <li key={index} className={item.cName}>
+                            <Link to={item.path}>
+                                <span class="icon">{item.icon}</span>
+                                <span class="item">{item.title}</span>
+                            </Link>
+                        </li>
+                    )
+                })}
+
+                {/* ОТЧЕТ ИЛИ ИТОГОВЫЕ СПИСКИ */}
+                <br />
+                <b>ОТЧЕТЫ</b>
+                {SidebarReports.map((item, index) => {
+                    return (
+                        <li key={index} className={item.cName}>
+                            <Link to={item.path}>
+                                <span class="icon">{item.icon}</span>
+                                <span class="item">{item.title}</span>
+                            </Link>
+                        </li>
+                    )
+                })}
+            </ul>
         </>
     )
 }

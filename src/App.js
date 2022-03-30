@@ -16,23 +16,27 @@ import FinalList from './Pages/FinalList'
 function App() {
   return (
     <>
-      <div>
+      <div className='aboba'>
         <Router>
-          <Navbar />
-          <Switch>
+          <div className='aboba1'>
+            <Navbar />
+          </div>
+          <div className='aboba2'>
+            <Switch>
 
-            {/* Это наш роутинг */}
-            <Route path='/listload' exact component={ListLoad} />
-            <Route path='/settings' component={Settings} />
-            <Route path='/nid' component={Nid} />
-            <Route path='/ud' component={Ud} />
-            <Route path='/od' component={Od} />
-            <Route path='/sd' component={Sd} />
-            <Route path='/ktd' component={Ktd} />
-            <Route path='/summary' component={Summary} />
-            <Route path='/severalDirectionsList' component={SeveralDirectionsList} />
-            <Route path='/finalList' component={FinalList} />
-          </Switch>
+              {/* Это наш роутинг */}
+              <Route path='/listload' exact component={ListLoad} />
+              <Route path='/settings' component={Settings} />
+              <Route path='/nid' component={Nid} />
+              <Route path='/ud' component={Ud} />
+              <Route path='/od' component={Od} />
+              <Route path='/sd' component={Sd} />
+              <Route path='/ktd' component={Ktd} />
+              <Route path='/summary' component={Summary} />
+              <Route path='/severalDirectionsList' component={SeveralDirectionsList} />
+              <Route path='/finalList' component={FinalList} />
+            </Switch>
+          </div>
         </Router>
       </div>
     </>
