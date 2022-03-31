@@ -13,18 +13,16 @@ import Summary from './Pages/Summary'
 import SeveralDirectionsList from './Pages/SeveralDirectionsList'
 import FinalList from './Pages/FinalList'
 
-import { BasicTable } from './components/BasicTable'
-
 function App() {
   return (
     <>
       <div className='aboba'>
         <Router>
           <div className='aboba1'>
+
             <Navbar />
           </div>
           <div className='aboba2'>
-            <BasicTable />
             <Switch>
 
               {/* Это наш роутинг */}
