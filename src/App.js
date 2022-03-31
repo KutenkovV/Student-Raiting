@@ -19,6 +19,7 @@ function App() {
       <div className='aboba'>
         <Router>
           <div className='aboba1'>
+
             <Navbar />
           </div>
           <div className='aboba2'>

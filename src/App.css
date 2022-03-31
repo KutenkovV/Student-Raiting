@@ -14,9 +14,6 @@
 }
 
 .aboba2 {
-  display: flex;
   width: 100%;
-  justify-content: center;
-  align-items: center;
   border: 1px solid rgb(30, 255, 0);
 }
