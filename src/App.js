@@ -13,6 +13,8 @@ import Summary from './Pages/Summary'
 import SeveralDirectionsList from './Pages/SeveralDirectionsList'
 import FinalList from './Pages/FinalList'
 
+import { BasicTable } from './components/BasicTable'
+
 function App() {
   return (
     <>
@@ -22,6 +24,7 @@ function App() {
             <Navbar />
           </div>
           <div className='aboba2'>
+            <BasicTable />
             <Switch>
 
               {/* Это наш роутинг */}
