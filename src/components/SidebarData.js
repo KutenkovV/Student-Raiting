@@ -8,13 +8,13 @@ import {
     faAddressBook, faList, faFileLines
 } from '@fortawesome/free-solid-svg-icons';
 
-// РАБОТА СО СПИСКАМИ
+// РАБОТА СО СПИСКАМИ active
 export const SidebarlistWork = [
     {
         title: 'ЗАГРУЗИТЬ СПИСКИ',
         path: '/listload',
         icon: <FontAwesomeIcon icon={faFileArrowUp} size="2x"/>,
-        cName: 'active nav-text'
+        cName: 'nav-text'
     },
     {
         title: 'НАСТРОЙКА РЕЙТИНГА',

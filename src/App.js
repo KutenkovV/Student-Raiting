@@ -16,13 +16,12 @@ import FinalList from './Pages/FinalList'
 function App() {
   return (
     <>
-      <div className='aboba'>
+      <div className='content'>
         <Router>
-          <div className='aboba1'>
-
+          <div className='sidebar'>
             <Navbar />
           </div>
-          <div className='aboba2'>
+          <div className='pageContent'>
             <Switch>
 
               {/* Это наш роутинг */}

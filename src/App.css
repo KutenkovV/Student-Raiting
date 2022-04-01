@@ -2,18 +2,22 @@
   text-align: center;
 }
 
-.aboba {
+.content {
   display: flex;
   border: 1px solid red;
   height: 100vh;
 }
 
-.aboba1 {
+.sidebar {
   border: 1px solid rgb(255, 238, 0);
   background-color: #F3F7F9;
 }
 
-.aboba2 {
+.pageContent {
   width: 100%;
-  border: 1px solid rgb(30, 255, 0);
+  border: 2px solid rgb(30, 255, 0);
+}
+
+.listload {
+  padding-inline: 50px;
 }
