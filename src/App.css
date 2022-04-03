@@ -4,20 +4,15 @@
 
 .content {
   display: flex;
-  border: 1px solid red;
   height: 100vh;
 }
 
 .sidebar {
-  border: 1px solid rgb(255, 238, 0);
   background-color: #F3F7F9;
 }
 
 .pageContent {
   width: 100%;
-  border: 2px solid rgb(30, 255, 0);
-}
-
-.listload {
+  padding-top: 2rem;
   padding-inline: 50px;
 }
