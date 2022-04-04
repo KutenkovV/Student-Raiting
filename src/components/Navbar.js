@@ -7,7 +7,7 @@ import {
 } from "./SidebarData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Navbar.css";
-
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 function Navbar() {
   const [sidebar, setSidebar] = useState(false);
 
@@ -15,6 +15,9 @@ function Navbar() {
 
   return (
     <>
+      <span class="burgerBar">
+        <FontAwesomeIcon icon={faBars} size="2x" />
+      </span>
       {/* это блок с гамбургером. Т.к. у нас сайдбар, то по науке он работает как дроп лист
             тыкнули и выскочили все айтемы
             пока оставлю это здесь, нам и так сойдет, т.е. статично */}

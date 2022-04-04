@@ -1,8 +1,7 @@
-.form-control {
-  color: #d6dde5;
-}
-
-.h1 {
+.header {
   text-transform: uppercase;
+  font-size: 1.5rem;
   color: #576372;
+  font-weight: bold;
+  cursor: pointer;
 }

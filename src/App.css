@@ -8,11 +8,11 @@
 }
 
 .sidebar {
-  background-color: #F3F7F9;
+  background-color: #f3f7f9;
 }
 
 .pageContent {
   width: 100%;
-  padding-top: 2rem;
+  padding-top: 4rem;
   padding-inline: 50px;
 }

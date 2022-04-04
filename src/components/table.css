@@ -4,11 +4,12 @@ table {
   font-size: 12px;
   border-collapse: collapse;
   width: 100%;
-  margin-top: 1.5em;
+  margin-top: 1.5rem;
 }
 
 thead tr {
   background-color: #e0e6eb;
+  text-transform: uppercase;
 }
 
 table td,
