@@ -4,7 +4,7 @@ table {
   font-size: 12px;
   border-collapse: collapse;
   width: 100%;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 }
 
 thead tr {
@@ -35,6 +35,8 @@ table th {
 
 .nav-pagination {
   justify-content: end;
-  padding: 1rem;
-  padding-right: 4rem;
+}
+.page-item {
+  padding: 0.4rem;
+  font-weight: bold;
 }

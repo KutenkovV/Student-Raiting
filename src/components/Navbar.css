@@ -2,7 +2,7 @@
 .nav-menu-items {
   top: 0;
   left: 0;
-  padding-top: 5.5rem;
+  padding-top: 6rem;
   padding-left: 0%;
   margin: 0%;
   background-color: #f3f7f9;
@@ -15,7 +15,7 @@
   text-decoration: none;
   color: #92a2b5;
   font-size: 0.9rem;
-  padding: 10px 40px;
+  padding: 8px 40px;
   margin: 0%;
 }
 
@@ -56,7 +56,7 @@
 .burgerBar {
   position: absolute;
   color: #576372;
-  margin-top: 2rem;
-  margin-left: 2rem;
+  margin-top: 2.5rem;
+  margin-left: 2.5rem;
   cursor: pointer;
 }
