@@ -4,10 +4,11 @@ table {
   font-size: 12px;
   border-collapse: collapse;
   width: 100%;
+  margin-top: 1.5em;
 }
 
-thead tr{
-  background-color: #E0E6EB;
+thead tr {
+  background-color: #e0e6eb;
 }
 
 table td,
@@ -16,11 +17,11 @@ table td,
 }
 
 table tr:nth-child(even) {
-  background-color: #F3F7F9;
+  background-color: #f3f7f9;
 }
 
 table tr:hover {
-  background-color: #E7ECEE;
+  background-color: #e7ecee;
 }
 
 table th {
