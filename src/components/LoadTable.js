@@ -43,7 +43,7 @@ const LoadTable = ({ data, itemsPerPage, startFrom }) => {
       </table>
 
       {/* блок с пагинацией */}
-      <nav className="pagination nav-pagination mt-5">
+      <nav className="pagination nav-pagination mt-3">
         {/* Кнопка "<< Назад" */}
         <li className="page-item">
           <a

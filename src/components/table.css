@@ -15,6 +15,7 @@ thead tr {
 table td,
 .table th {
   padding: 10px;
+  font-size: 1.2em;
 }
 
 table tr:nth-child(even) {
@@ -39,4 +40,6 @@ table th {
 .page-item {
   padding: 0.4rem;
   font-weight: bold;
+
+  font-size: 0.8em;
 }
