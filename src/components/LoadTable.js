@@ -1,6 +1,6 @@
 import React from "react";
 import usePagination from "../hooks/usePagination";
-import "./table.css";
+import "./LoadTable.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronRight,

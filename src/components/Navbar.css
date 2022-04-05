@@ -29,7 +29,7 @@
 }
 
 /* активная ячейка */
-.active a {
+#active a {
   color: #fff;
   background-color: #007bff;
 }
