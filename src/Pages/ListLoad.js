@@ -6,11 +6,13 @@ import "./ListLoad.css";
 
 function ListLoad() {
   document.title = "Загрузка списков";
+
   const [data] = useState(NIDlist);
   const [selected, setSelected] = useState("ЗАГРУЗКА СПИСКОВ");
+
   return (
     <div>
-      <div class="row align-items-start">
+      <div class="row mb-3">
         <Dropdown selected={selected} setSelected={setSelected}/>
       </div>
       <div class="row align-items-start mt-2 me-0 ">

@@ -1,6 +1,6 @@
 import './Dropdown.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDown, faL } from "@fortawesome/free-solid-svg-icons";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
 function Dropdown({ selected, setSelected }) {
@@ -14,7 +14,7 @@ function Dropdown({ selected, setSelected }) {
     return (
         <div className="dropdown">
             <div className="dropdown-btn" onClick={(e) => setIsActive(!isActive)}>
-                {selected}
+                <b className='me-2'>{selected}</b>
                 <FontAwesomeIcon icon={faAngleDown} />
             </div>
 
