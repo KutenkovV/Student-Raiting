@@ -1,20 +1,17 @@
 import React, { useState } from "react";
 import NIDlist from "../Data/NIDlist.json"; //подгружаю данные из json файла в таблицу
 import LoadTable from "../components/LoadTable";
+import Dropdown from "../components/Dropdown";
 import "./ListLoad.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
 function ListLoad() {
   document.title = "Загрузка списков";
   const [data] = useState(NIDlist);
-
+  const [selected, setSelected] = useState("ЗАГРУЗКА СПИСКОВ");
   return (
     <div>
       <div class="row align-items-start">
-        <h1 class="header col-3">
-          Загрузка списков <FontAwesomeIcon icon={faAngleDown} />
-        </h1>
+        <Dropdown selected={selected} setSelected={setSelected}/>
       </div>
       <div class="row align-items-start mt-2 me-0 ">
         <div class="mb-3 col-6">

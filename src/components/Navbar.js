@@ -36,7 +36,9 @@ function Navbar() {
             <li 
             key={index} 
             className={item.cName} 
+            // здесь задаем айдишник с нужным классом если путь айтема равен текущему
             id={window.location.pathname == item.path ? "active" : ""}
+            // при клике получаем текущий путь 
             onClick={() => {
               window.location.pathname = item.path;
             }}
