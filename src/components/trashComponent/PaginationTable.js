@@ -1,8 +1,8 @@
 import React from 'react'
 import { useMemo } from 'react'
 import { useTable, usePagination } from 'react-table'
-import NIDlist from './NIDlist.json'
-import { COLUMNS } from './Columns'
+import NIDlist from '../Data/NIDlist.json'
+import { COLUMNS } from '../Columns'
 import './table.css'
 
 export const PaginationTable = () => {
@@ -19,12 +19,14 @@ export const PaginationTable = () => {
         canNextPage,
         canPreviousPage,
         pageOptions,
+        pageSize,
         state,
         prepareRow,
     } = useTable(
         {
             columns,
             data,
+            initialState: { pageSize: 15 }
         },
         usePagination
     )
@@ -62,16 +64,24 @@ export const PaginationTable = () => {
                     }
                 </tbody>
             </table>
-            <div>
+
+            {/* блок с пагинацией */}
+            <nav className="pagination justify-content-end p-4">
+                <a class="page-link" href="#" onClick={() => previousPage()} disabled={!canPreviousPage} aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+
                 <span>
                     Page{' '}
                     <strong>
                         {pageIndex + 1} of {pageOptions.length}
                     </strong>{' '}
                 </span>
-                <button onClick={() => previousPage()} disabled={!canPreviousPage} >Previous</button>
-                <button onClick={() => nextPage()} disabled={!canNextPage} >Next</button>
-            </div>
+
+                <a class="page-link" href="#" onClick={() => nextPage()} disabled={!canNextPage} aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </nav>
         </>
     )
 }
