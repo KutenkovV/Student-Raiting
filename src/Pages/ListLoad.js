@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import NIDlist from "../Data/NIDlist.json"; //подгружаю данные из json файла в таблицу
-import LoadTable from "../components/LoadTable";
-import Dropdown from "../components/Dropdown";
+import LoadTable from "../components/LoadTable/LoadTable";
+import Dropdown from "../components/Dropdown/Dropdown";
 import "./ListLoad.css";
 
 function ListLoad() {
@@ -13,7 +13,7 @@ function ListLoad() {
   return (
     <div>
       <div class="row mb-3">
-        <Dropdown selected={selected} setSelected={setSelected}/>
+        <Dropdown selected={selected} setSelected={setSelected} />
       </div>
       <div class="row align-items-start mt-2 me-0 ">
         <div class="mb-3 col-6">

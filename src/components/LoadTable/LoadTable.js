@@ -1,5 +1,5 @@
 import React from "react";
-import usePagination from "../hooks/usePagination";
+import usePagination from "../../hooks/usePagination";
 import "./LoadTable.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

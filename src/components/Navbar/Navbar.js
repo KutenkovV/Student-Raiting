@@ -4,7 +4,7 @@ import {
   SidebarlistWork,
   SidebarRaitingList,
   SidebarReports,
-} from "./SidebarData";
+} from "../SidebarData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Navbar.css";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
@@ -33,15 +33,15 @@ function Navbar() {
         <b>РАБОТА СО СПИСКАМИ</b>
         {SidebarlistWork.map((item, index) => {
           return (
-            <li 
-            key={index} 
-            className={item.cName} 
-            // здесь задаем айдишник с нужным классом если путь айтема равен текущему
-            id={window.location.pathname == item.path ? "active" : ""}
-            // при клике получаем текущий путь 
-            onClick={() => {
-              window.location.pathname = item.path;
-            }}
+            <li
+              key={index}
+              className={item.cName}
+              // здесь задаем айдишник с нужным классом если путь айтема равен текущему
+              id={window.location.pathname == item.path ? "active" : ""}
+              // при клике получаем текущий путь
+              onClick={() => {
+                window.location.pathname = item.path;
+              }}
             >
               <Link to={item.path}>
                 <span class="icon">{item.icon}</span>
@@ -57,12 +57,12 @@ function Navbar() {
         {SidebarRaitingList.map((item, index) => {
           return (
             <li
-            key={index} 
-            className={item.cName} 
-            id={window.location.pathname == item.path ? "active" : ""}
-            onClick={() => {
-              window.location.pathname = item.path;
-            }}
+              key={index}
+              className={item.cName}
+              id={window.location.pathname == item.path ? "active" : ""}
+              onClick={() => {
+                window.location.pathname = item.path;
+              }}
             >
               <Link to={item.path}>
                 <span class="icon">{item.icon}</span>
@@ -77,13 +77,13 @@ function Navbar() {
         <b>ОТЧЕТЫ</b>
         {SidebarReports.map((item, index) => {
           return (
-            <li 
-            key={index} 
-            className={item.cName} 
-            id={window.location.pathname == item.path ? "active" : ""}
-            onClick={() => {
-              window.location.pathname = item.path;
-            }}
+            <li
+              key={index}
+              className={item.cName}
+              id={window.location.pathname == item.path ? "active" : ""}
+              onClick={() => {
+                window.location.pathname = item.path;
+              }}
             >
               <Link to={item.path}>
                 <span class="icon">{item.icon}</span>
