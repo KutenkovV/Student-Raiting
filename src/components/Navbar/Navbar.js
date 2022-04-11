@@ -5,21 +5,11 @@ import {
   SidebarRaitingList,
   SidebarReports,
 } from "../SidebarData";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Navbar.css";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
 
-function Navbar() {
-  const [sidebar, setSidebar] = useState(false);
-
-  const showSidebar = () => setSidebar(!sidebar);
-
+function Navbar(active, setActive) {
   return (
-    <>
-      <span class="burgerBar">
-        <FontAwesomeIcon icon={faBars} size="2x" />
-      </span>
-
+    <div className={active ? "mainMenu active" : "mainMenu"}>
       <ul className="nav-menu-items">
         {/* ЗАГРУЗКА СПИСКОВ */}
         <p>Работа со списками</p>
@@ -83,7 +73,7 @@ function Navbar() {
           );
         })}
       </ul>
-    </>
+    </div>
   );
 }
 

@@ -12,14 +12,25 @@ import Ktd from "./Pages/Ktd";
 import Summary from "./Pages/Summary";
 import SeveralDirectionsList from "./Pages/SeveralDirectionsList";
 import FinalList from "./Pages/FinalList";
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 function App() {
+  const [menuActive, setMenuActive] = useState(false);
+
   return (
     <>
       <div className="content">
         <Router>
           <div className="sidebar">
-            <Navbar />
+            <div
+              className="burger-btn"
+              onClick={() => setMenuActive(!menuActive)}
+            >
+              <FontAwesomeIcon icon={faBars} size="2x" />
+            </div>
+            <Navbar active={menuActive} setActive={setMenuActive} />
           </div>
           <div className="pageContent">
             <Switch>
