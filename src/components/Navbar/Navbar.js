@@ -19,18 +19,10 @@ function Navbar() {
       <span class="burgerBar">
         <FontAwesomeIcon icon={faBars} size="2x" />
       </span>
-      {/* это блок с гамбургером. Т.к. у нас сайдбар, то по науке он работает как дроп лист
-            тыкнули и выскочили все айтемы
-            пока оставлю это здесь, нам и так сойдет, т.е. статично */}
-      {/* <div className='navbar'>
-                <Link to='#' className='menu-bars'>
-                    <FontAwesomeIcon onClick={showSidebar} icon="fa-solid fa-file-arrow-up" />
-                </Link>
-            </div> */}
 
       <ul className="nav-menu-items">
         {/* ЗАГРУЗКА СПИСКОВ */}
-        <b>РАБОТА СО СПИСКАМИ</b>
+        <p>Работа со списками</p>
         {SidebarlistWork.map((item, index) => {
           return (
             <li
@@ -52,8 +44,7 @@ function Navbar() {
         })}
 
         {/* РЕЙТИНГОВЫЕ СПИСКИ */}
-        <br />
-        <b>СПИСКИ ПО НАПРАВЛЕНИЯМ</b>
+        <p>Списки по направлениям</p>
         {SidebarRaitingList.map((item, index) => {
           return (
             <li
@@ -73,8 +64,7 @@ function Navbar() {
         })}
 
         {/* ОТЧЕТ ИЛИ ИТОГОВЫЕ СПИСКИ */}
-        <br />
-        <b>ОТЧЕТЫ</b>
+        <p>Отчеты</p>
         {SidebarReports.map((item, index) => {
           return (
             <li
