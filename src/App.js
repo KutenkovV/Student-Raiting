@@ -30,7 +30,7 @@ function App() {
             >
               <FontAwesomeIcon icon={faBars} size="2x" />
             </div>
-            <Navbar active={menuActive} setActive={setMenuActive} />
+            <Navbar active={menuActive} />
           </div>
           <div className="pageContent">
             <Switch>

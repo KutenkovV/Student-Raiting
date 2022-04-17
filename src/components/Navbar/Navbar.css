@@ -1,9 +1,13 @@
 /* сам блок сайдбара */
 .mainMenu {
-  transform: translateX(-100%);
+  height: 100vh;
+  width: 7rem;
+  transform: translateX(-200%);
+  transition: 150ms;
 }
 
 .active {
+  width: auto;
   transform: translateX(0);
 }
 
