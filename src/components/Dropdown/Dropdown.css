@@ -10,8 +10,8 @@
 }
 
 .dropdown .dropdown-btn {
-  font-weight: #333;
-  display: flex;
+  display: inline-flex;
+  justify-items: start;
   align-items: center;
   cursor: pointer;
 }
