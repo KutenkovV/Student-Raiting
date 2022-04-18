@@ -1,0 +1,7 @@
+.header {
+  text-transform: uppercase;
+  font-size: 1.4rem;
+  color: #576372;
+  font-weight: bold;
+  cursor: pointer;
+}

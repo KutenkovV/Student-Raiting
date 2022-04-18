@@ -1,0 +1,18 @@
+.App {
+  text-align: center;
+}
+
+.content {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  background-color: #f3f7f9;
+}
+
+.pageContent {
+  width: 100%;
+  padding-top: 2.5rem;
+  padding-inline: 50px;
+}
