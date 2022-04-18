@@ -40,7 +40,7 @@ class ReportController {
         title: "Иван",
         totalSubmitted: "",
         count: "",
-        borderPoint: "",
+        borderPoint: "ывапролдлорпа",
         nextPoint: "",
       },
       {
