@@ -10,7 +10,7 @@ const Settings = () => {
       <div class="row mb-3 mt-4">
         <div class="col-5">
           <label for="percentageOfOverallRating" class="form-label">
-            Процент количества получающих от общего конкурса
+            Количество получающих от общего конкурса
           </label>
           <input
             type="email"
@@ -27,7 +27,7 @@ const Settings = () => {
             </label>
             <input class="form-control" id="percentageOfOverallRating" />
           </div>
-          <div class="col-5 ms-5 ms-auto">
+          <div class="col-5">
             <label for="percentageOfOverallRating" class="form-label">
               Учебная деятельность
             </label>
@@ -35,36 +35,39 @@ const Settings = () => {
           </div>
         </div>
         <div class="row mt-5 ">
-          <div class="col-5 ">
+          <div class="col-5">
             <label for="percentageOfOverallRating" class="form-label">
               Спортивная деятельность
             </label>
             <input class="form-control" id="percentageOfOverallRating" />
           </div>
-          <div class="col-5 ms-auto ">
+          <div class="col-5">
             <label for="percentageOfOverallRating" class="form-label">
               Культурно-творческая деятельность
             </label>
             <input class="form-control" id="percentageOfOverallRating" />
           </div>
         </div>
-        <div class="row mt-5 ">
-          <div class="col-5 ">
+        <div class="row mt-5">
+          <div class="col-5">
             <label for="percentageOfOverallRating" class="form-label">
               Спортивная деятельность
             </label>
             <input class="form-control" id="percentageOfOverallRating" />
           </div>
         </div>
-        <div class="row">
-          <a
-            name=""
-            id=""
-            class="btn btn-primary mt-5 col-1 ms-auto"
-            role="button"
-          >
-            Сохранить
-          </a>
+        <div class="row mt-5">
+          <div className="col-8"></div>
+          <div className="col-4">
+            <a
+              name=""
+              id=""
+              class="btn btn-primary"
+              role="button"
+            >
+              Сохранить
+            </a>
+          </div>
         </div>
       </div>
     </div>
