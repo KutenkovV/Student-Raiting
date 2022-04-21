@@ -11,7 +11,7 @@
 .dropdown .dropdown-btn {
   display: inline-flex;
   justify-items: start;
-  align-items: center;
+  align-items: center; 
   cursor: pointer;
 }
 
@@ -26,7 +26,7 @@
 }
 
 .dropdown .dropdown-content .dropdown-item {
-  font-size: 14px;
+  font-size: 0.7vw;
   color: #9eadbd;
   padding: 10px;
   cursor: pointer;
