@@ -18,6 +18,11 @@ table td,
   font-size: 1.2em;
 }
 
+/* Тут класс который увеличивает только таблицу Сводки */
+.tableSummary td { 
+  padding: 15px;
+}
+
 table tr:nth-child(even) {
   background-color: #f3f7f9;
 }
