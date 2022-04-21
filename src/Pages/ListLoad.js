@@ -12,9 +12,7 @@ function ListLoad() {
 
   return (
     <div>
-      <div class="row mb-3">
-        <Dropdown selected={selected} setSelected={setSelected} />
-      </div>
+      <Dropdown selected={selected} setSelected={setSelected} />
       <div class="row align-items-start mt-2 me-0 ">
         <div class="mb-3 col-6">
           <input class="form-control" type="file" id="formFile" />

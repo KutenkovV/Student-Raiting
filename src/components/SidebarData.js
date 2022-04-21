@@ -69,7 +69,7 @@ export const SidebarReports = [
     cName: "nav-text",
   },
   {
-    title: "ПОДАВШИЕ В НЕСКОЛЬКО НАПРАВЛЕНИЙ",
+    title: "ПОДАВШИЕ НА НЕСКОЛЬКО НАПРАВЛЕНИЙ",
     path: "/severalDirectionsList",
     icon: <FontAwesomeIcon icon={faList} size="2x" />,
     cName: "nav-text",
