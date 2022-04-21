@@ -1,0 +1,27 @@
+.studentMenu .studentMenu-btn {
+    display: inline-flex;
+    justify-items: center;
+    align-items: center; 
+    cursor: pointer;
+    width: 1rem;
+    height: 1rem;
+  }
+  .studentMenu .studentMenu-content {
+    position: absolute;
+    top: 120%;
+    padding: 15px;
+    background: #fff;
+    box-shadow: 2px 2px 5px 2px rgb(183, 183, 183);
+    color: #333;
+  }
+  .studentMenu .studentMenu-content .studentMenu-item {
+    font-size: 0.7vw;
+    color: #9eadbd;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .studentMenu .studentMenu-content .studentMenu-item:hover {
+    background: #f4f4f4;
+  }
