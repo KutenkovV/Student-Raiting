@@ -8,7 +8,6 @@
   }
   .studentMenu .studentMenu-content {
     position: absolute;
-    top: 120%;
     padding: 15px;
     background: #fff;
     box-shadow: 2px 2px 5px 2px rgb(183, 183, 183);
@@ -24,4 +23,8 @@
   
   .studentMenu .studentMenu-content .studentMenu-item:hover {
     background: #f4f4f4;
+  }
+  
+  .studentMenu{
+    position: relative;
   }

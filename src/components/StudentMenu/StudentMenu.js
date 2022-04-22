@@ -5,6 +5,13 @@ import "./StudentMenu.css";
 
 function StudentMenu() {
   const [isActive, setIsActive] = useState(false);
+  const options = [
+    "НАУЧНАЯ ДЕЯТЕЛЬНОСТЬ",
+    "УЧЕБНАЯ ДЕЯТЕЛЬНОСТЬ",
+    "ОБЩЕСТВЕННАЯ ДЕЯТЕЛЬНОСТЬ",
+    "СПОРТИВНАЯ ДЕЯТЕЛЬНОСТЬ",
+    "КУЛЬТУРНО-ТВОРЧЕСКАЯ ДЕЯТЕЛЬНОСТЬ",
+  ];
 
   return (
     <div className="studentMenu">
@@ -13,12 +20,17 @@ function StudentMenu() {
       </div>
       {isActive && (
         <div className="studentMenu-content">
-            <div className="studentMenu-item"                 
+          {options.map((option) => (
+            <div
                 onClick={(e) => {
-                setIsActive(false);}
-                }>
-              <p>епаресете</p>
+                setSelected(option);
+                setIsActive(false);
+              }}
+              className="studentMenu-item"
+            >
+              {option}
             </div>
+          ))}
         </div>
       )}
     </div>
