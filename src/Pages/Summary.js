@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SummaryTable from "../components/SummaryTable";
+import SummaryTable from "../components/tables/SummaryTable";
 import SummaryData from "../Data/SummaryList.json";
 
 function Summary() {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SeveralDirectionsTable from "../components/SeveralDirectionsTable";
+import SeveralDirectionsTable from "../components/tables/SeveralDirectionsTable";
 import SeveralDirections from "../Data/SeveralDirections.json";
 
 function SeveralDirectionsList() {

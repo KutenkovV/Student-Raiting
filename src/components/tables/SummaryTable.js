@@ -1,6 +1,7 @@
 import React from 'react'
-import "./LoadTable/LoadTable.css"
-import usePagination from "../hooks/usePagination";
+import "../LoadTable/LoadTable.css"
+import usePagination from "../../hooks/usePagination";
+
 const SummaryTable = ({ data, itemsPerPage, startFrom }) => {
     const { slicedData, pagination, prevPage, nextPage, changePage } =
         usePagination({ itemsPerPage, data, startFrom });

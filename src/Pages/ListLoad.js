@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import NIDlist from "../Data/NIDlist.json"; //подгружаю данные из json файла в таблицу
 import LoadTable from "../components/LoadTable/LoadTable";
 import Dropdown from "../components/Dropdown/Dropdown";
-import "./ListLoad.css";
 
 function ListLoad() {
   document.title = "Загрузка списков";
