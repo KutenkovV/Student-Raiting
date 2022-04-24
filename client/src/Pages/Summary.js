@@ -1,10 +1,19 @@
-import React from 'react'
+import React, { useState } from "react";
+import SummaryTable from "../components/tables/SummaryTable";
+import SummaryData from "../Data/SummaryList.json";
 
 function Summary() {
-  document.title = "Сводка"
+  document.title = "Сводка";
+  const [data] = useState(SummaryData);
+
   return (
-    <div><h1>Summary</h1></div>
-  )
+    <>
+      <div>
+        <h1 className="header">Сводка</h1>
+      </div>
+      <SummaryTable data={data} itemsPerPage={15} />
+    </>
+  );
 }
 
-export default Summary
+export default Summary;

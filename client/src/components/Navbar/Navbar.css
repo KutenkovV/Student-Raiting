@@ -1,0 +1,65 @@
+/* сам блок сайдбара */
+.mainMenu {
+  width: 7rem;
+  transform: translateX(-200%);
+  transition: 150ms;
+}
+
+.active {
+  width: auto;
+  transform: translateX(0);
+}
+
+.nav-menu-items {
+  top: 0;
+  left: 0;
+  padding-top: 1rem;
+  padding-left: 0%;
+  margin: 0%;
+  background-color: #f3f7f9;
+}
+
+/* сами блоки, ну которые "загрузить списки", "настройка рейтинга" итд */
+.nav-text a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #92a2b5;
+  font-size: 0.8rem;
+  padding: 8px 40px;
+}
+
+/* лейблы, ну которые "РАБОТА СО СПИСКАМИ" и тд */
+.nav-menu-items p {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 0.8rem;
+  color: #576372;
+  padding-left: 40px;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+/* активная ячейка */
+#active a {
+  color: #fff;
+  background-color: #007bff;
+}
+
+/* наводим на ячейку*/
+.nav-text a:hover {
+  color: #fff;
+  background-color: #007bff;
+  transition: all 0.2s ease;
+}
+
+
+.icon {
+  width: 30px;
+}
+
+.item {
+  padding-left: 20px;
+}

@@ -1,6 +1,6 @@
 const Router = require('express')
 const router = new Router()
-const coursesController = require('../controllers/courses.controllers')
+const RatingCountController = require('../controllers/ratingCount.controllers')
 const listLoadController = require('../controllers/listLoad.controllers')
 const reportController = require('../controllers/report.controllers')
 
@@ -18,11 +18,12 @@ router.get('/listLoad/nid',listLoadController.getAllNid)
 router.get('/listLoad/ktd',listLoadController.getAllKtd)
 router.get('/listLoad/sad',listLoadController.getAllSad)
 
-//router.get('/report',reportController.getAll)
+router.get('/report',reportController.getAll)
 
+router.get('/ratingCount',RatingCountController.getAll)
+//router.get('/ratingCount/:id',ReatingCountController.getOne)
+router.put('/ratingCount',RatingCountController.update)
+//router.delete('/ratingCount/:id',RatingCountController.delete)
 
-//router.get('/courses/:id',coursesController.getOneCourses)
-//router.put('/courses',coursesController.updateCourses)
-//router.delete('/courses/:id',coursesController.deleteCourses)
 
 module.exports = router

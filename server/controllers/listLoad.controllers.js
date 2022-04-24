@@ -6,7 +6,7 @@ class ListLoadController {
     
     async getAllOd(req, res) {
                
-        const result = await models.StudentsReating.findAll({
+        const result = await models.StudentsRating.findAll({
             
             attributes: ['id', 'destination'],
             required:true,
@@ -15,11 +15,11 @@ class ListLoadController {
                     model: models.Students,attributes: ['studnumber','fullname','educationgroup','institute','sad'],
                 },
                 {
-                    model: models.Reating,attributes: ['points'],
+                    model: models.Rating,attributes: ['points'],
                     required:true,
                     include: [
                         {
-                            model: models.ReatingCourses,
+                            model: models.RatingCourses,
                             required:true,
                             include: [
                                 {
@@ -60,7 +60,7 @@ class ListLoadController {
 
     async getAllSd(req, res) {
                
-        const result = await models.StudentsReating.findAll({
+        const result = await models.StudentsRating.findAll({
             
             attributes: ['id', 'destination'],
             required:true,
@@ -69,11 +69,11 @@ class ListLoadController {
                     model: models.Students,attributes: ['studnumber','fullname','educationgroup','institute','sad'],
                 },
                 {
-                    model: models.Reating,attributes: ['points'],
+                    model: models.Rating,attributes: ['points'],
                     required:true,
                     include: [
                         {
-                            model: models.ReatingCourses,
+                            model: models.RatingCourses,
                             required:true,
                             include: [
                                 {
@@ -114,7 +114,7 @@ class ListLoadController {
 
     async getAllNid(req, res) {
                
-        const result = await models.StudentsReating.findAll({
+        const result = await models.StudentsRating.findAll({
             
             attributes: ['id', 'destination'],
             required:true,
@@ -123,11 +123,11 @@ class ListLoadController {
                     model: models.Students,attributes: ['studnumber','fullname','educationgroup','institute','sad'],
                 },
                 {
-                    model: models.Reating,attributes: ['points'],
+                    model: models.Rating,attributes: ['points'],
                     required:true,
                     include: [
                         {
-                            model: models.ReatingCourses,
+                            model: models.RatingCourses,
                             required:true,
                             include: [
                                 {
@@ -169,7 +169,7 @@ class ListLoadController {
 
     async getAllKtd(req, res) {
                
-        const result = await models.StudentsReating.findAll({
+        const result = await models.StudentsRating.findAll({
             
             attributes: ['id', 'destination'],
             required:true,
@@ -178,11 +178,11 @@ class ListLoadController {
                     model: models.Students,attributes: ['studnumber','fullname','educationgroup','institute','sad'],
                 },
                 {
-                    model: models.Reating,attributes: ['points'],
+                    model: models.Rating,attributes: ['points'],
                     required:true,
                     include: [
                         {
-                            model: models.ReatingCourses,
+                            model: models.RatingCourses,
                             required:true,
                             include: [
                                 {
@@ -223,7 +223,7 @@ class ListLoadController {
 
     async getAllUd(req, res) {
                
-        const result = await models.StudentsReating.findAll({
+        const result = await models.StudentsRating.findAll({
             
             attributes: ['id', 'destination'],
             required:true,
@@ -232,11 +232,11 @@ class ListLoadController {
                     model: models.Students,attributes: ['studnumber','fullname','educationgroup','institute','sad'],
                 },
                 {
-                    model: models.Reating,attributes: ['points'],
+                    model: models.Rating,attributes: ['points'],
                     required:true,
                     include: [
                         {
-                            model: models.ReatingCourses,
+                            model: models.RatingCourses,
                             required:true,
                             include: [
                                 {
@@ -277,13 +277,26 @@ class ListLoadController {
 
     async getAllSad(req, res) {
                
-        const result = await models.StudentsReating.findAll({
+        const result = await models.StudentsRating.findAll({
             
-            
-            required:true,
+
             include: [
                 {
                     model: models.Students,attributes: ['studnumber','fullname','sad'],
+                },{
+                    model: models.DateTable,
+                    attributes: ['id','date'],
+                    required:true,
+                    where: {
+                      'date': {
+                          [Op.contains]: [
+                            { value: new Date(), inclusive: true },
+                            { value: new Date(), inclusive: true }
+                            //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
+                            //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
+                          ]
+                      }
+                  },
                 }
             ]
         });

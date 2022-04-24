@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useState } from "react";
+import NIDlist from "../Data/NIDlist.json";
 
 function Nid() {
-  document.title = "Научная"
+  document.title = "Научная";
+  const [data] = useState(NIDlist);
   return (
-    <div><h1>Nid</h1></div>
-  )
+    <div>
+      <h1 className="header">Научная деятельность</h1>
+    </div>
+  );
 }
 
-export default Nid
+export default Nid;
