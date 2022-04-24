@@ -6,34 +6,7 @@ const sequelize = require('../db')
 class ReportController {
   async getAll(req, res) {
     
-    
-
-    /*const dateId = await models.DateTable.findAll({
-        required: true,
-        
-            where: {
-                'date': {
-                    [Op.between]: [new Date(), new Date()]
-                }
-            },
-            
-    });*/
-
-    // Init main query
-    var query = "SELECT * FROM" + '"datetable"' +
-    " WHERE "  + '"date"' + " @>"+" [ " +  new Date() +
-    " ," + new Date()+"] ::daterange";
-
-
-    global.db.sequelize.query(query)
-    .then(function(calls) {
-    console.log(calls);
-    })
-    .error(function (err) {
-    console.log(err);
-    });
-
-
+     
     // объект JavaScript
     var result = [
       {
@@ -73,8 +46,23 @@ class ReportController {
       },
     ];
 
+
+    const dateId = await models.DateTable.findAll({
+      required: true,
+      attributes: ["id"],
+      where: {
+              'date': {
+                  [Op.contains]: [
+                    { value: new Date(), inclusive: true },
+                    { value: new Date(), inclusive: true }
+                  ]
+              }
+          },
+          
+    });
+    
     //return res.json(JSON.strigify(result));
-    return res.json(dateId);
+    return res.json(result);
   }
 
   async getСount() {

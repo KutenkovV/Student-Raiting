@@ -1,6 +1,6 @@
 const models = require('../models/models')
 const ApiError = require('../error/ApiError');
-
+const { Op } = require('sequelize');
 
 class ListLoadController {
     
@@ -35,6 +35,21 @@ class ListLoadController {
                             ]
                         }
                     ]
+                },
+                {
+                    model: models.DateTable,
+                    attributes: ['id','date'],
+                    required:true,
+                    where: {
+                      'date': {
+                          [Op.contains]: [
+                            { value: new Date(), inclusive: true },
+                            { value: new Date(), inclusive: true }
+                            //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
+                            //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
+                          ]
+                      }
+                  },
                 }
             ]
         });
@@ -74,6 +89,21 @@ class ListLoadController {
                             ]
                         }
                     ]
+                },
+                {
+                    model: models.DateTable,
+                    attributes: ['id','date'],
+                    required:true,
+                    where: {
+                      'date': {
+                          [Op.contains]: [
+                            { value: new Date(), inclusive: true },
+                            { value: new Date(), inclusive: true }
+                            //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
+                            //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
+                          ]
+                      }
+                  },
                 }
             ]
         });
@@ -113,6 +143,21 @@ class ListLoadController {
                             ]
                         }
                     ]
+                },
+                {
+                    model: models.DateTable,
+                    attributes: ['id','date'],
+                    required:true,
+                    where: {
+                      'date': {
+                          [Op.contains]: [
+                            { value: new Date(), inclusive: true },
+                            { value: new Date(), inclusive: true }
+                            //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
+                            //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
+                          ]
+                      }
+                  },
                 }
             ]
         });
@@ -153,6 +198,21 @@ class ListLoadController {
                             ]
                         }
                     ]
+                },
+                {
+                    model: models.DateTable,
+                    attributes: ['id','date'],
+                    required:true,
+                    where: {
+                      'date': {
+                          [Op.contains]: [
+                            { value: new Date(), inclusive: true },
+                            { value: new Date(), inclusive: true }
+                            //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
+                            //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
+                          ]
+                      }
+                  },
                 }
             ]
         });
@@ -183,7 +243,7 @@ class ListLoadController {
                                     model: models.Courses,
                                     
                                     where: {
-                                        'title': 'НИД',
+                                        'title': 'УД',
                                     }
                                 },
                                 {
@@ -192,6 +252,21 @@ class ListLoadController {
                             ]
                         }
                     ]
+                },
+                {
+                    model: models.DateTable,
+                    attributes: ['id','date'],
+                    required:true,
+                    where: {
+                      'date': {
+                          [Op.contains]: [
+                            { value: new Date(), inclusive: true },
+                            { value: new Date(), inclusive: true }
+                            //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
+                            //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
+                          ]
+                      }
+                  },
                 }
             ]
         });

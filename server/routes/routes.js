@@ -18,8 +18,7 @@ router.get('/listLoad/nid',listLoadController.getAllNid)
 router.get('/listLoad/ktd',listLoadController.getAllKtd)
 router.get('/listLoad/sad',listLoadController.getAllSad)
 
-router.get('/report',reportController.getAll)
-
+//router.get('/report',reportController.getAll)
 
 
 //router.get('/courses/:id',coursesController.getOneCourses)
