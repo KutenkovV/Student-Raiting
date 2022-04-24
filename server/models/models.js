@@ -9,7 +9,7 @@ const Courses = sequelize.define(
   },
   {
     // define the table's name
-    tableName: 'courses',
+    tableName: "courses",
     // Отключаем `createdAt`
     createdAt: false,
     // Изменяем название `updatedAt`
@@ -39,7 +39,7 @@ const DateTable = sequelize.define(
   },
   {
     // define the table's name
-    tableName: 'datetable',
+    tableName: "datetable",
     // Отключаем `createdAt`
     createdAt: false,
     // Изменяем название `updatedAt`
@@ -50,7 +50,7 @@ const DateTable = sequelize.define(
 const RatingCourses = sequelize.define(
   "ratingcourses",
   {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true }    
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   },
   {
     // Отключаем `createdAt`
@@ -64,12 +64,11 @@ const RatingCount = sequelize.define(
   "ratingcount",
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    count:{ type: DataTypes.INTEGER, allowNull: false }
-    
+    count: { type: DataTypes.INTEGER, allowNull: false },
   },
   {
     // define the table's name
-    tableName: 'ratingcount',
+    tableName: "ratingcount",
     // Отключаем `createdAt`
     createdAt: false,
     // Изменяем название `updatedAt`
@@ -81,53 +80,50 @@ const Rating = sequelize.define(
   "rating",
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    points:{ type: DataTypes.DOUBLE, allowNull: false },
-        
+    points: { type: DataTypes.DOUBLE, allowNull: false },
   },
   {
     // define the table's name
-    tableName: 'rating',
+    tableName: "rating",
     // Отключаем `createdAt`
     createdAt: false,
     // Изменяем название `updatedAt`
     updatedAt: false,
   }
 );
-
 
 const Students = sequelize.define(
   "students",
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    studnumber:{ type: DataTypes.INTEGER,unique:true, allowNull: false },
-    fullname:{ type: DataTypes.STRING(70), allowNull: false },
-    state:{ type: DataTypes.STRING(15), allowNull: false },
-    educationgroup:{ type: DataTypes.STRING(10), allowNull: false },
-    institute:{ type: DataTypes.STRING(7), allowNull: false },
-    sad:{ type: DataTypes.BOOLEAN, allowNull: false },
-    vacation:{ type: DataTypes.BOOLEAN, allowNull: false },
-    free:{ type: DataTypes.BOOLEAN, allowNull: false },
+    studnumber: { type: DataTypes.INTEGER, unique: true, allowNull: false },
+    fullname: { type: DataTypes.STRING(70), allowNull: false },
+    state: { type: DataTypes.STRING(15), allowNull: false },
+    educationgroup: { type: DataTypes.STRING(10), allowNull: false },
+    institute: { type: DataTypes.STRING(7), allowNull: false },
+    sad: { type: DataTypes.BOOLEAN, allowNull: false },
+    vacation: { type: DataTypes.BOOLEAN, allowNull: false },
+    free: { type: DataTypes.BOOLEAN, allowNull: false },
   },
   {
     // define the table's name
-    tableName: 'students',
+    tableName: "students",
     // Отключаем `createdAt`
     createdAt: false,
     // Изменяем название `updatedAt`
     updatedAt: false,
   }
 );
-
 
 const StudentsRating = sequelize.define(
   "studentsrating",
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    destination:{ type: DataTypes.BOOLEAN, allowNull: false },
+    destination: { type: DataTypes.BOOLEAN, allowNull: false },
   },
   {
     // define the table's name
-    tableName: 'studentsrating',
+    tableName: "studentsrating",
     // Отключаем `createdAt`
     createdAt: false,
     // Изменяем название `updatedAt`
@@ -135,72 +131,59 @@ const StudentsRating = sequelize.define(
   }
 );
 
-
-
-
-
-
 CourseLevels.hasMany(RatingCourses, {
   foreignKey: "levelid",
 });
-RatingCourses.belongsTo(CourseLevels,{
+RatingCourses.belongsTo(CourseLevels, {
   foreignKey: "levelid",
 });
 
 Courses.hasMany(RatingCourses, {
   foreignKey: "courseid",
 });
-RatingCourses.belongsTo(Courses,{
+RatingCourses.belongsTo(Courses, {
   foreignKey: "courseid",
 });
 
-
-
-DateTable.hasMany(RatingCount , {
+DateTable.hasMany(RatingCount, {
   foreignKey: "dateid",
 });
 RatingCount.belongsTo(DateTable, {
   foreignKey: "dateid",
 });
 
-Courses.hasMany(RatingCount , {
+Courses.hasMany(RatingCount, {
   foreignKey: "courseid",
 });
 RatingCount.belongsTo(Courses, {
   foreignKey: "courseid",
 });
 
-
-RatingCourses.hasMany(Rating , {
+RatingCourses.hasMany(Rating, {
   foreignKey: "ratingcoursesid",
 });
 Rating.belongsTo(RatingCourses, {
   foreignKey: "ratingcoursesid",
 });
 
-
-
-Students.hasMany(StudentsRating , {
+Students.hasMany(StudentsRating, {
   foreignKey: "studentid",
 });
 StudentsRating.belongsTo(Students, {
   foreignKey: "studentid",
 });
-Rating.hasMany(StudentsRating , {
+Rating.hasMany(StudentsRating, {
   foreignKey: "reatingid",
 });
 StudentsRating.belongsTo(Rating, {
   foreignKey: "reatingid",
 });
-DateTable.hasMany(StudentsRating , {
+DateTable.hasMany(StudentsRating, {
   foreignKey: "dateid",
 });
 StudentsRating.belongsTo(DateTable, {
   foreignKey: "dateid",
 });
-
-
-
 
 module.exports = {
   Courses,
@@ -210,5 +193,5 @@ module.exports = {
   RatingCount,
   Rating,
   Students,
-  StudentsRating
+  StudentsRating,
 };

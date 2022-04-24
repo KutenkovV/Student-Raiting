@@ -235,10 +235,12 @@ class CalculateRatingController {
       ],
     });
     console.log(list[0]);
+
     var c1 = 0;
+
     for (let i = 0; i < c; i++) {
       if (list[i].student.dataValues.sad == true) {
-        const r = await models.StudentsRating.update(
+        await models.StudentsRating.update(
           { destination: true },
           {
             where: {
@@ -254,7 +256,7 @@ class CalculateRatingController {
         list[i].rating.dataValues.points == c1 &&
         list[i].student.dataValues.sad == true
       ) {
-        const r = await models.StudentsRating.update(
+        await models.StudentsRating.update(
           { destination: true },
           {
             where: {
