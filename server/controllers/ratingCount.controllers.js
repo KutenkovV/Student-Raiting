@@ -1,6 +1,7 @@
 const models = require("../models/models");
 const ApiError = require('../error/ApiError');
 const { Op } = require('sequelize');
+const calculateRatingController = require("./calculateRating.controllers");
 
 class RatingCountController {
     
@@ -70,6 +71,13 @@ class RatingCountController {
               'id': id,
             },
           })
+
+
+
+
+          ///////////ПОСЛЕ ОБНОВЛЕНИЯ НАДО ПЕРЕРАСЧИТЫВАТЬ МЕСТА И ПОЛУЧАЮЩИХ///////////////////////////////////////////////////////////////////////////////////////
+          calculateRatingController.calculation();
+
         //console.log(JSON.stringify(courses, null, 2));
         return res.json(courses)
     }
