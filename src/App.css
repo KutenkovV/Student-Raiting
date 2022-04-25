@@ -16,3 +16,19 @@
   padding-top: 2.5rem;
   padding-inline: 50px;
 }
+
+.burger-btn {
+  color: #576372;
+  margin-top: 2.5rem;
+  margin-left: 2.5rem;
+  cursor: pointer;
+}
+
+.header {
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  color: #576372;
+  font-weight: bold;
+  cursor: default;
+}
+

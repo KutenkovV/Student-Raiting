@@ -1,5 +1,5 @@
 import React from "react";
-import usePagination from "../hooks/usePagination";
+import usePagination from "../../hooks/usePagination";
 import "./LoadTable.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -23,6 +23,8 @@ const LoadTable = ({ data, itemsPerPage, startFrom }) => {
             <th>ФИО</th>
             <th>ГРУППА</th>
             <th>ИНСТИТУТ</th>
+            <th>Каникулы</th>
+            <th>Свободный график</th>
             <th>ГАС</th>
           </tr>
         </thead>
@@ -36,6 +38,8 @@ const LoadTable = ({ data, itemsPerPage, startFrom }) => {
               <td>{item.fio}</td>
               <td>{item.group}</td>
               <td>{item.institute}</td>
+              <td>{item.holiday}</td>
+              <td>{item.freeGraphic}</td>
               <td>{item.gas}</td>
             </tr>
           ))}
