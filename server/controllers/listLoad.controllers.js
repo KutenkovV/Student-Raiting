@@ -3,330 +3,37 @@ const ApiError = require("../error/ApiError");
 const { Op } = require("sequelize");
 
 class ListLoadController {
-  async getAllOd(req, res) {
-    const result = await models.StudentsRating.findAll({
-      attributes: ["id", "destination"],
-      required: true,
-      include: [
-        {
-          model: models.Students,
-          attributes: [
-            "studnumber",
-            "fullname",
-            "educationgroup",
-            "institute",
-            "sad",
-          ],
-        },
-        {
-          model: models.Rating,
-          attributes: ["points"],
-          required: true,
-          include: [
-            {
-              model: models.RatingCourses,
-              required: true,
-              include: [
-                {
-                  model: models.Courses,
+  async load(req, res) {
+    //по идее тут надо загружать список и запускать парсер
+    //что то похожее на загрузку файла
+    /*const result = await models.StudentsRating.findAll();
 
-                  where: {
-                    title: "ОД",
-                  },
-                },
-                {
-                  model: models.CourseLevels,
-                  attributes: ["level"],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          model: models.DateTable,
-          attributes: ["id", "date"],
-          required: true,
-          where: {
-            date: {
-              [Op.contains]: [
-                { value: new Date(), inclusive: true },
-                { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
-              ],
-            },
-          },
-        },
-      ],
-    });
+    var fstream;
+    req.pipe(req.busboy);
+    req.busboy.on("file", function (fieldname, file, filename) {
+      console.log("Uploading: " + filename);
 
-    return res.json(result);
-  }
+      //Path where image will be uploaded
+      fstream = fs.createWriteStream(__dirname + "/img/" + filename);
+      file.pipe(fstream);
+      fstream.on("close", function () {
+        console.log("Upload Finished of " + filename);
+        res.redirect("back"); //where to go next
+      });
+    });*/
 
-  async getAllSd(req, res) {
-    const result = await models.StudentsRating.findAll({
-      attributes: ["id", "destination"],
-      required: true,
-      include: [
-        {
-          model: models.Students,
-          attributes: [
-            "studnumber",
-            "fullname",
-            "educationgroup",
-            "institute",
-            "sad",
-          ],
-        },
-        {
-          model: models.Rating,
-          attributes: ["points"],
-          required: true,
-          include: [
-            {
-              model: models.RatingCourses,
-              required: true,
-              include: [
-                {
-                  model: models.Courses,
+    //что то похожее на запуск exe файла
+    /*const { exec } = require("child_process");
+    exec("cat *.js bad_file | wc -l", (err, stdout, stderr) => {
+      if (err) {
+        // node couldn't execute the command
+        return;
+      }
 
-                  where: {
-                    title: "СД",
-                  },
-                },
-                {
-                  model: models.CourseLevels,
-                  attributes: ["level"],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          model: models.DateTable,
-          attributes: ["id", "date"],
-          required: true,
-          where: {
-            date: {
-              [Op.contains]: [
-                { value: new Date(), inclusive: true },
-                { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
-              ],
-            },
-          },
-        },
-      ],
-    });
-
-    return res.json(result);
-  }
-
-  async getAllNid(req, res) {
-    const result = await models.StudentsRating.findAll({
-      attributes: ["id", "destination"],
-      required: true,
-      include: [
-        {
-          model: models.Students,
-          attributes: [
-            "studnumber",
-            "fullname",
-            "educationgroup",
-            "institute",
-            "sad",
-          ],
-        },
-        {
-          model: models.Rating,
-          attributes: ["points"],
-          required: true,
-          include: [
-            {
-              model: models.RatingCourses,
-              required: true,
-              include: [
-                {
-                  model: models.Courses,
-
-                  where: {
-                    title: "НИД",
-                  },
-                },
-                {
-                  model: models.CourseLevels,
-                  attributes: ["level"],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          model: models.DateTable,
-          attributes: ["id", "date"],
-          required: true,
-          where: {
-            date: {
-              [Op.contains]: [
-                { value: new Date(), inclusive: true },
-                { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
-              ],
-            },
-          },
-        },
-      ],
-    });
-
-    return res.json(result);
-  }
-
-  async getAllKtd(req, res) {
-    const result = await models.StudentsRating.findAll({
-      attributes: ["id", "destination"],
-      required: true,
-      include: [
-        {
-          model: models.Students,
-          attributes: [
-            "studnumber",
-            "fullname",
-            "educationgroup",
-            "institute",
-            "sad",
-          ],
-        },
-        {
-          model: models.Rating,
-          attributes: ["points"],
-          required: true,
-          include: [
-            {
-              model: models.RatingCourses,
-              required: true,
-              include: [
-                {
-                  model: models.Courses,
-
-                  where: {
-                    title: "КТД",
-                  },
-                },
-                {
-                  model: models.CourseLevels,
-                  attributes: ["level"],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          model: models.DateTable,
-          attributes: ["id", "date"],
-          required: true,
-          where: {
-            date: {
-              [Op.contains]: [
-                { value: new Date(), inclusive: true },
-                { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
-              ],
-            },
-          },
-        },
-      ],
-    });
-
-    return res.json(result);
-  }
-
-  async getAllUd(req, res) {
-    const result = await models.StudentsRating.findAll({
-      attributes: ["id", "destination"],
-      required: true,
-      include: [
-        {
-          model: models.Students,
-          attributes: [
-            "studnumber",
-            "fullname",
-            "educationgroup",
-            "institute",
-            "sad",
-          ],
-        },
-        {
-          model: models.Rating,
-          attributes: ["points"],
-          required: true,
-          include: [
-            {
-              model: models.RatingCourses,
-              required: true,
-              include: [
-                {
-                  model: models.Courses,
-
-                  where: {
-                    title: "УД",
-                  },
-                },
-                {
-                  model: models.CourseLevels,
-                  attributes: ["level"],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          model: models.DateTable,
-          attributes: ["id", "date"],
-          required: true,
-          where: {
-            date: {
-              [Op.contains]: [
-                { value: new Date(), inclusive: true },
-                { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
-              ],
-            },
-          },
-        },
-      ],
-    });
-
-    return res.json(result);
-  }
-
-  async getAllSad(req, res) {
-    const result = await models.StudentsRating.findAll({
-      include: [
-        {
-          model: models.Students,
-          attributes: ["studnumber", "fullname", "sad"],
-        },
-        {
-          model: models.DateTable,
-          attributes: ["id", "date"],
-          required: true,
-          where: {
-            date: {
-              [Op.contains]: [
-                { value: new Date(), inclusive: true },
-                { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
-              ],
-            },
-          },
-        },
-      ],
-    });
+      // the *entire* stdout and stderr (buffered)
+      console.log(`stdout: ${stdout}`);
+      console.log(`stderr: ${stderr}`);
+    });*/
 
     return res.json(result);
   }
