@@ -11,7 +11,6 @@ function ListLoad() {
   const [selected, setSelected] = useState("ЗАГРУЗКА СПИСКОВ");
 
   const [file, setFile] = useState();
-
   const onInputChange = (e) => {
     setFile(e.target.files[0]);
   };
@@ -45,8 +44,7 @@ function ListLoad() {
             Загрузить
           </button>
         </div>
-      </form>
-      
+      </form>      
       {/* Передаю данные как параметр в компонент */}
       <LoadTable data={data} itemsPerPage={15} />
     </div>
