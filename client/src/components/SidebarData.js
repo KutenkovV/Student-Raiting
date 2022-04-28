@@ -6,8 +6,7 @@ import {
   faTasks,
   faEdit,
   faList,
-  faIdCard,
-  faCopy,
+  faIdCard, faCopy,
 } from "@fortawesome/free-solid-svg-icons";
 
 // РАБОТА СО СПИСКАМИ active

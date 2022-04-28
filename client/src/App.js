@@ -18,7 +18,6 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 function App() {
   const [menuActive, setMenuActive] = useState(false);
-//123
   return (
     <>
       <div className="content">

@@ -7,12 +7,10 @@ class ListLoadController {
     //по идее тут надо загружать список и запускать парсер
     //что то похожее на загрузку файла
     /*const result = await models.StudentsRating.findAll();
-
     var fstream;
     req.pipe(req.busboy);
     req.busboy.on("file", function (fieldname, file, filename) {
       console.log("Uploading: " + filename);
-
       //Path where image will be uploaded
       fstream = fs.createWriteStream(__dirname + "/img/" + filename);
       file.pipe(fstream);
@@ -29,7 +27,6 @@ class ListLoadController {
         // node couldn't execute the command
         return;
       }
-
       // the *entire* stdout and stderr (buffered)
       console.log(`stdout: ${stdout}`);
       console.log(`stderr: ${stderr}`);
