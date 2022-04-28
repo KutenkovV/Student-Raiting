@@ -24,7 +24,7 @@ router.get("/listLoad/vacation", listController.getAllVacation);
 router.get("/listLoad/free", listController.getAllFree);
 
 //контроллеры для загрузки списков
-//router.post("/listLoad/ud", udController.getAll);
+router.post("/listLoad/ud", listLoadController.load);
 //router.post("/listLoad/od", odController.getAll);
 //router.post("/listLoad/sd", sdController.getAll);
 //router.post("/listLoad/nid", nidController.getAll);

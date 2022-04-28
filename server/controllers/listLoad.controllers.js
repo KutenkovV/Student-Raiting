@@ -4,21 +4,29 @@ const { Op } = require("sequelize");
 
 class ListLoadController {
   async load(req, res) {
-    //по идее тут надо загружать список и запускать парсер
     //что то похожее на загрузку файла
-    /*const result = await models.StudentsRating.findAll();
-    var fstream;
-    req.pipe(req.busboy);
-    req.busboy.on("file", function (fieldname, file, filename) {
-      console.log("Uploading: " + filename);
-      //Path where image will be uploaded
-      fstream = fs.createWriteStream(__dirname + "/img/" + filename);
-      file.pipe(fstream);
-      fstream.on("close", function () {
-        console.log("Upload Finished of " + filename);
-        res.redirect("back"); //where to go next
-      });
-    });*/
+
+    let sampleFile;
+    let uploadPath;
+  
+    if (!req.files || Object.keys(req.files).length === 0) {
+      res.status(400).send('No files were uploaded.');
+      return;
+    }
+  
+    //console.log('req.files >>>', req.files); // eslint-disable-line
+  
+    sampleFile = req.files.file;
+     
+    uploadPath = './uploads/' + sampleFile.name;
+  
+    sampleFile.mv(uploadPath, function(err) {
+      if (err) {
+        return res.status(500).send(err);
+      }
+  
+      res.send('File uploaded to ' + uploadPath);
+    });
 
     //что то похожее на запуск exe файла
     /*const { exec } = require("child_process");
@@ -32,7 +40,7 @@ class ListLoadController {
       console.log(`stderr: ${stderr}`);
     });*/
 
-    return res.json(result);
+    //return res;
   }
 }
 
