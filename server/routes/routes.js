@@ -24,14 +24,11 @@ router.get("/listLoad/vacation", listController.getAllVacation);
 router.get("/listLoad/free", listController.getAllFree);
 
 //контроллеры для загрузки списков
-router.post("/listLoad/ud", listLoadController.load);
-//router.post("/listLoad/od", odController.getAll);
-//router.post("/listLoad/sd", sdController.getAll);
-//router.post("/listLoad/nid", nidController.getAll);
-//router.post("/listLoad/ktd", ktdController.getAll);
-//router.post("/listLoad/sad", listLoadController.getAllSad);
-//router.post("/listLoad/vacation", listLoadController.getAllVacation);
-//router.post("/listLoad/free", listLoadController.getAllFree);
+router.post("/listLoad/all", listLoadController.loadAll);
+router.post("/listLoad/free", listLoadController.loadFree);
+router.post("/listLoad/vacation", listLoadController.loadVacation);
+router.post("/listLoad/sad", listLoadController.loadSad);
+
 
 //контроллер для сводки
 router.get("/report", reportController.getAll);

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\worker\\source\\repos\\parserApp\\parserApp\\parserApp.csproj": {}
+    "C:\\Users\\Yulia\\Study\\3_course_2\\Rating\\server\\parserApp\\parserApp\\parserApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\worker\\source\\repos\\parserApp\\parserApp\\parserApp.csproj": {
+    "C:\\Users\\Yulia\\Study\\3_course_2\\Rating\\server\\parserApp\\parserApp\\parserApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\worker\\source\\repos\\parserApp\\parserApp\\parserApp.csproj",
+        "projectUniqueName": "C:\\Users\\Yulia\\Study\\3_course_2\\Rating\\server\\parserApp\\parserApp\\parserApp.csproj",
         "projectName": "parserApp",
-        "projectPath": "C:\\Users\\worker\\source\\repos\\parserApp\\parserApp\\parserApp.csproj",
-        "packagesPath": "C:\\Users\\worker\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\worker\\source\\repos\\parserApp\\parserApp\\obj\\",
+        "projectPath": "C:\\Users\\Yulia\\Study\\3_course_2\\Rating\\server\\parserApp\\parserApp\\parserApp.csproj",
+        "packagesPath": "C:\\Users\\Yulia\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Yulia\\Study\\3_course_2\\Rating\\server\\parserApp\\parserApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\worker\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Yulia\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -72,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

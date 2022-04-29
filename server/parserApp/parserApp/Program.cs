@@ -21,7 +21,7 @@ namespace parserApp
                     var vacation = @$"{o.vacation}";
                     if(stud != null)
                     {
-                        var cs = "Host=localhost;Port=5434;Database=test8;Username=postgres;Password=123";
+                        var cs = "Host=localhost;Port=5432;Database=rating;Username=postgres;Password=root";
 
                         using (NpgsqlConnection con = new NpgsqlConnection(cs))
                         {
@@ -42,7 +42,7 @@ namespace parserApp
                     }
                     if(free != null)
                     {
-                        var cs = "Host=localhost;Port=5434;Database=test8;Username=postgres;Password=123";
+                        var cs = "Host=localhost;Port=5432;Database=rating;Username=postgres;Password=root";
 
                         using (NpgsqlConnection con = new NpgsqlConnection(cs))
                         {
@@ -68,7 +68,7 @@ namespace parserApp
                     }
                     if(sad != null)
                     {
-                        var cs = "Host=localhost;Port=5434;Database=test8;Username=postgres;Password=123";
+                        var cs = "Host=localhost;Port=5432;Database=rating;Username=postgres;Password=root";
 
                         using (NpgsqlConnection con = new NpgsqlConnection(cs))
                         {
@@ -94,7 +94,7 @@ namespace parserApp
                     }
                     if(vacation != null)
                     {
-                        var cs = "Host=localhost;Port=5434;Database=test8;Username=postgres;Password=123";
+                        var cs = "Host=localhost;Port=5432;Database=rating;Username=postgres;Password=root";
 
                         using (NpgsqlConnection con = new NpgsqlConnection(cs))
                         {
