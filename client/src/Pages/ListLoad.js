@@ -21,7 +21,7 @@ function ListLoad() {
     const data = new FormData();
     data.append('file', file);
 
-    axios.post('http://localhost:8080/api/listLoad/ud', data)
+    axios.post('http://localhost:8080/api/listLoad/all', data)
       .then((e) => {
         console.log("Success!");
       })

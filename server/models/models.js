@@ -267,4 +267,6 @@ module.exports = {
   Rating,
   Students,
   StudentsRating,
+  StudentsSAD,
+  StudentsVacation,StudentsFree
 };

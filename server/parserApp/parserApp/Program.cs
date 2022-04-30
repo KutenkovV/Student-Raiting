@@ -19,7 +19,7 @@ namespace parserApp
                     var free = @$"{o.free}";
                     var sad = @$"{o.sad}";
                     var vacation = @$"{o.vacation}";
-                    if(stud != null)
+                    if(stud.Length != 0)
                     {
                         var cs = "Host=localhost;Port=5432;Database=rating;Username=postgres;Password=root";
 
@@ -36,11 +36,12 @@ namespace parserApp
                             {
                                 Console.Write(ex.Message);
                             }
+                            addDate(con);
                             setStudTable(con, students);
                             con.Close();
                         }
                     }
-                    if(free != null)
+                    if(free.Length != 0)
                     {
                         var cs = "Host=localhost;Port=5432;Database=rating;Username=postgres;Password=root";
 
@@ -59,14 +60,12 @@ namespace parserApp
                             {
                                 Console.Write(ex.Message);
                             }
-                            Console.WriteLine("Заполняю даты");
                             addDate(con);
-                            Console.WriteLine("Заполняю булевые таблицы");
                             setFree(con, fileNameFree);
                             con.Close();
                         }
                     }
-                    if(sad != null)
+                    if(sad.Length != 0)
                     {
                         var cs = "Host=localhost;Port=5432;Database=rating;Username=postgres;Password=root";
 
@@ -85,14 +84,12 @@ namespace parserApp
                             {
                                 Console.Write(ex.Message);
                             }
-                            Console.WriteLine("Заполняю даты");
                             addDate(con);
-                            Console.WriteLine("Заполняю булевые таблицы");
                             setSAD(con, studStateSAD);
                             con.Close();
                         }
                     }
-                    if(vacation != null)
+                    if(vacation.Length != 0)
                     {
                         var cs = "Host=localhost;Port=5432;Database=rating;Username=postgres;Password=root";
 
@@ -111,9 +108,7 @@ namespace parserApp
                             {
                                 Console.Write(ex.Message);
                             }
-                            Console.WriteLine("Заполняю даты");
                             addDate(con);
-                            Console.WriteLine("Заполняю булевые таблицы");
                             setVacation(con, studStateVacation);
                             con.Close();
                         }
@@ -192,9 +187,9 @@ VALUES({students[i].id}, '{students[i].fullName}', '{students[i].state}', '{stud
                 }
                     };
                     ratingId = Convert.ToInt64(cmdRating.ExecuteScalar());
-                    var req1 = $@"select id from public.students where studNumber = {students[i].id}";
-                    using var cmdRatingGet = new NpgsqlCommand(req1, con);
-                    studId = Convert.ToInt64(cmdRatingGet.ExecuteScalar());
+                    //var req1 = $@"select id from public.students where studNumber = {students[i].id}";
+                    //using var cmdRatingGet = new NpgsqlCommand(req1, con);
+                    //studId = Convert.ToInt64(cmdRatingGet.ExecuteScalar());
                 }
                 catch (PostgresException ex)
                 {
@@ -282,7 +277,6 @@ VALUES({students[i].id}, '{students[i].fullName}', '{students[i].state}', '{stud
         {
             var year = DateTime.Now.Year;
             var month = DateTime.Now.Month;
-            Console.WriteLine(year + " " + month);
             dateId = 0;
             switch (month)
             {
@@ -301,7 +295,6 @@ VALUES({students[i].id}, '{students[i].fullName}', '{students[i].state}', '{stud
                             while (dr.Read())
                             {
                                 dateId = dr.GetInt64(0);
-                                Console.WriteLine(dateId);
 
                             }
                         }
@@ -335,7 +328,6 @@ VALUES({students[i].id}, '{students[i].fullName}', '{students[i].state}', '{stud
                             {
 
                                 dateId = dr.GetInt64(0);
-                                Console.WriteLine(dateId);
 
                             }
                         }
@@ -360,7 +352,6 @@ where dateId = {dateId}";
                 while (dr.Read())
                 {
                     ratingCountId = dr.GetInt64(0);
-                    Console.WriteLine(ratingCountId);
 
                 }
             }
