@@ -33,14 +33,14 @@ const LoadTable = ({ data, itemsPerPage, startFrom }) => {
           {slicedData.map((item) => (
             <tr key={item.id}>
               <td>{item.id}</td>
-              <td>{item.points}</td>
-              <td>{item.level}</td>
-              <td>{item.fio}</td>
-              <td>{item.group}</td>
-              <td>{item.institute}</td>
-              <td>{item.holiday}</td>
-              <td>{item.freeGraphic}</td>
-              <td>{item.gas}</td>
+              <td>{item.rating.points}</td>
+              <td>{item.rating.ratingcourse.levelid}</td>
+              <td>{item.student.fullname}</td>
+              <td>{item.student.educationgroup}</td>
+              <td>{item.student.institute}</td>
+              <td>{item.student.vacation}</td>
+              <td>{item.student.free}</td>
+              <td>{item.student.sad}</td>
             </tr>
           ))}
         </tbody>
