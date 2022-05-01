@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "dgSpecHash": "4p25ERl6AKBMI0r6PNHdw734w0xrvCyyI7Wme3h5pF5vv7T0v2v7UlwDuZCcC0NR/dDQeEsN9AogflosPvlMKg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Yulia\\Study\\3_course_2\\Rating\\server\\parserApp\\parserApp\\parserApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Yulia\\.nuget\\packages\\aspose.cells\\22.2.0\\aspose.cells.22.2.0.nupkg.sha512",
+    "C:\\Users\\Yulia\\.nuget\\packages\\commandlineparser\\2.8.0\\commandlineparser.2.8.0.nupkg.sha512",
+    "C:\\Users\\Yulia\\.nuget\\packages\\csvhelper\\27.2.1\\csvhelper.27.2.1.nupkg.sha512",
+    "C:\\Users\\Yulia\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
+    "C:\\Users\\Yulia\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "C:\\Users\\Yulia\\.nuget\\packages\\npgsql\\6.0.3\\npgsql.6.0.3.nupkg.sha512",
+    "C:\\Users\\Yulia\\.nuget\\packages\\system.drawing.common\\4.7.0\\system.drawing.common.4.7.0.nupkg.sha512",
+    "C:\\Users\\Yulia\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "C:\\Users\\Yulia\\.nuget\\packages\\system.text.encoding.codepages\\4.7.0\\system.text.encoding.codepages.4.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}

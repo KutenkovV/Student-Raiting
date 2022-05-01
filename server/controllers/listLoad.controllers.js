@@ -1,46 +1,216 @@
 const models = require("../models/models");
 const ApiError = require("../error/ApiError");
+const path = require("path");
 const { Op } = require("sequelize");
 
 class ListLoadController {
-  async getAllOd(req, res) {
-    const result = await models.StudentsRating.findAll({
+  async loadAll(req, res) {
+    //что то похожее на загрузку файла
+
+    let sampleFile;
+    let uploadPath;
+
+    if (!req.files || Object.keys(req.files).length === 0) {
+      res.status(400).send("No files were uploaded.");
+      return;
+    }
+
+    //console.log('req.files >>>', req.files); // eslint-disable-line
+
+    sampleFile = req.files.file;
+
+    uploadPath = "./uploads/" + sampleFile.name;
+
+    sampleFile.mv(uploadPath, function (err) {
+      if (err) {
+        return res.status(500).send(err);
+      }
+
+      console.log("File uploaded to " + uploadPath);
+    });
+
+    console.log(path.resolve("../server/uploads/" + sampleFile.name));
+
+    //что то похожее на запуск exe файла
+    const { execFile } = require("child_process");
+    execFile(
+      path.resolve(
+        "../server/parserApp/parserApp/bin/Debug/net6.0/parserApp.exe"
+      ),
+      ["-s", path.resolve("../server/uploads/" + sampleFile.name)],
+      (err, stdout, stderr) => {
+        if (err) {
+          // node couldn't execute the command
+          console.log(err);
+          res.status(400).send("node couldnt execute the command");
+          return;
+        }
+
+        // the *entire* stdout and stderr (buffered)
+        console.log(`stdout: ${stdout}`);
+        res.send("ОК");
+      }
+    );
+
+    ListLoadController.selectionBooleanVariables();
+  }
+  async loadFree(req, res) {
+    //что то похожее на загрузку файла
+
+    let sampleFile;
+    let uploadPath;
+
+    if (!req.files || Object.keys(req.files).length === 0) {
+      res.status(400).send("No files were uploaded.");
+      return;
+    }
+
+    //console.log('req.files >>>', req.files); // eslint-disable-line
+
+    sampleFile = req.files.file;
+
+    uploadPath = "./uploads/" + sampleFile.name;
+
+    sampleFile.mv(uploadPath, function (err) {
+      if (err) {
+        return res.status(500).send(err);
+      }
+
+      console.log("File uploaded to " + uploadPath);
+    });
+
+    console.log(path.resolve("../server/uploads/" + sampleFile.name));
+
+    //что то похожее на запуск exe файла
+    const { execFile } = require("child_process");
+    execFile(
+      path.resolve(
+        "../server/parserApp/parserApp/bin/Debug/net6.0/parserApp.exe"
+      ),
+      ["-f", path.resolve("../server/uploads/" + sampleFile.name)],
+      (err, stdout, stderr) => {
+        if (err) {
+          // node couldn't execute the command
+          console.log(err);
+          res.status(400).send("node couldnt execute the command");
+          return;
+        }
+
+        // the *entire* stdout and stderr (buffered)
+        console.log(`stdout: ${stdout}`);
+        res.send("ОК");
+      }
+    );
+    
+    ListLoadController.selectionBooleanVariables();
+  }
+  async loadVacation(req, res) {
+    //что то похожее на загрузку файла
+
+    let sampleFile;
+    let uploadPath;
+
+    if (!req.files || Object.keys(req.files).length === 0) {
+      res.status(400).send("No files were uploaded.");
+      return;
+    }
+
+    //console.log('req.files >>>', req.files); // eslint-disable-line
+
+    sampleFile = req.files.file;
+
+    uploadPath = "./uploads/" + sampleFile.name;
+
+    sampleFile.mv(uploadPath, function (err) {
+      if (err) {
+        return res.status(500).send(err);
+      }
+
+      console.log("File uploaded to " + uploadPath);
+    });
+
+    console.log(path.resolve("../server/uploads/" + sampleFile.name));
+
+    //что то похожее на запуск exe файла
+    const { execFile } = require("child_process");
+    execFile(
+      path.resolve(
+        "../server/parserApp/parserApp/bin/Debug/net6.0/parserApp.exe"
+      ),
+      ["-v", path.resolve("../server/uploads/" + sampleFile.name)],
+      (err, stdout, stderr) => {
+        if (err) {
+          // node couldn't execute the command
+          console.log(err);
+          res.status(400).send("node couldnt execute the command");
+          return;
+        } else {
+          // the *entire* stdout and stderr (buffered)
+          console.log(`stdout: ${stdout}`);
+          res.send("ОК");
+        }
+      }
+    );
+    ListLoadController.selectionBooleanVariables();
+  }
+  async loadSad(req, res) {
+    //что то похожее на загрузку файла
+
+    let sampleFile;
+    let uploadPath;
+
+    if (!req.files || Object.keys(req.files).length === 0) {
+      res.status(400).send("No files were uploaded.");
+      return;
+    }
+
+    //console.log('req.files >>>', req.files); // eslint-disable-line
+
+    sampleFile = req.files.file;
+
+    uploadPath = "./uploads/" + sampleFile.name;
+
+    sampleFile.mv(uploadPath, function (err) {
+      if (err) {
+        return res.status(500).send(err);
+      }
+
+      console.log("File uploaded to " + uploadPath);
+    });
+
+    console.log(path.resolve("../server/uploads/" + sampleFile.name));
+
+    //что то похожее на запуск exe файла
+    const { execFile } = require("child_process");
+    execFile(
+      path.resolve(
+        "../server/parserApp/parserApp/bin/Debug/net6.0/parserApp.exe"
+      ),
+      ["-g", path.resolve("../server/uploads/" + sampleFile.name)],
+      (err, stdout, stderr) => {
+        if (err) {
+          // node couldn't execute the command
+          console.log(err);
+          res.status(400).send("node couldnt execute the command");
+          return;
+        }
+
+        // the *entire* stdout and stderr (buffered)
+        console.log(`stdout: ${stdout}`);
+        res.send("ОК");
+      }
+    );
+    ListLoadController.selectionBooleanVariables();
+  }
+
+  static async selectionBooleanVariables () {
+      const list = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
       required: true,
       include: [
         {
           model: models.Students,
-          attributes: [
-            "studnumber",
-            "fullname",
-            "educationgroup",
-            "institute",
-            "sad",
-          ],
-        },
-        {
-          model: models.Rating,
-          attributes: ["points"],
-          required: true,
-          include: [
-            {
-              model: models.RatingCourses,
-              required: true,
-              include: [
-                {
-                  model: models.Courses,
-
-                  where: {
-                    title: "ОД",
-                  },
-                },
-                {
-                  model: models.CourseLevels,
-                  attributes: ["level"],
-                },
-              ],
-            },
-          ],
+          attributes: ["id", "studnumber"],
         },
         {
           model: models.DateTable,
@@ -51,8 +221,6 @@ class ListLoadController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
               ],
             },
           },
@@ -60,49 +228,10 @@ class ListLoadController {
       ],
     });
 
-    return res.json(result);
-  }
-
-  async getAllSd(req, res) {
-    const result = await models.StudentsRating.findAll({
-      attributes: ["id", "destination"],
+    const listF = await models.StudentsFree.findAll({
       required: true,
       include: [
         {
-          model: models.Students,
-          attributes: [
-            "studnumber",
-            "fullname",
-            "educationgroup",
-            "institute",
-            "sad",
-          ],
-        },
-        {
-          model: models.Rating,
-          attributes: ["points"],
-          required: true,
-          include: [
-            {
-              model: models.RatingCourses,
-              required: true,
-              include: [
-                {
-                  model: models.Courses,
-
-                  where: {
-                    title: "СД",
-                  },
-                },
-                {
-                  model: models.CourseLevels,
-                  attributes: ["level"],
-                },
-              ],
-            },
-          ],
-        },
-        {
           model: models.DateTable,
           attributes: ["id", "date"],
           required: true,
@@ -120,49 +249,10 @@ class ListLoadController {
       ],
     });
 
-    return res.json(result);
-  }
-
-  async getAllNid(req, res) {
-    const result = await models.StudentsRating.findAll({
-      attributes: ["id", "destination"],
+    const listV = await models.StudentsVacation.findAll({
       required: true,
       include: [
         {
-          model: models.Students,
-          attributes: [
-            "studnumber",
-            "fullname",
-            "educationgroup",
-            "institute",
-            "sad",
-          ],
-        },
-        {
-          model: models.Rating,
-          attributes: ["points"],
-          required: true,
-          include: [
-            {
-              model: models.RatingCourses,
-              required: true,
-              include: [
-                {
-                  model: models.Courses,
-
-                  where: {
-                    title: "НИД",
-                  },
-                },
-                {
-                  model: models.CourseLevels,
-                  attributes: ["level"],
-                },
-              ],
-            },
-          ],
-        },
-        {
           model: models.DateTable,
           attributes: ["id", "date"],
           required: true,
@@ -180,155 +270,65 @@ class ListLoadController {
       ],
     });
 
-    return res.json(result);
-  }
-
-  async getAllKtd(req, res) {
-    const result = await models.StudentsRating.findAll({
-      attributes: ["id", "destination"],
+    const listS = await models.StudentsSAD.findAll({
       required: true,
       include: [
         {
-          model: models.Students,
-          attributes: [
-            "studnumber",
-            "fullname",
-            "educationgroup",
-            "institute",
-            "sad",
-          ],
-        },
-        {
-          model: models.Rating,
-          attributes: ["points"],
+          model: models.DateTable,
+          attributes: ["id", "date"],
           required: true,
-          include: [
+          where: {
+            date: {
+              [Op.contains]: [
+                { value: new Date(), inclusive: true },
+                { value: new Date(), inclusive: true },
+                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
+                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
+              ],
+            },
+          },
+        },
+      ],
+    });
+
+    for (let i = 0; i < list.length; i++) {
+      for (let y = 0; y < listS.length; y++) {
+        if (list[i].student.dataValues.studnumber == listS[y].studnumber) {
+          await models.Students.update(
+            { sad: true },
             {
-              model: models.RatingCourses,
-              required: true,
-              include: [
-                {
-                  model: models.Courses,
-
-                  where: {
-                    title: "КТД",
-                  },
-                },
-                {
-                  model: models.CourseLevels,
-                  attributes: ["level"],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          model: models.DateTable,
-          attributes: ["id", "date"],
-          required: true,
-          where: {
-            date: {
-              [Op.contains]: [
-                { value: new Date(), inclusive: true },
-                { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
-              ],
-            },
-          },
-        },
-      ],
-    });
-
-    return res.json(result);
-  }
-
-  async getAllUd(req, res) {
-    const result = await models.StudentsRating.findAll({
-      attributes: ["id", "destination"],
-      required: true,
-      include: [
-        {
-          model: models.Students,
-          attributes: [
-            "studnumber",
-            "fullname",
-            "educationgroup",
-            "institute",
-            "sad",
-          ],
-        },
-        {
-          model: models.Rating,
-          attributes: ["points"],
-          required: true,
-          include: [
+              where: {
+                id: list[i].student.dataValues.id,
+              },
+            }
+          );
+        }
+      }
+      for (let y = 0; y < listV.length; y++) {
+        if (list[i].student.dataValues.studnumber == listV[y].studnumber) {
+          await models.Students.update(
+            { vacation: true },
             {
-              model: models.RatingCourses,
-              required: true,
-              include: [
-                {
-                  model: models.Courses,
-
-                  where: {
-                    title: "УД",
-                  },
-                },
-                {
-                  model: models.CourseLevels,
-                  attributes: ["level"],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          model: models.DateTable,
-          attributes: ["id", "date"],
-          required: true,
-          where: {
-            date: {
-              [Op.contains]: [
-                { value: new Date(), inclusive: true },
-                { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
-              ],
-            },
-          },
-        },
-      ],
-    });
-
-    return res.json(result);
-  }
-
-  async getAllSad(req, res) {
-    const result = await models.StudentsRating.findAll({
-      include: [
-        {
-          model: models.Students,
-          attributes: ["studnumber", "fullname", "sad"],
-        },
-        {
-          model: models.DateTable,
-          attributes: ["id", "date"],
-          required: true,
-          where: {
-            date: {
-              [Op.contains]: [
-                { value: new Date(), inclusive: true },
-                { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
-              ],
-            },
-          },
-        },
-      ],
-    });
-
-    return res.json(result);
+              where: {
+                id: list[i].student.dataValues.id,
+              },
+            }
+          );
+        }
+      }
+      for (let y = 0; y < listF.length; y++) {
+        if (list[i].student.dataValues.studnumber == listF[y].studnumber) {
+          await models.Students.update(
+            { free: true },
+            {
+              where: {
+                id: list[i].student.dataValues.id,
+              },
+            }
+          );
+        }
+      }
+    }
   }
 }
 
