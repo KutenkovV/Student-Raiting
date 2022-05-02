@@ -1,23 +1,32 @@
 import React, { useState, useEffect } from "react";
 import LoadTable from "../components/LoadTable/LoadTable";
 import Dropdown from "../components/Dropdown/Dropdown";
+import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import axios from "axios";
 
 function ListLoad() {
   document.title = "Загрузка списков";
 
   const [selected, setSelected] = useState("ЗАГРУЗКА СПИСКОВ");
+  const { promiseInProgress } = usePromiseTracker();
   const [items, setItems] = useState([]);
 
-  //Гет запроса на список
   useEffect(() => {
-      axios.get('http://localhost:8080/api/listLoad/nid')
-          .then(response => setItems(response.data))
-          .catch(error => console.log(error));
-  }, []);
+    var url;
+    if (selected === "НАУЧНАЯ ДЕЯТЕЛЬНОСТЬ") { url = "nid" }
+    else if (selected === "УЧЕБНАЯ ДЕЯТЕЛЬНОСТЬ") { url = "ud" }
+    else if (selected === "ОБЩЕСТВЕННАЯ ДЕЯТЕЛЬНОСТЬ") { url = "od" }
+    else if (selected === "СПОРТИВНАЯ ДЕЯТЕЛЬНОСТЬ") { url = "sd" }
+    else if (selected === "КУЛЬТУРНО-ТВОРЧЕСКАЯ ДЕЯТЕЛЬНОСТЬ") { url = "ktd" }
+    else if (selected === "СПИСОК ГАС") { url = "sad" }
 
-  console.log(items);
+    trackPromise(axios.get(`http://localhost:8080/api/listLoad/${url}`))
+      .then(response => setItems(response.data))
+      .catch(error => console.error(error));
 
+    console.log(url);
+    console.log(items);
+  }, [selected]);
 
   ////////////////// Загрузка списков
   const [file, setFile] = useState();
@@ -34,14 +43,12 @@ function ListLoad() {
 
     //сам пост запрос
     axios.post('http://localhost:8080/api/listLoad/all', data)
-      .then((e) => {
+      .then(() => {
         console.log("Success!");
       })
       .catch((e) => {
         console.error('Error!', e);
       })
-
-    console.log(file);
   };
   //////////////////////////////////
 
@@ -60,7 +67,8 @@ function ListLoad() {
       </form>
 
       {/* Передаю данные как параметр в компонент */}
-      <LoadTable data={items} itemsPerPage={15} />
+      {promiseInProgress
+        ? <div>Загрузка...</div> : <LoadTable data={items} itemsPerPage={15} />}
     </div>
   );
 }
