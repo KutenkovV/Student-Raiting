@@ -12,8 +12,11 @@ const LoadTable = ({ data, itemsPerPage, startFrom }) => {
   const { slicedData, pagination, prevPage, nextPage, changePage } =
     usePagination({ itemsPerPage, data, startFrom });
 
+  if (data.length === 0) return <div>Выберите и загрузите список</div>
+
   return (
     <>
+      <div className="success">Список загружен!</div>
       <table>
         <thead>
           <tr>

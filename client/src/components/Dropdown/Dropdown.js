@@ -18,16 +18,16 @@ function Dropdown({ selected, setSelected }) {
 
   return (
     <div className="dropdown">
-      <div className="dropdown-btn" onClick={(e) => setIsActive(!isActive)}>
+      <div className="dropdown-btn" onClick={() => setIsActive(!isActive)}>
         <b className="me-2">{selected}</b>
-        <FontAwesomeIcon icon={faAngleDown}/>
+        <FontAwesomeIcon icon={faAngleDown} />
       </div>
 
       {isActive && (
         <div className="dropdown-content">
           {options.map((option) => (
             <div
-                onClick={(e) => {
+              onClick={() => {
                 setSelected(option);
                 setIsActive(false);
               }}
