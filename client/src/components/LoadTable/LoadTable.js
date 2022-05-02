@@ -8,7 +8,8 @@ import {
   faEllipsis,
 } from "@fortawesome/free-solid-svg-icons";
 
-const LoadTable = ({ data, itemsPerPage, startFrom }) => {
+const LoadTable = ({ data, startFrom }) => {
+  const itemsPerPage = 15;
   const { slicedData, pagination, prevPage, nextPage, changePage } =
     usePagination({ itemsPerPage, data, startFrom });
 

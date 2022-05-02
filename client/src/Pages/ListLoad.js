@@ -34,6 +34,17 @@ function ListLoad() {
     setFile(e.target.files[0]);
   };
 
+  //Тут условия пост запросов (не работаю адекватно)
+  var url;
+  if (selected === "НАУЧНАЯ ДЕЯТЕЛЬНОСТЬ"
+    || selected === "УЧЕБНАЯ ДЕЯТЕЛЬНОСТЬ"
+    || selected === "СПОРТИВНАЯ ДЕЯТЕЛЬНОСТЬ"
+    || selected === "ОБЩЕСТВЕННАЯ ДЕЯТЕЛЬНОСТЬ"
+    || selected === "КУЛЬТУРНО-ТВОРЧЕСКАЯ ДЕЯТЕЛЬНОСТЬ") { url = "all" }
+  else if (selected === "СПИСОК ГАС") { url = "sad" }
+  else if (selected === "СВОБОДНЫЙ ГРАФИК") { url = "free" }
+  else if (selected === "КАНИКУЛЫ") { url = "vacation" }
+
   //обработка нажатия
   const onSubmit = (e) => {
     e.preventDefault()
@@ -41,8 +52,9 @@ function ListLoad() {
     const data = new FormData();
     data.append('file', file);
 
+    console.log(url);
     //сам пост запрос
-    axios.post('http://localhost:8080/api/listLoad/all', data)
+    axios.post(`http://localhost:8080/api/listLoad/${url}`, data)
       .then(() => {
         console.log("Success!");
       })
@@ -68,7 +80,7 @@ function ListLoad() {
 
       {/* Передаю данные как параметр в компонент */}
       {promiseInProgress
-        ? <div>Загрузка...</div> : <LoadTable data={items} itemsPerPage={15} />}
+        ? <div>Загрузка...</div> : <LoadTable data={items} />}
     </div>
   );
 }
