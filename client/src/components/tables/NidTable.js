@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../LoadTable/LoadTable.css";
 import usePagination from "../../hooks/usePagination";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,7 +10,7 @@ import {
 
 const NidTable = ({ data, itemsPerPage, startFrom }) => {
   const { slicedData, pagination, prevPage, nextPage, changePage } =
-    usePagination({ itemsPerPage, data, startFrom });
+    usePagination({ data, itemsPerPage, startFrom });
 
   return (
     <>

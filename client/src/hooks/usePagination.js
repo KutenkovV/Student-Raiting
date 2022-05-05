@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // 
 // Хук честно украден у https://www.youtube.com/watch?v=AFlFTAI5k-Q
@@ -13,24 +13,33 @@ const usePagination = (initialState) => {
   const [currentPage, setCurrentPage] = useState(startFrom <= pages ? startFrom : 1);
   const [slicedData, setSlicedData] = useState([...data].slice((currentPage - 1) * perPage, currentPage * perPage));
 
+  //костыль
+  useEffect(() => {
+    setSlicedData([...data].slice((currentPage - 1) * perPage, currentPage * perPage));
+  }, [data]); //из-за этого параметры могут возникнуть баги
+  //если следующее значение будет равно предыдущему, рендерится будет старый элемент
+
+  console.log("Сука это слайсед ");
+  console.log(slicedData);
+
   let ellipsisLeft = false;
   let ellipsisRight = false;
-  for(let i = 1; i <= pages; i++) {
-    if(i === currentPage) {
+  for (let i = 1; i <= pages; i++) {
+    if (i === currentPage) {
       pagination.push(
         { id: i, current: true, ellipsis: false }
       );
-    }else {
-      if(i < 2 || i > pages - 1 || i === currentPage - 1 || i === currentPage + 1) {
+    } else {
+      if (i < 2 || i > pages - 1 || i === currentPage - 1 || i === currentPage + 1) {
         pagination.push(
           { id: i, current: false, ellipsis: false }
         );
-      }else if(i > 1 && i < currentPage && !ellipsisLeft) {
+      } else if (i > 1 && i < currentPage && !ellipsisLeft) {
         pagination.push(
           { id: i, current: false, ellipsis: true }
         );
         ellipsisLeft = true;
-      }else if(i < pages && i > currentPage && !ellipsisRight) {
+      } else if (i < pages && i > currentPage && !ellipsisRight) {
         pagination.push(
           { id: i, current: false, ellipsis: true }
         );
@@ -41,7 +50,7 @@ const usePagination = (initialState) => {
 
   const changePage = (page, e) => {
     e.preventDefault();
-    if(page !== currentPage) {
+    if (page !== currentPage) {
       setCurrentPage(page);
       setSlicedData([...data].slice((page - 1) * perPage, page * perPage));
     }
@@ -50,7 +59,7 @@ const usePagination = (initialState) => {
   const goToPrevPage = (e) => {
     e.preventDefault();
     setCurrentPage(prevVal => prevVal - 1 === 0 ? prevVal : prevVal - 1);
-    if(currentPage !== 1) {
+    if (currentPage !== 1) {
       setSlicedData([...data].slice((currentPage - 2) * perPage, (currentPage - 1) * perPage));
     }
   }
@@ -58,7 +67,7 @@ const usePagination = (initialState) => {
   const goToNextPage = (e) => {
     e.preventDefault();
     setCurrentPage(prevVal => prevVal === pages ? prevVal : prevVal + 1);
-    if(currentPage !== pages) {
+    if (currentPage !== pages) {
       setSlicedData([...data].slice(currentPage * perPage, (currentPage + 1) * perPage));
     }
   }

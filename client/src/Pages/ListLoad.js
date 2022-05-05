@@ -8,7 +8,7 @@ function ListLoad() {
   document.title = "Загрузка списков";
 
   const [selected, setSelected] = useState("ЗАГРУЗКА СПИСКОВ");
-  const { promiseInProgress } = usePromiseTracker();
+  const { promiseInProgress } = usePromiseTracker(); //промис который отвечает за "Загрузка..."
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ function ListLoad() {
     setFile(e.target.files[0]);
   };
 
-  //Тут условия пост запросов (не работаю адекватно)
+  //Тут условия пост запросов (пока не работают адекватно)
   var url;
   if (selected === "НАУЧНАЯ ДЕЯТЕЛЬНОСТЬ"
     || selected === "УЧЕБНАЯ ДЕЯТЕЛЬНОСТЬ"
@@ -80,7 +80,8 @@ function ListLoad() {
 
       {/* Передаю данные как параметр в компонент */}
       {promiseInProgress
-        ? <div>Загрузка...</div> : <LoadTable data={items} />}
+        ? <div>Загрузка...</div> : <LoadTable data={items} />
+      }
     </div>
   );
 }

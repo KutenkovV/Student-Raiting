@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import usePagination from "../../hooks/usePagination";
 import "./LoadTable.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,10 +8,10 @@ import {
   faEllipsis,
 } from "@fortawesome/free-solid-svg-icons";
 
-const LoadTable = ({ data, startFrom }) => {
+const LoadTable = ({ data, startForm }) => {
   const itemsPerPage = 15;
   const { slicedData, pagination, prevPage, nextPage, changePage } =
-    usePagination({ itemsPerPage, data, startFrom });
+    usePagination({ data, itemsPerPage, startForm });
 
   if (data.length === 0) return <div>Выберите и загрузите список</div>
 

@@ -9,7 +9,7 @@ function Ud() {
   
   //Гет запроса на список
   useEffect(() => {
-    axios.get('http://localhost:8080/api/listLoad/sd')
+    axios.get('http://localhost:8080/api/listLoad/ud')
         .then(response => setItems(response.data))
         .catch(error => console.log(error));
 }, []);
