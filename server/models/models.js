@@ -257,7 +257,6 @@ DateTable.hasMany(StudentsRating, {
 StudentsRating.belongsTo(DateTable, {
   foreignKey: "dateid",
 });
-
 module.exports = {
   Courses,
   CourseLevels,
