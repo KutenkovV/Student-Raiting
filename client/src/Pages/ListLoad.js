@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import NIDlist from "../Data/NIDlist.json"; //подгружаю данные из json файла в таблицу
+import React, { useState, useEffect } from "react";
 import LoadTable from "../components/LoadTable/LoadTable";
 import Dropdown from "../components/Dropdown/Dropdown";
 import axios from "axios";
@@ -7,20 +6,33 @@ import axios from "axios";
 function ListLoad() {
   document.title = "Загрузка списков";
 
-  const [data] = useState(NIDlist);
   const [selected, setSelected] = useState("ЗАГРУЗКА СПИСКОВ");
+  const [items, setItems] = useState([]);
 
+  //Гет запроса на список
+  useEffect(() => {
+      axios.get('http://localhost:8080/api/listLoad/nid')
+          .then(response => setItems(response.data))
+          .catch(error => console.log(error));
+  }, []);
+
+  console.log(items);
+
+
+  ////////////////// Загрузка списков
   const [file, setFile] = useState();
   const onInputChange = (e) => {
     setFile(e.target.files[0]);
   };
 
+  //обработка нажатия
   const onSubmit = (e) => {
     e.preventDefault()
 
     const data = new FormData();
     data.append('file', file);
 
+    //сам пост запрос
     axios.post('http://localhost:8080/api/listLoad/all', data)
       .then((e) => {
         console.log("Success!");
@@ -31,6 +43,7 @@ function ListLoad() {
 
     console.log(file);
   };
+  //////////////////////////////////
 
   return (
     <div>
@@ -44,9 +57,10 @@ function ListLoad() {
             Загрузить
           </button>
         </div>
-      </form>      
+      </form>
+
       {/* Передаю данные как параметр в компонент */}
-      <LoadTable data={data} itemsPerPage={15} />
+      <LoadTable data={items} itemsPerPage={15} />
     </div>
   );
 }
