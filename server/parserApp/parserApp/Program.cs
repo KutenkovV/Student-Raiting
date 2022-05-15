@@ -21,7 +21,7 @@ namespace parserApp
                     var vacation = @$"{o.vacation}";
                     if(stud.Length != 0)
                     {
-                        var cs = "Host=localhost;Port=5432;Database=rating;Username=postgres;Password=root";
+                        var cs = "Host=localhost;Port=5434;Database=test8;Username=postgres;Password=123";
 
                         using (NpgsqlConnection con = new NpgsqlConnection(cs))
                         {
@@ -43,7 +43,7 @@ namespace parserApp
                     }
                     if(free.Length != 0)
                     {
-                        var cs = "Host=localhost;Port=5432;Database=rating;Username=postgres;Password=root";
+                        var cs = "Host=localhost;Port=5434;Database=test8;Username=postgres;Password=123";
 
                         using (NpgsqlConnection con = new NpgsqlConnection(cs))
                         {
@@ -67,7 +67,7 @@ namespace parserApp
                     }
                     if(sad.Length != 0)
                     {
-                        var cs = "Host=localhost;Port=5432;Database=rating;Username=postgres;Password=root";
+                        var cs = "Host=localhost;Port=5434;Database=test8;Username=postgres;Password=123";
 
                         using (NpgsqlConnection con = new NpgsqlConnection(cs))
                         {
@@ -91,7 +91,7 @@ namespace parserApp
                     }
                     if(vacation.Length != 0)
                     {
-                        var cs = "Host=localhost;Port=5432;Database=rating;Username=postgres;Password=root";
+                        var cs = "Host=localhost;Port=5434;Database=test8;Username=postgres;Password=123";
 
                         using (NpgsqlConnection con = new NpgsqlConnection(cs))
                         {
@@ -165,6 +165,34 @@ namespace parserApp
 
         static void setStudTable(NpgsqlConnection con, List<Students> students)
         {
+            string sql = "";
+            if (students[0].course=="НИД")
+            {
+                sql = $@"create TEMP table ratingId(id integer);
+insert into ratingId 
+	select studentsrating.reatingid from studentsrating
+	where dateId = {dateId} and reatingid IN 
+(SELECT id FROM rating WHERE ratingcoursesid = {getCourseInfo(students[0].course, 1)}
+or ratingcoursesid = {getCourseInfo(students[0].course, 2)} OR ratingcoursesid = {getCourseInfo(students[0].course, 3)});
+select * from ratingId;
+delete from studentsrating where dateId = {dateId} and reatingId IN (select id from ratingId);
+delete from rating where rating.id in (select ratingId.id from ratingId);
+drop table ratingId;";
+            }
+            else
+            {
+                sql = $@"create TEMP table ratingId(id integer);
+insert into ratingId 
+	select studentsrating.reatingid from studentsrating
+	where dateId = {dateId} and reatingid IN 
+(SELECT id FROM rating WHERE ratingcoursesid = {getCourseInfo(students[0].course, students[0].level)});
+select * from ratingId;
+delete from studentsrating where dateId = {dateId} and reatingId IN (select id from ratingId);
+delete from rating where rating.id in (select ratingId.id from ratingId);
+drop table ratingId;";
+            }
+            using var cmdDel = new NpgsqlCommand(sql, con);
+            cmdDel.ExecuteScalar();
             for (int i = 0; i < students.Count; i++)
             {
                 long ratingId = 0;
