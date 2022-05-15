@@ -33,11 +33,7 @@ class RatingCountController {
 
     return res.json(courseCount);
   }
-  async delete(req, res) {
-    const courses = await Reating.findAll({ include: [{ all: true }] });
-    //console.log(JSON.stringify(courses, null, 2));
-    return res.json(courses);
-  }
+  
   async update(req, res) {
     const { title, count } = req.body;
     const courses = await Students.update(
@@ -81,14 +77,6 @@ class RatingCountController {
     return res.json(courses);
   }
 
-  async getOne(req, res) {
-    const { id } = req.params;
-    const device = await Device.findOne({
-      where: { id },
-      include: [{ model: DeviceInfo, as: "info" }],
-    });
-    return res.json(device);
-  }
 }
 
 module.exports = new RatingCountController();

@@ -39,6 +39,10 @@ router.get("/ratingCount", RatingCountController.getAll);
 router.put("/ratingCount", RatingCountController.update);
 //router.delete('/ratingCount/:id',RatingCountController.delete)
 
+//котроллер для тестирования алгоритма расчета
+router.get("/test", CalculateRatingController.calculation);
+
+
 //котроллер для списков по направлениям
 router.get("/ktd", ktdController.getAllWithOrder);
 router.get("/nid", nidController.getAllWithOrder);
@@ -46,7 +50,6 @@ router.get("/sd", sdController.getAllWithOrder);
 router.get("/od", odController.getAllWithOrder);
 router.get("/ud", udController.getAllWithOrder);
 
-//котроллер для тестирования алгоритма расчета
-router.get("/test", CalculateRatingController.calculation);
+
 
 module.exports = router;
