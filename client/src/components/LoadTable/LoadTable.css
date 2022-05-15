@@ -47,3 +47,12 @@ table th {
   font-weight: bold;
   font-size: 0.8em;
 }
+
+.success {
+  background-color: #4bfb6e;
+  text-align: center;
+  border-radius: 5px;
+  padding: 0.5rem;
+  width: 10rem;
+  transition: all 0.3s ease;
+}

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
+import "../LoadTable/LoadTable.css";
 import usePagination from "../../hooks/usePagination";
-import "./LoadTable.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronRight,
@@ -8,48 +8,35 @@ import {
   faEllipsis,
 } from "@fortawesome/free-solid-svg-icons";
 
-const LoadTable = ({ data, startForm }) => {
-  const itemsPerPage = 15;
+const DirectionsTable = ({ data, itemsPerPage, startFrom }) => {
   const { slicedData, pagination, prevPage, nextPage, changePage } =
-    usePagination({ data, itemsPerPage, startForm });
-
-  if (data.length === 0) return <div>Выберите и загрузите список</div>
+    usePagination({ itemsPerPage, data, startFrom });
 
   return (
     <>
-      <div className="success">Список загружен!</div>
-      <table>
+      <table className="DirectionsTable">
         <thead>
           <tr>
-            <th>id</th>
+            <th>Id</th>
             <th>Баллы</th>
-            <th>Уровень</th>
             <th>ФИО</th>
-            <th>ГРУППА</th>
-            <th>ИНСТИТУТ</th>
-            <th>Каникулы</th>
-            <th>Свободный график</th>
-            <th>ГАС</th>
+            <th>Институт</th>
+            <th>Группа</th>
           </tr>
         </thead>
         <tbody>
-          {/* Перебор данных из sliceData */}
           {slicedData.map((item) => (
             <tr key={item.id}>
               <td>{item.id}</td>
               <td>{item.rating.points}</td>
-              <td>{item.rating.ratingcourse.levelid}</td>
               <td>{item.student.fullname}</td>
-              <td>{item.student.educationgroup}</td>
               <td>{item.student.institute}</td>
-              <td>{item.student.vacation}</td>
-              <td>{item.student.free}</td>
-              <td>{item.student.sad}</td>
+              <td>{item.student.educationgroup}</td>
             </tr>
           ))}
         </tbody>
       </table>
-
+      
       {/* блок с пагинацией */}
       <nav className="pagination nav-pagination mt-3">
         {/* Кнопка "<< Назад" */}
@@ -115,4 +102,4 @@ const LoadTable = ({ data, startForm }) => {
   );
 };
 
-export default LoadTable;
+export default DirectionsTable;
