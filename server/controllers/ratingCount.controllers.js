@@ -35,8 +35,10 @@ class RatingCountController {
   }
   
   async update(req, res) {
+    
+    
     const { title, count } = req.body;
-    const courses = await Students.update(
+    const courses = await RatingCount.update(
       {
         count: count,
       },

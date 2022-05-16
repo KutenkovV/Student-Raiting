@@ -10,6 +10,7 @@ const nidController = require("../controllers/courses/nid.controllers");
 const odController = require("../controllers/courses/od.controllers");
 const sdController = require("../controllers/courses/sd.controllers");
 const udController = require("../controllers/courses/ud.controllers");
+const studentRatingManyCourses = require("../controllers/studentRatingManyCourses.controllers");
 
 const CalculateRatingController = require("../controllers/calculateRating.controllers");
 
@@ -29,19 +30,15 @@ router.post("/listLoad/free", listLoadController.loadFree);
 router.post("/listLoad/vacation", listLoadController.loadVacation);
 router.post("/listLoad/sad", listLoadController.loadSad);
 
-
-//контроллер для сводки
-router.get("/report", reportController.getAll);
-
 //котроллер для настроек мест рейтинга
 router.get("/ratingCount", RatingCountController.getAll);
-//router.get('/ratingCount/:id',ReatingCountController.getOne)
 router.put("/ratingCount", RatingCountController.update);
-//router.delete('/ratingCount/:id',RatingCountController.delete)
 
 //котроллер для тестирования алгоритма расчета
 router.get("/test", CalculateRatingController.calculation);
 
+//котроллер для тестирования алгоритма расчета
+router.get("/testTwoCourse", studentRatingManyCourses.getAll);
 
 //котроллер для списков по направлениям
 router.get("/ktd", ktdController.getAllWithOrder);
@@ -51,5 +48,7 @@ router.get("/od", odController.getAllWithOrder);
 router.get("/ud", udController.getAllWithOrder);
 
 
+//контроллер для сводки
+router.get("/report", reportController.getAll);
 
 module.exports = router;
