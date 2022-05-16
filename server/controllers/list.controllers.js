@@ -137,12 +137,40 @@ class ListController {
   }
   async getAllSad(req, res) {
     const result = await models.StudentsRating.findAll({
+      attributes: ["id", "destination"],
+      required: true,
       include: [
         {
           model: models.Students,
-          attributes: ["studnumber", "fullname", "sad"],
+          attributes: [
+            "studnumber",
+            "fullname",
+            "educationgroup",
+            "institute",
+            "sad",
+            "vacation",
+            "free",
+          ],
           required: true,
           where: { sad: "true" },
+        },
+        {
+          model: models.Rating,
+          attributes: ["points"],
+          required: true,
+          include: [
+            {
+              model: models.RatingCourses,
+              required: true,
+              include: [
+
+                {
+                  model: models.CourseLevels,
+                  attributes: ["level"],
+                },
+              ],
+            },
+          ],
         },
         {
           model: models.DateTable,
@@ -167,12 +195,40 @@ class ListController {
 
   async getAllVacation(req, res) {
     const result = await models.StudentsRating.findAll({
+      attributes: ["id", "destination"],
+      required: true,
       include: [
         {
           model: models.Students,
-          attributes: ["studnumber", "fullname", "vacation"],
+          attributes: [
+            "studnumber",
+            "fullname",
+            "educationgroup",
+            "institute",
+            "sad",
+            "vacation",
+            "free",
+          ],
           required: true,
           where: { vacation: "true" },
+        },
+        {
+          model: models.Rating,
+          attributes: ["points"],
+          required: true,
+          include: [
+            {
+              model: models.RatingCourses,
+              required: true,
+              include: [
+
+                {
+                  model: models.CourseLevels,
+                  attributes: ["level"],
+                },
+              ],
+            },
+          ],
         },
         {
           model: models.DateTable,
@@ -196,12 +252,40 @@ class ListController {
   }
   async getAllFree(req, res) {
     const result = await models.StudentsRating.findAll({
+      attributes: ["id", "destination"],
+      required: true,
       include: [
         {
           model: models.Students,
-          attributes: ["studnumber", "fullname", "free"],
+          attributes: [
+            "studnumber",
+            "fullname",
+            "educationgroup",
+            "institute",
+            "sad",
+            "vacation",
+            "free",
+          ],
           required: true,
           where: { free: "true" },
+        },
+        {
+          model: models.Rating,
+          attributes: ["points"],
+          required: true,
+          include: [
+            {
+              model: models.RatingCourses,
+              required: true,
+              include: [
+
+                {
+                  model: models.CourseLevels,
+                  attributes: ["level"],
+                },
+              ],
+            },
+          ],
         },
         {
           model: models.DateTable,
