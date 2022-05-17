@@ -14,56 +14,8 @@
 # Название полей для настройки
 (Надо убрать когда сделаем)
 
-<div class="mainSettings">
-        <div class="row mt-5">
-          <div class="col-5 ">
-            <label for="percentageOfOverallRating" class="form-label">
-              Научная деятельность
-            </label>
-            <input name="nidInput" class="form-control" id="percentageOfOverallRating" />
-          </div>
-          <div class="col-5">
-            <label for="percentageOfOverallRating" class="form-label">
-              Учебная деятельность
-            </label>
-            <input name="udInput"class="form-control" id="percentageOfOverallRating" />
-          </div>
-        </div>
-        <div class="row mt-5 ">
-          <div class="col-5">
-            <label for="percentageOfOverallRating" class="form-label">
-              Спортивная деятельность
-            </label>
-            <input name="sdInput" class="form-control" id="percentageOfOverallRating" />
-          </div>
-          <div class="col-5">
-            <label for="percentageOfOverallRating" class="form-label">
-              Культурно-творческая деятельность
-            </label>
-            <input name="ktdInput" class="form-control" id="percentageOfOverallRating" />
-          </div>
-        </div>
-        <div class="row mt-5">
-          <div class="col-5">
-            <label for="percentageOfOverallRating" class="form-label">
-              Общественная деятельность
-            </label>
-            <input name="odInput" class="form-control" id="percentageOfOverallRating" />
-          </div>
-        </div>
-        <div class="row mt-5">
-          <div className="col-8"></div>
-          <div className="col-4">
-            <a
-              name=""
-              id=""
-              class="btn btn-primary"
-              role="button"
-            >
-              Сохранить
-            </a>
-          </div>
-        </div>
-    </div>
-</div>
-
+Научная деятельность name="nidInput"
+Учебная деятельность name="udInput"
+Спортивная деятельность name="sdInput"
+Культурно-творческая деятельность name="ktdInput"
+Общественная деятельность name="odInput"      
