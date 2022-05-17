@@ -15,11 +15,6 @@ class StudentRatingManyCoursesController {
       //получаю список заявок студента
       const listStudentRating = await models.StudentsRating.findAll({
         attributes: ["id", "destination"],
-        order: [
-          [models.Students, "sad", "DESC NULLS LAST"],
-          [models.Rating, "points", "DESC"],
-        ],
-        required: true,
         include: [
           {
             model: models.Students,
@@ -45,10 +40,7 @@ class StudentRatingManyCoursesController {
                 include: [
                   {
                     model: models.Courses,
-                  },
-                  {
-                    model: models.CourseLevels,
-                    attributes: ["level"],
+                    attributes: ["title"],
                   },
                 ],
               },
@@ -63,15 +55,13 @@ class StudentRatingManyCoursesController {
                 [Op.contains]: [
                   { value: new Date(), inclusive: true },
                   { value: new Date(), inclusive: true },
-                  //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                  //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
                 ],
               },
             },
           },
         ],
       });
-//если количество заявок больше чем 1
+      //если количество заявок больше чем 1
       if (listStudentRating.length > 1) {
         //переменная с инфой о студенте
         var stud = {
@@ -105,57 +95,43 @@ class StudentRatingManyCoursesController {
         //счетчик на количество заявок с которыми стдуент прошел
         var countDestinationTrue = 0;
 
-        console.log(listStudentRating)
-
-
         //цикл на перебор заявок стдуента
         for (let y = 0; y < listStudentRating.length; y++) {
           //если заявка прошла то увеличить счетчик
-          if (listStudentRating[y].destination==true) {
+          if (listStudentRating[y].destination == true) {
             countDestinationTrue++;
           }
+
           //добавление инфы из заявки в переменную stud
-          if (
+          switch (
             listStudentRating[y].rating.dataValues.ratingcourse.dataValues
-              .course.dataValues.title == "HИД"
+              .course.dataValues.title
           ) {
-            stud.nid.point = listStudentRating[y].rating.dataValues.points;
-            stud.nid.destination = listStudentRating[y].destination;
-          }
-          if (
-            listStudentRating[y].rating.dataValues.ratingcourse.dataValues
-              .course.dataValues.title == "КТД"
-          ) {
-            stud.ktd.point = listStudentRating[y].rating.dataValues.points;
-            stud.ktd.destination = listStudentRating[y].destination;
-          }
-          if (
-            listStudentRating[y].rating.dataValues.ratingcourse.dataValues
-              .course.dataValues.title == "ОД"
-          ) {
-            stud.od.point = listStudentRating[y].rating.dataValues.points;
-            stud.od.destination = listStudentRating[y].destination;
-          }
-          if (
-            listStudentRating[y].rating.dataValues.ratingcourse.dataValues
-              .course.dataValues.title == "СД"
-          ) {
-            stud.sd.point = listStudentRating[y].rating.dataValues.points;
-            stud.sd.destination = listStudentRating[y].destination;
-          }
-          if (
-            listStudentRating[y].rating.dataValues.ratingcourse.dataValues
-              .course.dataValues.title == "УД"
-          ) {
-            stud.ud.point = listStudentRating[y].rating.dataValues.points;
-            stud.ud.destination = listStudentRating[y].destination;
+            case "НИД":
+              stud.nid.point = listStudentRating[y].rating.dataValues.points;
+              stud.nid.destination = listStudentRating[y].destination;
+              break;
+            case "КТД":
+              stud.ktd.point = listStudentRating[y].rating.dataValues.points;
+              stud.ktd.destination = listStudentRating[y].destination;
+              break;
+            case "ОД":
+              stud.od.point = listStudentRating[y].rating.dataValues.points;
+              stud.od.destination = listStudentRating[y].destination;
+              break;
+            case "СД":
+              stud.sd.point = listStudentRating[y].rating.dataValues.points;
+              stud.sd.destination = listStudentRating[y].destination;
+              break;
+            case "УД":
+              stud.ud.point = listStudentRating[y].rating.dataValues.points;
+              stud.ud.destination = listStudentRating[y].destination;
+              break;
           }
         }
-        if (
-          countDestinationTrue>1
-        ) {
+        if (countDestinationTrue > 1) {
           result.push(stud);
-        } 
+        }
       }
     }
 
