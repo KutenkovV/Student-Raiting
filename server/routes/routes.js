@@ -37,8 +37,8 @@ router.put("/ratingCount", RatingCountController.update);
 //котроллер для тестирования алгоритма расчета
 router.get("/test", CalculateRatingController.calculation);
 
-//котроллер для тестирования алгоритма расчета
-router.get("/testTwoCourse", studentRatingManyCourses.getAll);
+//котроллер для списка студентов которые подали на несколько направлений
+router.get("/studentRatingManyCourses", studentRatingManyCourses.getAll);
 
 //котроллер для списков по направлениям
 router.get("/ktd", ktdController.getAllWithOrder);
