@@ -82,7 +82,6 @@ class StudentRatingManyCoursesController {
           institute: listStudentRating[0].student.dataValues.institute,
           sad: listStudentRating[0].student.dataValues.sad,
           nid: {
-            
             point: 0,
             destination: false,
           },

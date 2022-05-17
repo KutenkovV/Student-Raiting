@@ -4,15 +4,17 @@ const { Op } = require("sequelize");
 
 class CalculateRatingController {
   async calculation(req, res) {
-    //вызовем 5 раз метод расчета для всех направлений
+    //вызовем 5 раз метод очистки и расчета для всех направлений
+    await CalculateRatingController.deleteCourse();
+
     await CalculateRatingController.calculationCourse("НИД");
     await CalculateRatingController.calculationCourse("УД");
     await CalculateRatingController.calculationCourse("СД");
     await CalculateRatingController.calculationCourse("ОД");
     await CalculateRatingController.calculationCourse("КТД");
-    //await CalculateRatingController.deleteCourse("НИД");
+    
 
-    const result = await models.StudentsRating.findAll({
+    /*const result = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
       order: [
         [models.Students, "sad", "DESC NULLS LAST"],
@@ -72,52 +74,14 @@ class CalculateRatingController {
       ],
     });
 
-    return res.json(result);
+    return res.json(result);*/
   }
 
-  static async deleteCourse(title) {
+  static async deleteCourse() {
     const list = await models.StudentsRating.findAll({
-      attributes: ["id", "destination"],
-      order: [
-        [models.Students, "sad", "DESC NULLS LAST"],
-        [models.Rating, "points", "DESC"],
-      ],
+      attributes: ["id", "destination","cause"],
       required: true,
       include: [
-        {
-          model: models.Students,
-          attributes: [
-            "studnumber",
-            "fullname",
-            "educationgroup",
-            "institute",
-            "sad",
-          ],
-        },
-        {
-          model: models.Rating,
-          attributes: ["points"],
-          required: true,
-          include: [
-            {
-              model: models.RatingCourses,
-              required: true,
-              include: [
-                {
-                  model: models.Courses,
-
-                  where: {
-                    title: title,
-                  },
-                },
-                {
-                  model: models.CourseLevels,
-                  attributes: ["level"],
-                },
-              ],
-            },
-          ],
-        },
         {
           model: models.DateTable,
           attributes: ["id", "date"],
@@ -137,8 +101,8 @@ class CalculateRatingController {
     });
 
     for (let i = 0; i < list.length; i++) {
-      const r = await models.StudentsRating.update(
-        { destination: false, cause: false  },
+      await models.StudentsRating.update(
+        { destination: false, cause: null  },
         {
           where: {
             id: list[i].dataValues.id,
@@ -298,7 +262,7 @@ class CalculateRatingController {
         list[i].student.dataValues.sad == true
       ) {
         await models.StudentsRating.update(
-          { destination: true },
+          { destination: true ,cause: null},
           {
             where: {
               id: list[i].dataValues.id,

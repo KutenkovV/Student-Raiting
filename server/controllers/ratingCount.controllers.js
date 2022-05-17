@@ -37,19 +37,51 @@ class RatingCountController {
   async update(req, res) {
     if (!req.body) return response.sendStatus(400);
     
-    await RatingCountController.updateCountCourse("НИД",req.body.nidInput);
-    await RatingCountController.updateCountCourse("УД",req.body.udInput);
-    await RatingCountController.updateCountCourse("СД",req.body.sdInput);
-    await RatingCountController.updateCountCourse("ОД",req.body.odInput);
-    await RatingCountController.updateCountCourse("КТД",req.body.ktdInput);
+    await RatingCountController.updateCountCourse("НИД", req.body.nidInput);
+    await RatingCountController.updateCountCourse("УД", req.body.udInput);
+    await RatingCountController.updateCountCourse("СД", req.body.sdInput);
+    await RatingCountController.updateCountCourse("ОД", req.body.odInput);
+    await RatingCountController.updateCountCourse("КТД", req.body.ktdInput);
 
     ///////////ПОСЛЕ ОБНОВЛЕНИЯ НАДО ПЕРЕРАСЧИТЫВАТЬ МЕСТА И ПОЛУЧАЮЩИХ////////////
     calculateRatingController.calculation();
-
-    //console.log(JSON.stringify(courses, null, 2));
     res.send("ОК");
   }
+  static async updateCountCourse(title1, count1) {
+    const list = await models.RatingCount.findOne({
+      attributes: ["id"],
+      include: [
+        {
+          model: models.Courses,
+          where: {
+            title: title1,
+          },
+        },
+        {
+          model: models.DateTable,
+          required: true,
+          where: {
+            date: {
+              [Op.contains]: [
+                { value: new Date(), inclusive: true },
+                { value: new Date(), inclusive: true },
+              ],
+            },
+          },
+        },
+      ],
+    });
 
+    await models.RatingCount.update(
+      { count: parseInt(count1) },
+      {
+        where: {
+          id: list.id,
+        },
+      }
+    );
+    
+  }
   async getCountFromSad(req, res) {
     const list = await models.StudentsSAD.findAll({
       required: true,
@@ -73,36 +105,6 @@ class RatingCountController {
     });
 
     return res.json(list.length * 0.1);
-  }
-  static async updateCountCourse(title1,count1) {
-
-    await models.RatingCount.update(
-      {
-        count: count1,
-      },
-      {
-        include: [
-          {
-            model: models.Courses,
-            where: {
-              title: title1,
-            },
-          },
-          {
-            model: models.DateTable,
-            required: true,
-            where: {
-              date: {
-                [Op.contains]: [
-                  { value: new Date(), inclusive: true },
-                  { value: new Date(), inclusive: true },
-                ],
-              },
-            },
-          },
-        ],
-      },
-    );
   }
 }
 
