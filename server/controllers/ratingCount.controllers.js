@@ -79,6 +79,35 @@ class RatingCountController {
     return res.json(courses);
   }
 
+  async getCountFromSad(req, res) {
+    const courseCount = await models.RatingCount.findAll({
+      required: true,
+      attributes: ["id", "count"],
+      include: [
+        {
+          model: models.Courses,
+          attributes: ["title"],
+        },
+        {
+          model: models.DateTable,
+          attributes: ["id", "date"],
+          required: true,
+          where: {
+            date: {
+              [Op.contains]: [
+                { value: new Date(), inclusive: true },
+                { value: new Date(), inclusive: true },
+                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
+                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
+              ],
+            },
+          },
+        },
+      ],
+    });
+
+    return res.json(courseCount);
+  }
 }
 
 module.exports = new RatingCountController();

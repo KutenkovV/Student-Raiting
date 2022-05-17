@@ -14,7 +14,7 @@ const studentRatingManyCourses = require("../controllers/studentRatingManyCourse
 
 const CalculateRatingController = require("../controllers/calculateRating.controllers");
 
-//контроллеры для запросов get загруженных списков
+//маршруты для запросов get загруженных списков
 router.get("/listLoad/ud", udController.getAll);
 router.get("/listLoad/od", odController.getAll);
 router.get("/listLoad/sd", sdController.getAll);
@@ -24,31 +24,34 @@ router.get("/listLoad/sad", listController.getAllSad);
 router.get("/listLoad/vacation", listController.getAllVacation);
 router.get("/listLoad/free", listController.getAllFree);
 
-//контроллеры для загрузки списков
+//маршруты для загрузки списков
 router.post("/listLoad/all", listLoadController.loadAll);
 router.post("/listLoad/free", listLoadController.loadFree);
 router.post("/listLoad/vacation", listLoadController.loadVacation);
 router.post("/listLoad/sad", listLoadController.loadSad);
 
-//котроллер для настроек мест рейтинга
+//маршрут для настроек мест рейтинга
 router.get("/ratingCount", RatingCountController.getAll);
+router.get("/ratingCountFromSAD", RatingCountController.getCountFromSad);
 router.put("/ratingCount", RatingCountController.update);
 
-//котроллер для тестирования алгоритма расчета
+//маршрут для тестирования алгоритма расчета
 router.get("/test", CalculateRatingController.calculation);
 
-//котроллер для списка студентов которые подали на несколько направлений
-router.get("/studentRatingManyCourses", studentRatingManyCourses.getAll);
-
-//котроллер для списков по направлениям
+//маршруты для списков по направлениям
 router.get("/ktd", ktdController.getAllWithOrder);
 router.get("/nid", nidController.getAllWithOrder);
 router.get("/sd", sdController.getAllWithOrder);
 router.get("/od", odController.getAllWithOrder);
 router.get("/ud", udController.getAllWithOrder);
 
+//маршрут для списка студентов которые подали на несколько направлений
+router.get("/studentRatingManyCourses", studentRatingManyCourses.getAll);
 
-//контроллер для сводки
+//маршрут для сводки
 router.get("/report", reportController.getAll);
+
+//маршрут для итогового списка
+router.get("/finalList", reportController.getAll);
 
 module.exports = router;

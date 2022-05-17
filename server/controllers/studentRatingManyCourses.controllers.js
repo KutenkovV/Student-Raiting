@@ -12,6 +12,7 @@ class StudentRatingManyCoursesController {
 
     //цикл на поиск людей с несколькими направлениями
     for (let i = 0; i < list.length; i++) {
+      //получаю список заявок студента
       const listStudentRating = await models.StudentsRating.findAll({
         attributes: ["id", "destination"],
         order: [
@@ -70,8 +71,9 @@ class StudentRatingManyCoursesController {
           },
         ],
       });
-
+//если количество заявок больше чем 1
       if (listStudentRating.length > 1) {
+        //переменная с инфой о студенте
         var stud = {
           studnumber: listStudentRating[0].student.dataValues.studnumber,
           fullname: listStudentRating[0].student.dataValues.fullname,
@@ -80,6 +82,7 @@ class StudentRatingManyCoursesController {
           institute: listStudentRating[0].student.dataValues.institute,
           sad: listStudentRating[0].student.dataValues.sad,
           nid: {
+            
             point: 0,
             destination: false,
           },
@@ -100,16 +103,25 @@ class StudentRatingManyCoursesController {
             destination: false,
           },
         };
+        //счетчик на количество заявок с которыми стдуент прошел
+        var countDestinationTrue = 0;
 
+        console.log(listStudentRating)
+
+
+        //цикл на перебор заявок стдуента
         for (let y = 0; y < listStudentRating.length; y++) {
-          
+          //если заявка прошла то увеличить счетчик
+          if (listStudentRating[y].destination==true) {
+            countDestinationTrue++;
+          }
+          //добавление инфы из заявки в переменную stud
           if (
             listStudentRating[y].rating.dataValues.ratingcourse.dataValues
               .course.dataValues.title == "HИД"
           ) {
             stud.nid.point = listStudentRating[y].rating.dataValues.points;
             stud.nid.destination = listStudentRating[y].destination;
-
           }
           if (
             listStudentRating[y].rating.dataValues.ratingcourse.dataValues
@@ -117,7 +129,6 @@ class StudentRatingManyCoursesController {
           ) {
             stud.ktd.point = listStudentRating[y].rating.dataValues.points;
             stud.ktd.destination = listStudentRating[y].destination;
-            
           }
           if (
             listStudentRating[y].rating.dataValues.ratingcourse.dataValues
@@ -141,8 +152,11 @@ class StudentRatingManyCoursesController {
             stud.ud.destination = listStudentRating[y].destination;
           }
         }
-
-        result.push(stud);
+        if (
+          countDestinationTrue>1
+        ) {
+          result.push(stud);
+        } 
       }
     }
 
