@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace parserApp
 {
-    internal class StudentState
+    internal class StudentState 
     {
         public int id { get; set; }
         public static List<StudentState> LoadFile(String FileName)

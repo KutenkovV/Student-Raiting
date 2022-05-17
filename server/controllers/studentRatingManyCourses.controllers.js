@@ -64,7 +64,7 @@ class StudentRatingManyCoursesController {
 
     var result = []
     
-    //цикл на начисление стипендии если после последнего прошедшего стоят люди с таким же количеством
+    //цикл на поиск людей с несколькими направлениями
     for (let i = 0; i < list.length; i++) {
       
       const listStudentRating = await models.StudentsRating.findAll({

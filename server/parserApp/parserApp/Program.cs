@@ -10,7 +10,7 @@ namespace parserApp
 
         static long dateId;
 
-        public static void Main(String[] args)
+        public static void Main(String[] args) 
         {
 
             Parser.Default.ParseArguments<Options>(args)
@@ -394,25 +394,25 @@ where dateId = {dateId}";
 	 courseid, count, dateid)
 	VALUES ( 2, 0, {dateId});";
                 using var cmdIns2 = new NpgsqlCommand(reqIns, con);
-                cmdIns.ExecuteScalar();
+                cmdIns2.ExecuteScalar();
 
                 reqIns = $@"INSERT INTO public.ratingcount(
 	 courseid, count, dateid)
 	VALUES ( 3, 0, {dateId});";
                 using var cmdIns3 = new NpgsqlCommand(reqIns, con);
-                cmdIns.ExecuteScalar();
+                cmdIns3.ExecuteScalar();
 
                 reqIns = $@"INSERT INTO public.ratingcount(
 	 courseid, count, dateid)
 	VALUES ( 4, 0, {dateId});";
                 using var cmdIns4 = new NpgsqlCommand(reqIns, con);
-                cmdIns.ExecuteScalar();
+                cmdIns4.ExecuteScalar();
 
                 reqIns = $@"INSERT INTO public.ratingcount(
 	 courseid, count, dateid)
 	VALUES ( 5, 0, {dateId});";
                 using var cmdIns5 = new NpgsqlCommand(reqIns, con);
-                cmdIns.ExecuteScalar();
+                cmdIns5.ExecuteScalar();
             }
 
 
