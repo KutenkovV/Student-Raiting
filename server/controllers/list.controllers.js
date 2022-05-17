@@ -133,6 +133,34 @@ class ListController {
       ],
     });
 
+    //цикл на начисление стипендии если после последнего прошедшего стоят люди с таким же количеством
+    for (let i = 0; i < result.length; i++) {
+      if (
+        result[i].student.dataValues.sad == true
+      ) {
+        result[i].student.dataValues.sad ="Да"
+      }
+      else {
+        result[i].student.dataValues.sad ="Нет"
+      }
+      if (
+        result[i].student.dataValues.vacation == true
+      ) {
+        result[i].student.dataValues.vacation ="Да"
+      }
+      else {
+        result[i].student.dataValues.vacation ="Нет"
+      }
+      if (
+        result[i].student.dataValues.free == true
+      ) {
+        result[i].student.dataValues.free ="Да"
+      }
+      else {
+        result[i].student.dataValues.free ="Нет"
+      }
+    }
+
     return result;
   }
   async getAllSad(req, res) {
@@ -189,7 +217,32 @@ class ListController {
         },
       ],
     });
-
+    for (let i = 0; i < result.length; i++) {
+      if (
+        result[i].student.dataValues.sad == true
+      ) {
+        result[i].student.dataValues.sad ="Да"
+      }
+      else {
+        result[i].student.dataValues.sad ="Нет"
+      }
+      if (
+        result[i].student.dataValues.vacation == true
+      ) {
+        result[i].student.dataValues.vacation ="Да"
+      }
+      else {
+        result[i].student.dataValues.vacation ="Нет"
+      }
+      if (
+        result[i].student.dataValues.free == true
+      ) {
+        result[i].student.dataValues.free ="Да"
+      }
+      else {
+        result[i].student.dataValues.free ="Нет"
+      }
+    }
     return res.json(result);
   }
 
@@ -247,7 +300,32 @@ class ListController {
         },
       ],
     });
-
+    for (let i = 0; i < result.length; i++) {
+      if (
+        result[i].student.dataValues.sad == true
+      ) {
+        result[i].student.dataValues.sad ="Да"
+      }
+      else {
+        result[i].student.dataValues.sad ="Нет"
+      }
+      if (
+        result[i].student.dataValues.vacation == true
+      ) {
+        result[i].student.dataValues.vacation ="Да"
+      }
+      else {
+        result[i].student.dataValues.vacation ="Нет"
+      }
+      if (
+        result[i].student.dataValues.free == true
+      ) {
+        result[i].student.dataValues.free ="Да"
+      }
+      else {
+        result[i].student.dataValues.free ="Нет"
+      }
+    }
     return res.json(result);
   }
   async getAllFree(req, res) {
@@ -304,7 +382,32 @@ class ListController {
         },
       ],
     });
-
+    for (let i = 0; i < result.length; i++) {
+      if (
+        result[i].student.dataValues.sad == true
+      ) {
+        result[i].student.dataValues.sad ="Да"
+      }
+      else {
+        result[i].student.dataValues.sad ="Нет"
+      }
+      if (
+        result[i].student.dataValues.vacation == true
+      ) {
+        result[i].student.dataValues.vacation ="Да"
+      }
+      else {
+        result[i].student.dataValues.vacation ="Нет"
+      }
+      if (
+        result[i].student.dataValues.free == true
+      ) {
+        result[i].student.dataValues.free ="Да"
+      }
+      else {
+        result[i].student.dataValues.free ="Нет"
+      }
+    }
     return res.json(result);
   }
 }

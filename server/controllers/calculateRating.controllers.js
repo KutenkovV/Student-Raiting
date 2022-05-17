@@ -12,7 +12,7 @@ class CalculateRatingController {
     await CalculateRatingController.calculationCourse("КТД");
     //await CalculateRatingController.deleteCourse("НИД");
 
-    /*const result = await models.StudentsRating.findAll({
+    const result = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
       order: [
         [models.Students, "sad", "DESC NULLS LAST"],
@@ -72,7 +72,7 @@ class CalculateRatingController {
       ],
     });
 
-    return res.json(result);*/
+    return res.json(result);
   }
 
   static async deleteCourse(title) {
