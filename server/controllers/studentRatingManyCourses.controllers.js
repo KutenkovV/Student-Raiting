@@ -22,6 +22,7 @@ class StudentRatingManyCoursesController {
               id: list[i].dataValues.id,
             },
             attributes: [
+              "id",
               "studnumber",
               "fullname",
               "educationgroup",
@@ -65,6 +66,7 @@ class StudentRatingManyCoursesController {
       if (listStudentRating.length > 1) {
         //переменная с инфой о студенте
         var stud = {
+          id:listStudentRating[0].student.dataValues.id,
           studnumber: listStudentRating[0].student.dataValues.studnumber,
           fullname: listStudentRating[0].student.dataValues.fullname,
           educationgroup:
@@ -139,47 +141,27 @@ class StudentRatingManyCoursesController {
   }
 
   async update(req, res) {
-    const { title, count } = req.body;
-    const courses = await RatingCount.update(
-      {
-        count: count,
-      },
-      {
-        include: [
-          {
-            model: models.Courses,
-            attributes: ["title"],
-          },
-          {
-            model: models.DateTable,
-            //attributes: ['id','date'],
-            required: true,
-            where: {
-              date: {
-                [Op.contains]: [
-                  { value: new Date(), inclusive: true },
-                  { value: new Date(), inclusive: true },
-                  //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                  //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
-                ],
-              },
-            },
-          },
-        ],
-      },
-      {
-        where: {
-          id: id,
-        },
-      }
-    );
+    //надо что бы на вход был ID студента которого определяют и направление которое нужно поставить destination=true
 
-    ///////////ПОСЛЕ ОБНОВЛЕНИЯ НАДО ПЕРЕРАСЧИТЫВАТЬ МЕСТА И ПОЛУЧАЮЩИХ///////////////////////////////////////////////////////////////////////////////////////
-    calculateRatingController.calculation();
+    console.log( req.query);
+    //{ id: '20', course: '"НИД"' }
+    
+    //узнаем в каких направлениях нужно добавить студентов в прошедшие
+    //ставим студенту отметку destination=false где надо
+    //перебираем направления
+      //получаем все заявки одного из направлений
+      //запускаем цикл на завки одного из направлений
+      //в цикле находим последнего кто прошел,
+        //смотрим имеет ли следующий чел стипендию
+        //если стипендия есть то назначить ему стипендию
+      //выход из цикла
 
-    //console.log(JSON.stringify(courses, null, 2));
-    return res.json(courses);
+      //цикл на начисление стипендии если после последнего прошедшего стоят люди с таким же количеством
+
+   //console.log(JSON.stringify(courses, null, 2));
+    //return res.json(courses);
   }
+
 }
 
 module.exports = new StudentRatingManyCoursesController();

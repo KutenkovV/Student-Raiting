@@ -47,6 +47,7 @@ router.get("/ud", udController.getAllWithOrder);
 
 //маршрут для списка студентов которые подали на несколько направлений
 router.get("/studentRatingManyCourses", studentRatingManyCourses.getAll);
+router.put("/studentRatingManyCourses", studentRatingManyCourses.update);
 
 //маршрут для сводки
 router.get("/report", reportController.getAll);
