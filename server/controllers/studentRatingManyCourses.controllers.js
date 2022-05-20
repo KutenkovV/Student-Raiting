@@ -66,7 +66,7 @@ class StudentRatingManyCoursesController {
       if (listStudentRating.length > 1) {
         //переменная с инфой о студенте
         var stud = {
-          id:listStudentRating[0].student.dataValues.id,
+          id: listStudentRating[0].student.dataValues.id,
           studnumber: listStudentRating[0].student.dataValues.studnumber,
           fullname: listStudentRating[0].student.dataValues.fullname,
           educationgroup:
@@ -143,25 +143,120 @@ class StudentRatingManyCoursesController {
   async update(req, res) {
     //надо что бы на вход был ID студента которого определяют и направление которое нужно поставить destination=true
 
-    console.log( req.query);
+    //console.log(req.query.id);
     //{ id: '20', course: '"НИД"' }
-    
     //узнаем в каких направлениях нужно добавить студентов в прошедшие
-    //ставим студенту отметку destination=false где надо
-    //перебираем направления
-      //получаем все заявки одного из направлений
-      //запускаем цикл на завки одного из направлений
-      //в цикле находим последнего кто прошел,
-        //смотрим имеет ли следующий чел стипендию
-        //если стипендия есть то назначить ему стипендию
-      //выход из цикла
+    const list = await models.StudentsRating.findAll({
+      attributes: ["id", "destination"],
+      include: [
+        {
+          model: models.Students,
+          where: {
+            id: req.query.id,
+          },
+        },
+        {
+          model: models.Rating,
+          attributes: ["points"],
+          required: true,
+          include: [
+            {
+              model: models.RatingCourses,
+              required: true,
+              include: [
+                {
+                  model: models.Courses,
+                  attributes: ["title"],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          model: models.DateTable,
+          attributes: ["id", "date"],
+          required: true,
+          where: {
+            date: {
+              [Op.contains]: [
+                { value: new Date(), inclusive: true },
+                { value: new Date(), inclusive: true },
+              ],
+            },
+          },
+        },
+      ],
+    });
 
-      //цикл на начисление стипендии если после последнего прошедшего стоят люди с таким же количеством
+    //перебираем заявки студента
+    for (let i = 0; i < list.length; i++) {
+      if (
+        (list[i].rating.dataValues.ratingcourse.dataValues.course.dataValues
+          .title !=
+          req.query.course) &
+        (list[i].destination == true)
+      ) {
+        console.log(
+          list[i].rating.dataValues.ratingcourse.dataValues.course.dataValues
+            .title
+        );
+        //получаем все заявки одного из направлений
+        const list = await models.StudentsRating.findAll({
+          attributes: ["id", "destination"],
+          include: [
+            {
+              model: models.Rating,
+              attributes: ["points"],
+              required: true,
+              include: [
+                {
+                  model: models.RatingCourses,
+                  required: true,
+                  include: [
+                    {
+                      model: models.Courses,
+                      attributes: ["title"],
+                      where: {
+                        title:
+                          list[i].rating.dataValues.ratingcourse.dataValues
+                            .course.dataValues.title,
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              model: models.DateTable,
+              attributes: ["id", "date"],
+              required: true,
+              where: {
+                date: {
+                  [Op.contains]: [
+                    { value: new Date(), inclusive: true },
+                    { value: new Date(), inclusive: true },
+                  ],
+                },
+              },
+            },
+          ],
+        });
+        for (let y = 0; y < list.length; y++) {
+          //запускаем цикл на завки одного из направлений
+          //ставим студенту отметку destination=false где надо
+          //в цикле находим последнего кто прошел,
+          //смотрим имеет ли следующий чел стипендию
+          //если стипендия есть то назначить ему стипендию
+          //выход из цикла
+        }
+      }
+    }
 
-   //console.log(JSON.stringify(courses, null, 2));
+    //цикл на начисление стипендии если после последнего прошедшего стоят люди с таким же количеством
+
+    //console.log(JSON.stringify(courses, null, 2));
     //return res.json(courses);
   }
-
 }
 
 module.exports = new StudentRatingManyCoursesController();
