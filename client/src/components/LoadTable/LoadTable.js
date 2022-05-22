@@ -9,7 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const LoadTable = ({ data, startForm }) => {
-  const itemsPerPage = 15;
+  const itemsPerPage = 10;
   const { slicedData, pagination, prevPage, nextPage, changePage } =
     usePagination({ data, itemsPerPage, startForm });
 
