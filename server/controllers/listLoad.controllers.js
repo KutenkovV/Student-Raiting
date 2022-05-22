@@ -204,7 +204,7 @@ class ListLoadController {
   }
 
   static async selectionBooleanVariables () {
-      const list = await models.StudentsRating.findAll({
+    const list = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
       required: true,
       include: [

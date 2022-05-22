@@ -10,10 +10,11 @@ const nidController = require("../controllers/courses/nid.controllers");
 const odController = require("../controllers/courses/od.controllers");
 const sdController = require("../controllers/courses/sd.controllers");
 const udController = require("../controllers/courses/ud.controllers");
+const studentRatingManyCourses = require("../controllers/studentRatingManyCourses.controllers");
 
 const CalculateRatingController = require("../controllers/calculateRating.controllers");
 
-//контроллеры для запросов get загруженных списков
+//маршруты для запросов get загруженных списков
 router.get("/listLoad/ud", udController.getAll);
 router.get("/listLoad/od", odController.getAll);
 router.get("/listLoad/sd", sdController.getAll);
@@ -23,30 +24,35 @@ router.get("/listLoad/sad", listController.getAllSad);
 router.get("/listLoad/vacation", listController.getAllVacation);
 router.get("/listLoad/free", listController.getAllFree);
 
-//контроллеры для загрузки списков
+//маршруты для загрузки списков
 router.post("/listLoad/all", listLoadController.loadAll);
 router.post("/listLoad/free", listLoadController.loadFree);
 router.post("/listLoad/vacation", listLoadController.loadVacation);
 router.post("/listLoad/sad", listLoadController.loadSad);
 
-
-//контроллер для сводки
-router.get("/report", reportController.getAll);
-
-//котроллер для настроек мест рейтинга
+//маршрут для настроек мест рейтинга
 router.get("/ratingCount", RatingCountController.getAll);
-//router.get('/ratingCount/:id',ReatingCountController.getOne)
+router.get("/ratingCountFromSAD", RatingCountController.getCountFromSad);
 router.put("/ratingCount", RatingCountController.update);
-//router.delete('/ratingCount/:id',RatingCountController.delete)
 
-//котроллер для списков по направлениям
+//маршрут для тестирования алгоритма расчета
+router.get("/test", CalculateRatingController.calculation);
+
+//маршруты для списков по направлениям
 router.get("/ktd", ktdController.getAllWithOrder);
 router.get("/nid", nidController.getAllWithOrder);
 router.get("/sd", sdController.getAllWithOrder);
 router.get("/od", odController.getAllWithOrder);
 router.get("/ud", udController.getAllWithOrder);
 
-//котроллер для тестирования алгоритма расчета
-router.get("/test", CalculateRatingController.calculation);
+//маршрут для списка студентов которые подали на несколько направлений
+router.get("/studentRatingManyCourses", studentRatingManyCourses.getAll);
+router.put("/studentRatingManyCourses", studentRatingManyCourses.update);
+
+//маршрут для сводки
+router.get("/report", reportController.getAll);
+
+//маршрут для итогового списка
+router.get("/finalList", reportController.getAll);
 
 module.exports = router;

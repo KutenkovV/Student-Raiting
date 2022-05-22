@@ -133,16 +133,72 @@ class ListController {
       ],
     });
 
+    //цикл на начисление стипендии если после последнего прошедшего стоят люди с таким же количеством
+    for (let i = 0; i < result.length; i++) {
+      if (
+        result[i].student.dataValues.sad == true
+      ) {
+        result[i].student.dataValues.sad ="Да"
+      }
+      else {
+        result[i].student.dataValues.sad ="Нет"
+      }
+      if (
+        result[i].student.dataValues.vacation == true
+      ) {
+        result[i].student.dataValues.vacation ="Да"
+      }
+      else {
+        result[i].student.dataValues.vacation ="Нет"
+      }
+      if (
+        result[i].student.dataValues.free == true
+      ) {
+        result[i].student.dataValues.free ="Да"
+      }
+      else {
+        result[i].student.dataValues.free ="Нет"
+      }
+    }
+
     return result;
   }
   async getAllSad(req, res) {
     const result = await models.StudentsRating.findAll({
+      attributes: ["id", "destination"],
+      required: true,
       include: [
         {
           model: models.Students,
-          attributes: ["studnumber", "fullname", "sad"],
+          attributes: [
+            "studnumber",
+            "fullname",
+            "educationgroup",
+            "institute",
+            "sad",
+            "vacation",
+            "free",
+          ],
           required: true,
           where: { sad: "true" },
+        },
+        {
+          model: models.Rating,
+          attributes: ["points"],
+          required: true,
+          include: [
+            {
+              model: models.RatingCourses,
+              required: true,
+              include: [
+
+                {
+                  model: models.CourseLevels,
+                  attributes: ["level"],
+                },
+              ],
+            },
+          ],
         },
         {
           model: models.DateTable,
@@ -161,20 +217,73 @@ class ListController {
         },
       ],
     });
-
+    for (let i = 0; i < result.length; i++) {
+      if (
+        result[i].student.dataValues.sad == true
+      ) {
+        result[i].student.dataValues.sad ="Да"
+      }
+      else {
+        result[i].student.dataValues.sad ="Нет"
+      }
+      if (
+        result[i].student.dataValues.vacation == true
+      ) {
+        result[i].student.dataValues.vacation ="Да"
+      }
+      else {
+        result[i].student.dataValues.vacation ="Нет"
+      }
+      if (
+        result[i].student.dataValues.free == true
+      ) {
+        result[i].student.dataValues.free ="Да"
+      }
+      else {
+        result[i].student.dataValues.free ="Нет"
+      }
+    }
     return res.json(result);
   }
 
   async getAllVacation(req, res) {
     const result = await models.StudentsRating.findAll({
+      attributes: ["id", "destination"],
+      required: true,
       include: [
         {
           model: models.Students,
-          attributes: ["studnumber", "fullname", "vacation"],
+          attributes: [
+            "studnumber",
+            "fullname",
+            "educationgroup",
+            "institute",
+            "sad",
+            "vacation",
+            "free",
+          ],
           required: true,
           where: { vacation: "true" },
         },
         {
+          model: models.Rating,
+          attributes: ["points"],
+          required: true,
+          include: [
+            {
+              model: models.RatingCourses,
+              required: true,
+              include: [
+
+                {
+                  model: models.CourseLevels,
+                  attributes: ["level"],
+                },
+              ],
+            },
+          ],
+        },
+        {
           model: models.DateTable,
           attributes: ["id", "date"],
           required: true,
@@ -191,17 +300,70 @@ class ListController {
         },
       ],
     });
-
+    for (let i = 0; i < result.length; i++) {
+      if (
+        result[i].student.dataValues.sad == true
+      ) {
+        result[i].student.dataValues.sad ="Да"
+      }
+      else {
+        result[i].student.dataValues.sad ="Нет"
+      }
+      if (
+        result[i].student.dataValues.vacation == true
+      ) {
+        result[i].student.dataValues.vacation ="Да"
+      }
+      else {
+        result[i].student.dataValues.vacation ="Нет"
+      }
+      if (
+        result[i].student.dataValues.free == true
+      ) {
+        result[i].student.dataValues.free ="Да"
+      }
+      else {
+        result[i].student.dataValues.free ="Нет"
+      }
+    }
     return res.json(result);
   }
   async getAllFree(req, res) {
     const result = await models.StudentsRating.findAll({
+      attributes: ["id", "destination"],
+      required: true,
       include: [
         {
           model: models.Students,
-          attributes: ["studnumber", "fullname", "free"],
+          attributes: [
+            "studnumber",
+            "fullname",
+            "educationgroup",
+            "institute",
+            "sad",
+            "vacation",
+            "free",
+          ],
           required: true,
           where: { free: "true" },
+        },
+        {
+          model: models.Rating,
+          attributes: ["points"],
+          required: true,
+          include: [
+            {
+              model: models.RatingCourses,
+              required: true,
+              include: [
+
+                {
+                  model: models.CourseLevels,
+                  attributes: ["level"],
+                },
+              ],
+            },
+          ],
         },
         {
           model: models.DateTable,
@@ -220,7 +382,32 @@ class ListController {
         },
       ],
     });
-
+    for (let i = 0; i < result.length; i++) {
+      if (
+        result[i].student.dataValues.sad == true
+      ) {
+        result[i].student.dataValues.sad ="Да"
+      }
+      else {
+        result[i].student.dataValues.sad ="Нет"
+      }
+      if (
+        result[i].student.dataValues.vacation == true
+      ) {
+        result[i].student.dataValues.vacation ="Да"
+      }
+      else {
+        result[i].student.dataValues.vacation ="Нет"
+      }
+      if (
+        result[i].student.dataValues.free == true
+      ) {
+        result[i].student.dataValues.free ="Да"
+      }
+      else {
+        result[i].student.dataValues.free ="Нет"
+      }
+    }
     return res.json(result);
   }
 }

@@ -76,7 +76,6 @@ const RatingCount = sequelize.define(
   }
 );
 
-
 const StudentsSAD = sequelize.define(
   "studentssad",
   {
@@ -169,6 +168,7 @@ const StudentsRating = sequelize.define(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     destination: { type: DataTypes.BOOLEAN, allowNull: false },
+    cause: { type: DataTypes.STRING(20), allowNull: true},
   },
   {
     // define the table's name
@@ -208,7 +208,6 @@ StudentsFree.belongsTo(DateTable, {
   foreignKey: "dateid",
 });
 
-
 DateTable.hasMany(StudentsSAD, {
   foreignKey: "dateid",
 });
@@ -222,8 +221,6 @@ DateTable.hasMany(StudentsVacation, {
 StudentsVacation.belongsTo(DateTable, {
   foreignKey: "dateid",
 });
-
-
 
 Courses.hasMany(RatingCount, {
   foreignKey: "courseid",
@@ -257,7 +254,6 @@ DateTable.hasMany(StudentsRating, {
 StudentsRating.belongsTo(DateTable, {
   foreignKey: "dateid",
 });
-
 module.exports = {
   Courses,
   CourseLevels,
@@ -268,5 +264,6 @@ module.exports = {
   Students,
   StudentsRating,
   StudentsSAD,
-  StudentsVacation,StudentsFree
+  StudentsVacation,
+  StudentsFree,
 };

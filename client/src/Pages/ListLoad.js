@@ -19,6 +19,8 @@ function ListLoad() {
     else if (selected === "СПОРТИВНАЯ ДЕЯТЕЛЬНОСТЬ") { url = "sd" }
     else if (selected === "КУЛЬТУРНО-ТВОРЧЕСКАЯ ДЕЯТЕЛЬНОСТЬ") { url = "ktd" }
     else if (selected === "СПИСОК ГАС") { url = "sad" }
+    else if (selected === "СВОБОДНЫЙ ГРАФИК") { url = "free" }
+    else if (selected === "КАНИКУЛЫ") { url = "vacation" }
 
     trackPromise(axios.get(`http://localhost:8080/api/listLoad/${url}`))
       .then(response => setItems(response.data))

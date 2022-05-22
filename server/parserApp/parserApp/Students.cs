@@ -44,7 +44,7 @@ namespace parserApp
             {
                 csv.Read();
                 csv.ReadHeader();
-                while (csv.Read())
+                while (csv.Read())  
                 {
                     if (!int.TryParse(csv.GetField("ID записи"), out int id))
                     {
