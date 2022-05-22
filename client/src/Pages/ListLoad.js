@@ -7,7 +7,7 @@ import axios from "axios";
 function ListLoad() {
   document.title = "Загрузка списков";
 
-  const [selected, setSelected] = useState("ЗАГРУЗКА СПИСКОВ");
+  const [selected, setSelected] = useState("НАУЧНАЯ ДЕЯТЕЛЬНОСТЬ");
   const { promiseInProgress } = usePromiseTracker(); //промис который отвечает за "Загрузка..."
   const [items, setItems] = useState([]);
 
