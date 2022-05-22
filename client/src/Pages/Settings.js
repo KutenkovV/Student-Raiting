@@ -19,58 +19,53 @@ const Settings = () => {
           />
         </div>
       </div>
-      <div class="mainSettings">
-        <div class="row mt-5">
-          <div class="col-5 ">
-            <label for="percentageOfOverallRating" class="form-label">
-              Научная деятельность
-            </label>
-            <input class="form-control" id="percentageOfOverallRating" />
-          </div>
-          <div class="col-5">
-            <label for="percentageOfOverallRating" class="form-label">
-              Учебная деятельность
-            </label>
-            <input class="form-control" id="percentageOfOverallRating" />
-          </div>
+      <div class="mainSettings row ">
+        <div class = "col">
+          <div class="col m-4">
+              <label for="percentageOfOverallRating" class="form-label">
+                Научная деятельность
+              </label>
+              <input class="form-control" id="percentageOfOverallRating" />
+            </div>
+            <div class="col m-4">
+              <label for="percentageOfOverallRating" class="form-label">
+                Учебная деятельность
+              </label>
+              <input class="form-control" id="percentageOfOverallRating" />
+            </div>
+            <div class="col m-4">
+              <label for="percentageOfOverallRating" class="form-label">
+                Общественная деятельность
+              </label>
+              <input class="form-control" id="percentageOfOverallRating" />
+            </div>
         </div>
-        <div class="row mt-5 ">
-          <div class="col-5">
-            <label for="percentageOfOverallRating" class="form-label">
-              Спортивная деятельность
-            </label>
-            <input class="form-control" id="percentageOfOverallRating" />
-          </div>
-          <div class="col-5">
-            <label for="percentageOfOverallRating" class="form-label">
-              Культурно-творческая деятельность
-            </label>
-            <input class="form-control" id="percentageOfOverallRating" />
-          </div>
+        <div class = "col">
+          <div class="col m-4">
+              <label for="percentageOfOverallRating" class="form-label">
+                Спортивная деятельность
+              </label>
+              <input class="form-control" id="percentageOfOverallRating" />
+            </div>
+            <div class="col m-4">
+              <label for="percentageOfOverallRating" class="form-label">
+                Культурно-творческая деятельность
+              </label>
+              <input class="form-control" id="percentageOfOverallRating" />
+            </div>
         </div>
-        <div class="row mt-5">
-          <div class="col-5">
-            <label for="percentageOfOverallRating" class="form-label">
-              Спортивная деятельность
-            </label>
-            <input class="form-control" id="percentageOfOverallRating" />
-          </div>
         </div>
-        <div class="row mt-5">
-          <div className="col-8"></div>
-          <div className="col-4">
+        <div className="row d-flex justify-content-end">
             <a
               name=""
               id=""
-              class="btn btn-primary"
+              class="btn btn-primary col-auto mt-4"
               role="button"
             >
               Сохранить
             </a>
           </div>
-        </div>
       </div>
-    </div>
   );
 };
 
