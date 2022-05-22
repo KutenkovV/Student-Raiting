@@ -16,7 +16,7 @@ const usePagination = (initialState) => {
   //костыль
   useEffect(() => {
     setSlicedData([...data].slice((currentPage - 1) * perPage, currentPage * perPage));
-  }, [data]); //из-за этого параметры могут возникнуть баги
+  }, [data, startFrom]); //из-за этого параметры могут возникнуть баги
   //если следующее значение будет равно предыдущему, рендерится будет старый элемент
 
   console.log(slicedData);

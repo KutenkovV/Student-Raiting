@@ -22,7 +22,6 @@ const LoadTable = ({ data, startForm }) => {
         <thead>
           <tr>
             <th>Номер студента</th>
-            <th>Направление</th>
             <th>Баллы</th>
             <th>Уровень</th>
             <th>ФИО</th>
@@ -38,7 +37,6 @@ const LoadTable = ({ data, startForm }) => {
           {slicedData.map((item) => (
             <tr key={item.student.studnumber}>
               <td>{item.student.studnumber}</td>
-              <td>{item.rating.ratingcourse.course.title}</td>
               <td>{item.rating.points}</td>
               <td>{item.rating.ratingcourse.levelid}</td>
               <td>{item.student.fullname}</td>
