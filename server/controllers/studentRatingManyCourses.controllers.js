@@ -191,19 +191,33 @@ class StudentRatingManyCoursesController {
     //перебираем заявки студента
     for (let i = 0; i < list.length; i++) {
       if (
-        (list[i].rating.dataValues.ratingcourse.dataValues.course.dataValues
-          .title !=
-          req.query.course) &
-        (list[i].destination == true)
+        list[i].rating.dataValues.ratingcourse.dataValues.course.dataValues
+          .title != req.query.course &&
+        list[i].destination == true
       ) {
         console.log(
           list[i].rating.dataValues.ratingcourse.dataValues.course.dataValues
             .title
         );
         //получаем все заявки одного из направлений
-        const list = await models.StudentsRating.findAll({
+        const listStudentsRating = await models.StudentsRating.findAll({
           attributes: ["id", "destination"],
+          order: [
+            [models.Students, "sad", "DESC NULLS LAST"],
+            [models.Rating, "points", "DESC"],
+          ],
+
           include: [
+            {
+              model: models.Students,
+              attributes: [
+                "studnumber",
+                "fullname",
+                "educationgroup",
+                "institute",
+                "sad",
+              ],
+            },
             {
               model: models.Rating,
               attributes: ["points"],
@@ -241,21 +255,67 @@ class StudentRatingManyCoursesController {
             },
           ],
         });
-        for (let y = 0; y < list.length; y++) {
-          //запускаем цикл на завки одного из направлений
-          //ставим студенту отметку destination=false где надо
-          //в цикле находим последнего кто прошел,
-          //смотрим имеет ли следующий чел стипендию
-          //если стипендия есть то назначить ему стипендию
-          //выход из цикла
+        //ставим студенту отметку destination=false где надо
+        await models.StudentsRating.update(
+          { destination: false ,cause: "Другое направление"},
+          {
+            where: {
+              id: list[i].dataValues.id,
+            },
+          }
+        );
+        //балл последнего кто прошел
+        var p = listStudentsRating[0].rating.dataValues.points;
+        //запускаем цикл на завки одного из направлений
+        for (let y = 0; y < listStudentsRating.length; y++) {
+          //в цикле находим последнего кто прошел
+          if (
+            listStudentsRating[y].rating.dataValues.points < p &&
+            listStudentsRating[y].student.dataValues.sad == true &&
+            listStudentsRating[y].destination == true
+          ) {
+            p = listStudentsRating[y].rating.dataValues.points;
+          } //смотрим имеет ли следующий чел стипендию
+          else if (
+            listStudentsRating[y].rating.dataValues.points < p &&
+            listStudentsRating[y].student.dataValues.sad == true &&
+            listStudentsRating[y].destination == false
+          ) {
+            //если стипендия есть то назначить ему рейтинговую стипендию
+            //выход из цикла
+            p = listStudentsRating[y].rating.dataValues.points;
+            await models.StudentsRating.update(
+              { destination: true, cause: null },
+              {
+                where: {
+                  id: listStudentsRating[y].dataValues.id,
+                },
+              }
+            );
+            break;
+          }
+        }
+        //цикл на начисление стипендии если после последнего прошедшего стоят люди с таким же количеством
+        for (let i = 0; i < listStudentsRating.length; i++) {
+          if (
+            listStudentsRating[i].rating.dataValues.points == p &&
+            listStudentsRating[i].student.dataValues.sad == true
+          ) {
+            await models.StudentsRating.update(
+              { destination: true, cause: null },
+              {
+                where: {
+                  id: listStudentsRating[i].dataValues.id,
+                },
+              }
+            );
+          }
         }
       }
     }
 
-    //цикл на начисление стипендии если после последнего прошедшего стоят люди с таким же количеством
-
-    //console.log(JSON.stringify(courses, null, 2));
-    //return res.json(courses);
+    
+    return res.send("ОК");;
   }
 }
 
