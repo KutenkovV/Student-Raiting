@@ -7,11 +7,11 @@ import axios from "axios";
 function ListLoad() {
   document.title = "Загрузка списков";
 
-  const [selected, setSelected] = useState("ЗАГРУЗКА СПИСКОВ");
+  const [selected, setSelected] = useState("НАУЧНАЯ ДЕЯТЕЛЬНОСТЬ");
   const { promiseInProgress } = usePromiseTracker(); //промис который отвечает за "Загрузка..."
   const [items, setItems] = useState([]);
 
-  useEffect(() => {
+  const fetchData = async () => {
     var url;
     if (selected === "НАУЧНАЯ ДЕЯТЕЛЬНОСТЬ") { url = "nid" }
     else if (selected === "УЧЕБНАЯ ДЕЯТЕЛЬНОСТЬ") { url = "ud" }
@@ -22,13 +22,16 @@ function ListLoad() {
     else if (selected === "СВОБОДНЫЙ ГРАФИК") { url = "free" }
     else if (selected === "КАНИКУЛЫ") { url = "vacation" }
 
-    trackPromise(axios.get(`http://localhost:8080/api/listLoad/${url}`))
+    await trackPromise(axios.get(`http://localhost:8080/api/listLoad/${url}`))
       .then(response => setItems(response.data))
       .catch(error => console.error(error));
+  }
 
-    console.log(url);
-    console.log(items);
+  useEffect(() => {
+    fetchData();
+    document.getElementById("formFile").value = "";
   }, [selected]);
+
 
   ////////////////// Загрузка списков
   const [file, setFile] = useState();
@@ -36,35 +39,39 @@ function ListLoad() {
     setFile(e.target.files[0]);
   };
 
-  //Тут условия пост запросов (пока не работают адекватно)
-  var url;
-  if (selected === "НАУЧНАЯ ДЕЯТЕЛЬНОСТЬ"
-    || selected === "УЧЕБНАЯ ДЕЯТЕЛЬНОСТЬ"
-    || selected === "СПОРТИВНАЯ ДЕЯТЕЛЬНОСТЬ"
-    || selected === "ОБЩЕСТВЕННАЯ ДЕЯТЕЛЬНОСТЬ"
-    || selected === "КУЛЬТУРНО-ТВОРЧЕСКАЯ ДЕЯТЕЛЬНОСТЬ") { url = "all" }
-  else if (selected === "СПИСОК ГАС") { url = "sad" }
-  else if (selected === "СВОБОДНЫЙ ГРАФИК") { url = "free" }
-  else if (selected === "КАНИКУЛЫ") { url = "vacation" }
-
   //обработка нажатия
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
+    //Тут условия пост запросов
+    var url;
+    if (selected === "НАУЧНАЯ ДЕЯТЕЛЬНОСТЬ"
+      || selected === "УЧЕБНАЯ ДЕЯТЕЛЬНОСТЬ"
+      || selected === "СПОРТИВНАЯ ДЕЯТЕЛЬНОСТЬ"
+      || selected === "ОБЩЕСТВЕННАЯ ДЕЯТЕЛЬНОСТЬ"
+      || selected === "КУЛЬТУРНО-ТВОРЧЕСКАЯ ДЕЯТЕЛЬНОСТЬ") { url = "all" }
+    else if (selected === "СПИСОК ГАС") { url = "sad" }
+    else if (selected === "СВОБОДНЫЙ ГРАФИК") { url = "free" }
+    else if (selected === "КАНИКУЛЫ") { url = "vacation" }
+
     e.preventDefault()
 
     const data = new FormData();
     data.append('file', file);
 
-    console.log(url);
     //сам пост запрос
-    axios.post(`http://localhost:8080/api/listLoad/${url}`, data)
+    await axios.post(`http://localhost:8080/api/listLoad/${url}`, data)
       .then(() => {
         console.log("Success!");
       })
       .catch((e) => {
         console.error('Error!', e);
       })
+
+    document.getElementById("formFile").value = ""; // Чистим выбранный файл после загрузки
+    fetchData(); // Ещё раз делаем запрос
+    setItems([...items]); // И ещё раз (это не обязательно) загружаем файлы в стейт
   };
   //////////////////////////////////
+
 
   return (
     <div>
