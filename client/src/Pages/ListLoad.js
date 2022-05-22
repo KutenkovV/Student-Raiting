@@ -65,7 +65,6 @@ function ListLoad() {
       })
   };
   //////////////////////////////////
-
   return (
     <div>
       <Dropdown selected={selected} setSelected={setSelected} />
