@@ -70,12 +70,7 @@ function ListLoad() {
     fetchData(); // Ещё раз делаем запрос
     setItems([...items]); // И ещё раз (это не обязательно) загружаем файлы в стейт
   };
-  //////////////////////////////////
-<<<<<<< HEAD
-=======
 
-
->>>>>>> 081d06559668c9103cb7391212f5819f1c614c62
   return (
     <div>
       <Dropdown selected={selected} setSelected={setSelected} />
