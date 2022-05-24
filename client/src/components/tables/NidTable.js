@@ -30,7 +30,7 @@ const NidTable = ({ data, itemsPerPage, startFrom }) => {
             <tr key={item.id}>
               <td>{item.id}</td>
               <td>{item.rating.points}</td>
-              <td>{item.rating.ratingcourse.levelid}</td>
+              <td>{item.rating.ratingcourse.courselevel.level}</td>
               <td>{item.student.fullname}</td>
               <td>{item.student.institute}</td>
               <td>{item.student.educationgroup}</td>

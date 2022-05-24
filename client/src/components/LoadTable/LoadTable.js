@@ -38,7 +38,7 @@ const LoadTable = ({ data, startForm }) => {
             <tr key={item.student.studnumber}>
               <td>{item.student.studnumber}</td>
               <td>{item.rating.points}</td>
-              <td>{item.rating.ratingcourse.levelid}</td>
+              <td>{item.rating.ratingcourse.courselevel.level}</td>
               <td>{item.student.fullname}</td>
               <td>{item.student.educationgroup}</td>
               <td>{item.student.institute}</td>
