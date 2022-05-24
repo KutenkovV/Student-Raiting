@@ -5,9 +5,8 @@ const { Op } = require("sequelize");
 class ListController {
   async getAllWithOrder(title) {
     const result = await models.StudentsRating.findAll({
-      attributes: ["id", "destination"],
+      attributes: ["id", "destination","cause"],
       order: [
-        [models.Students, "sad", "DESC NULLS LAST"],
         [models.Rating, "points", "DESC"],
         [
           models.Rating,
@@ -42,7 +41,7 @@ class ListController {
                   model: models.Courses,
 
                   where: {
-                    title: "УД",
+                    title: title,
                   },
                 },
                 {
