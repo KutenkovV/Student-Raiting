@@ -27,7 +27,7 @@ table td,
   background-color: #f3f7f9;
 }
 
-.loadTr:hover {
+table tr:hover {
   background-color: #e7ecee;
 }
 
