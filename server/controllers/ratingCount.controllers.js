@@ -36,6 +36,7 @@ class RatingCountController {
 
   async update(req, res) {
     if (!req.body) return response.sendStatus(400);
+    console.log(req.body.nidInput)
     
     await RatingCountController.updateCountCourse("НИД", req.body.nidInput);
     await RatingCountController.updateCountCourse("УД", req.body.udInput);

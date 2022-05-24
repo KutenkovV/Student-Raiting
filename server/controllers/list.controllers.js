@@ -71,7 +71,7 @@ class ListController {
       ],
     });
 
-    return res.json(result);
+    return result;
   }
 
   async getAll(title) {
