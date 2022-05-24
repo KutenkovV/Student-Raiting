@@ -17,21 +17,23 @@ const DirectionsTable = ({ data, itemsPerPage, startFrom }) => {
       <table className="DirectionsTable">
         <thead>
           <tr>
-            <th>Id</th>
+            <th>Номер студента</th>
             <th>Баллы</th>
             <th>ФИО</th>
             <th>Институт</th>
             <th>Группа</th>
+            <th>Причина</th>
           </tr>
         </thead>
         <tbody>
           {slicedData.map((item) => (
-            <tr key={item.id}>
-              <td>{item.id}</td>
+            <tr key={item.id} className={item.destination ? "destinationTrue" : "destinationFalse"}>
+               <td>{item.student.studnumber}</td>
               <td>{item.rating.points}</td>
               <td>{item.student.fullname}</td>
               <td>{item.student.institute}</td>
               <td>{item.student.educationgroup}</td>
+              <td>{item.cause}</td>
             </tr>
           ))}
         </tbody>

@@ -9,7 +9,7 @@ function Ud() {
   
   //Гет запроса на список
   useEffect(() => {
-    axios.get('http://localhost:8080/api/listLoad/ud')
+    axios.get('http://localhost:8080/api/ud')
         .then(response => setItems(response.data))
         .catch(error => console.log(error));
 }, []);
@@ -17,7 +17,7 @@ function Ud() {
   return (
     <div>
       <h1 class="header">Учебная деятельность</h1>
-      <DirectionsTable data={items} itemsPerPage={18} />
+      <DirectionsTable data={items} itemsPerPage={10} />
     </div>
   );
 }
