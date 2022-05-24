@@ -8,6 +8,7 @@ import {
   faEllipsis,
 } from "@fortawesome/free-solid-svg-icons";
 
+import "./NidTable.css";
 const NidTable = ({ data, itemsPerPage, startFrom }) => {
   const { slicedData, pagination, prevPage, nextPage, changePage } =
     usePagination({ data, itemsPerPage, startFrom });
@@ -23,17 +24,21 @@ const NidTable = ({ data, itemsPerPage, startFrom }) => {
             <th>ФИО</th>
             <th>Институт</th>
             <th>Группа</th>
+            <th>Причина</th>
+            <th>ГАС</th>
           </tr>
         </thead>
         <tbody>
           {slicedData.map((item) => (
-            <tr key={item.id}>
+            <tr key={item.id} className={item.destination ? "destinationTrue" : "destinationFalse"}>
               <td>{item.id}</td>
               <td>{item.rating.points}</td>
               <td>{item.rating.ratingcourse.courselevel.level}</td>
               <td>{item.student.fullname}</td>
               <td>{item.student.institute}</td>
               <td>{item.student.educationgroup}</td>
+              <td>{item.cause}</td>
+              <td>{item.student.sad}</td>
             </tr>
           ))}
         </tbody>
