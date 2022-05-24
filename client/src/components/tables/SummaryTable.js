@@ -20,11 +20,11 @@ const SummaryTable = ({ data, itemsPerPage, startFrom }) => {
                 </thead>
                 <tbody>
                     {slicedData.map((item) => (
-                        <tr key={item.direction}>
-                            <td>{item.direction}</td>
-                            <td>{item.total}</td>
-                            <td>{item.totalStipend}</td>
-                            <td>{item.scorePoint}</td>
+                        <tr key={item.title}  className = "loadTr">
+                            <td>{item.title}</td>
+                            <td>{item.totalSubmitted}</td>
+                            <td>{item.count}</td>
+                            <td>{item.borderPoint}</td>
                             <td>{item.nextPoint}</td>
                         </tr>
                     ))}

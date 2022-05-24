@@ -9,7 +9,7 @@ function Od() {
   
   //Гет запроса на список
   useEffect(() => {
-    axios.get('http://localhost:8080/api/listLoad/od')
+    axios.get('http://localhost:8080/api/od')
         .then(response => setItems(response.data))
         .catch(error => console.log(error));
 }, []);
@@ -17,7 +17,7 @@ function Od() {
   return (
     <div>
       <h1 className="header">Общественная деятельность</h1>
-      <DirectionsTable data={items} itemsPerPage={18} />
+      <DirectionsTable data={items} itemsPerPage={10} />
     </div>
   );
 }

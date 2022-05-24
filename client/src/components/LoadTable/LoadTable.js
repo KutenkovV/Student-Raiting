@@ -35,7 +35,7 @@ const LoadTable = ({ data, startForm }) => {
         <tbody>
           {/* Перебор данных из sliceData */}
           {slicedData.map((item) => (
-            <tr key={item.student.studnumber}>
+            <tr key={item.student.studnumber} className = "loadTr">
               <td>{item.student.studnumber}</td>
               <td>{item.rating.points}</td>
               <td>{item.rating.ratingcourse.courselevel.level}</td>

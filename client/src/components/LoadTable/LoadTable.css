@@ -23,7 +23,7 @@ table td,
   padding: 15px;
 }
 
-table tr:nth-child(even) {
+.loadTr:nth-child(even) {
   background-color: #f3f7f9;
 }
 

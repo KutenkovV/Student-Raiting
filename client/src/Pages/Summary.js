@@ -1,17 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import SummaryTable from "../components/tables/SummaryTable";
-import SummaryData from "../Data/SummaryList.json";
+import axios from "axios";
 
 function Summary() {
   document.title = "Сводка";
-  const [data] = useState(SummaryData);
+
+  const [items, setItems] = useState([]);
+
+  //Гет запроса на список
+  useEffect(() => {
+    axios.get('http://localhost:8080/api/report')
+      .then(response => setItems(response.data))
+      .catch(error => console.log(error));
+  }, []);
 
   return (
     <>
       <div>
         <h1 className="header">Сводка</h1>
       </div>
-      <SummaryTable data={data} itemsPerPage={15} />
+      <SummaryTable data={items} itemsPerPage={10}  />
     </>
   );
 }

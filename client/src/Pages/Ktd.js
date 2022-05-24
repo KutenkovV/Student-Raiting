@@ -9,7 +9,7 @@ function Ktd() {
   
   //Гет запроса на список
   useEffect(() => {
-    axios.get('http://localhost:8080/api/listLoad/ktd')
+    axios.get('http://localhost:8080/api/ktd')
         .then(response => setItems(response.data))
         .catch(error => console.log(error));
 }, []);
@@ -17,7 +17,7 @@ function Ktd() {
   return (
     <div>
       <h1 className="header">Культурно-творческая деятельность</h1>
-      <DirectionsTable data={items} itemsPerPage={18} />
+      <DirectionsTable data={items} itemsPerPage={10} />
     </div>
   );
 }
