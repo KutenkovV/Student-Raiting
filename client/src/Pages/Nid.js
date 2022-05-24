@@ -8,7 +8,7 @@ function Nid() {
 
   //Гет запроса на список
   useEffect(() => {
-    axios.get('http://localhost:8080/api/listLoad/nid')
+    axios.get('http://localhost:8080/api/nid')
       .then(response => setItems(response.data))
       .catch(error => console.log(error));
   }, []);

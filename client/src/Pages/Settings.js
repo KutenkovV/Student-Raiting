@@ -19,53 +19,48 @@ const Settings = () => {
           />
         </div>
       </div>
+      <form action="">
       <div class="mainSettings row ">
         <div class = "col">
           <div class="col m-4">
-              <label for="percentageOfOverallRating" class="form-label">
+              <label for="nidInput" class="form-label">
                 Научная деятельность
               </label>
-              <input class="form-control" id="percentageOfOverallRating" />
+              <input class="form-control" name="nidInput" />
             </div>
             <div class="col m-4">
-              <label for="percentageOfOverallRating" class="form-label">
+              <label for="udInput" class="form-label">
                 Учебная деятельность
               </label>
-              <input class="form-control" id="percentageOfOverallRating" />
+              <input class="form-control" name="udInput" />
             </div>
             <div class="col m-4">
-              <label for="percentageOfOverallRating" class="form-label">
-                Общественная деятельность
+              <label for="sdInput" class="form-label">
+                Спортивная деятельность
               </label>
-              <input class="form-control" id="percentageOfOverallRating" />
+              <input class="form-control" name="sdInput" />
             </div>
         </div>
         <div class = "col">
           <div class="col m-4">
-              <label for="percentageOfOverallRating" class="form-label">
-                Спортивная деятельность
+              <label for="odInput" class="form-label">
+                Общественная деятельность
               </label>
-              <input class="form-control" id="percentageOfOverallRating" />
+              <input class="form-control" name="odInput" />
             </div>
             <div class="col m-4">
-              <label for="percentageOfOverallRating" class="form-label">
+              <label for="ktdInput" class="form-label">
                 Культурно-творческая деятельность
               </label>
-              <input class="form-control" id="percentageOfOverallRating" />
+              <input class="form-control" name="ktdInput" />
             </div>
         </div>
         </div>
         <div className="row d-flex justify-content-end">
-            <a
-              name=""
-              id=""
-              class="btn btn-primary col-auto mt-4"
-              role="button"
-            >
-              Сохранить
-            </a>
-          </div>
-      </div>
+            <button type="submit" class="btn btn-primary col-auto mt-4">Сохранить</button>
+        </div>
+      </form>
+    </div>
   );
 };
 
