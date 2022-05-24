@@ -8,7 +8,7 @@ function Nid() {
 
   //Гет запроса на список
   useEffect(() => {
-    axios.get('http://localhost:8080/api/listLoad/nid')
+    axios.get('http://localhost:8080/api/nid')
       .then(response => setItems(response.data))
       .catch(error => console.log(error));
   }, []);
@@ -16,7 +16,7 @@ function Nid() {
   return (
     <div>
       <h1 className="header">Научная деятельность</h1>
-      <NidTable data={items} itemsPerPage={18} />
+      <NidTable data={items} itemsPerPage={10} />
     </div>
   );
 }

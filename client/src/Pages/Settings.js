@@ -41,20 +41,9 @@ const Settings = () => {
   return (
     <div>
       <h1 className="header">Настройка рейтинга</h1>
-      <div class="row mb-3 mt-4">
-        <div class="col-5">
-          <label for="percentageOfOverallRating" class="form-label">
-            Количество получающих от общего конкурса
-          </label>
-          <input
-            type="email"
-            class="form-control"
-            id="percentageOfOverallRating"
-          />
-        </div>
-      </div>
+
       <form action="#" id="#" method="put" onSubmit={onSubmit}>
-      <div class="mainSettings row ">
+      <div class="mainSettings row mt-4">
         <div class = "col">
           <div class="col m-4">
               <label for="nidInput" class="form-label">
