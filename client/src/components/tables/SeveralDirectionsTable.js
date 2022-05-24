@@ -12,7 +12,7 @@ const SeveralDirectionsTable = ({ data, itemsPerPage, startFrom }) => {
       <table className="tableSeveralDirections">
         <thead>
           <tr>
-            <th>Id</th>
+            <th>Номер студента</th>
             <th>Фио</th>
             <th>Нид</th>
             <th>Уд</th>
@@ -28,16 +28,15 @@ const SeveralDirectionsTable = ({ data, itemsPerPage, startFrom }) => {
         <tbody>
           {slicedData.map((item) => (
             <tr key={item.id}>
-              <td>{item.id}</td>
-              <td>{item.fio}</td>
-              <td>{item.nid}</td>
-              <td>{item.ud}</td>
-              <td>{item.sd}</td>
-              <td>{item.od}</td>
-              <td>{item.ktd}</td>
-              <td>{item.group}</td>
+              <td>{item.studnumber}</td>
+              <td>{item.fullname}</td>
+              <td className={item.nid.destination ? "tdTrue" : "tdFalse"} >{item.nid.point}</td>
+              <td className={item.ud.destination ? "tdTrue" : "tdFalse"} >{item.ud.point}</td>
+              <td className={item.sd.destination ? "tdTrue" : "tdFalse"}>{item.sd.point}</td>
+              <td className={item.od.destination ? "tdTrue" : "tdFalse"}>{item.od.point}</td>
+              <td className={item.ktd.destination ? "tdTrue" : "tdFalse"}>{item.ktd.point}</td>
+              <td>{item.educationgroup}</td>
               <td>{item.institute}</td>
-              <td>{item.gas}</td>
               <td><StudentMenu/></td>
             </tr>
           ))}
