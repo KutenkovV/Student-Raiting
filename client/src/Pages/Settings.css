@@ -9,7 +9,13 @@
   padding: 2rem;
   box-shadow: 2px 2px 5px 2px rgb(219, 219, 219);
 }
+
 .settingSafe{
+  opacity: 0;
+}
+
+.activeSafe{
+  opacity: 100;
   background-color: #bdffd9;
   text-align: center;
   border-radius: 5px;

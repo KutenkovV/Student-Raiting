@@ -7,7 +7,7 @@ function Od() {
   const [items, setItems] = useState([]);
 
   
-  //Гет запроса на список
+  //Гет-запрос на список
   useEffect(() => {
     axios.get('http://localhost:8080/api/od')
         .then(response => setItems(response.data))
