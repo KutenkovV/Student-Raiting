@@ -16,11 +16,11 @@ const Settings = () => {
   }, []);
 
   // изменения значений инпутов  
-  const [nidValue, setnidValue] = useState(78)
-  const [udValue, setudValue] = useState(72)
-  const [sdValue, setsdValue] = useState(65)
-  const [odValue, setodValue] = useState(65)
-  const [ktdValue, setktdValue] = useState(65)
+  const [nidValue, setnidValue] = useState(0)
+  const [udValue, setudValue] = useState(0)
+  const [sdValue, setsdValue] = useState(0)
+  const [odValue, setodValue] = useState(0)
+  const [ktdValue, setktdValue] = useState(0)
 
 
   const onSubmit = async (e) => {
