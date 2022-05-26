@@ -76,6 +76,54 @@ const RatingCount = sequelize.define(
   }
 );
 
+const StudentsSAD = sequelize.define(
+  "studentssad",
+  {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    studnumber: { type: DataTypes.INTEGER, allowNull: false },
+  },
+  {
+    // define the table's name
+    tableName: "studentssad",
+    // Отключаем `createdAt`
+    createdAt: false,
+    // Изменяем название `updatedAt`
+    updatedAt: false,
+  }
+);
+
+const StudentsVacation = sequelize.define(
+  "studentsvacation",
+  {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    studnumber: { type: DataTypes.INTEGER, allowNull: false },
+  },
+  {
+    // define the table's name
+    tableName: "studentsvacation",
+    // Отключаем `createdAt`
+    createdAt: false,
+    // Изменяем название `updatedAt`
+    updatedAt: false,
+  }
+);
+
+const StudentsFree = sequelize.define(
+  "studentsfree",
+  {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    studnumber: { type: DataTypes.INTEGER, allowNull: false },
+  },
+  {
+    // define the table's name
+    tableName: "studentsfree",
+    // Отключаем `createdAt`
+    createdAt: false,
+    // Изменяем название `updatedAt`
+    updatedAt: false,
+  }
+);
+
 const Rating = sequelize.define(
   "rating",
   {
@@ -120,6 +168,7 @@ const StudentsRating = sequelize.define(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     destination: { type: DataTypes.BOOLEAN, allowNull: false },
+    cause: { type: DataTypes.STRING(20), allowNull: true},
   },
   {
     // define the table's name
@@ -149,6 +198,27 @@ DateTable.hasMany(RatingCount, {
   foreignKey: "dateid",
 });
 RatingCount.belongsTo(DateTable, {
+  foreignKey: "dateid",
+});
+
+DateTable.hasMany(StudentsFree, {
+  foreignKey: "dateid",
+});
+StudentsFree.belongsTo(DateTable, {
+  foreignKey: "dateid",
+});
+
+DateTable.hasMany(StudentsSAD, {
+  foreignKey: "dateid",
+});
+StudentsSAD.belongsTo(DateTable, {
+  foreignKey: "dateid",
+});
+
+DateTable.hasMany(StudentsVacation, {
+  foreignKey: "dateid",
+});
+StudentsVacation.belongsTo(DateTable, {
   foreignKey: "dateid",
 });
 
@@ -184,7 +254,6 @@ DateTable.hasMany(StudentsRating, {
 StudentsRating.belongsTo(DateTable, {
   foreignKey: "dateid",
 });
-
 module.exports = {
   Courses,
   CourseLevels,
@@ -194,4 +263,7 @@ module.exports = {
   Rating,
   Students,
   StudentsRating,
+  StudentsSAD,
+  StudentsVacation,
+  StudentsFree,
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import usePagination from "../../hooks/usePagination";
 import "./LoadTable.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,39 +8,43 @@ import {
   faEllipsis,
 } from "@fortawesome/free-solid-svg-icons";
 
-const LoadTable = ({ data, itemsPerPage, startFrom }) => {
+const LoadTable = ({ data, startForm }) => {
+  const itemsPerPage = 10;
   const { slicedData, pagination, prevPage, nextPage, changePage } =
-    usePagination({ itemsPerPage, data, startFrom });
+    usePagination({ data, itemsPerPage, startForm });
+
+  if (data.length === 0) return <div>Выберите и загрузите список</div>
 
   return (
     <>
+      <div className="success">Список загружен!</div>
       <table>
         <thead>
           <tr>
-            <th>id</th>
+            <th>Номер студента</th>
             <th>Баллы</th>
             <th>Уровень</th>
             <th>ФИО</th>
             <th>ГРУППА</th>
             <th>ИНСТИТУТ</th>
-            <th>Каникулы</th>
-            <th>Свободный график</th>
             <th>ГАС</th>
+            <th>Свободный график</th>
+            <th>Каникулы</th>
           </tr>
         </thead>
         <tbody>
           {/* Перебор данных из sliceData */}
           {slicedData.map((item) => (
-            <tr key={item.id}>
-              <td>{item.id}</td>
-              <td>{item.points}</td>
-              <td>{item.level}</td>
-              <td>{item.fio}</td>
-              <td>{item.group}</td>
-              <td>{item.institute}</td>
-              <td>{item.holiday}</td>
-              <td>{item.freeGraphic}</td>
-              <td>{item.gas}</td>
+            <tr key={item.student.studnumber} className = "loadTr">
+              <td>{item.student.studnumber}</td>
+              <td>{item.rating.points}</td>
+              <td>{item.rating.ratingcourse.courselevel.level}</td>
+              <td>{item.student.fullname}</td>
+              <td>{item.student.educationgroup}</td>
+              <td>{item.student.institute}</td>
+              <td>{item.student.sad}</td>
+              <td>{item.student.free}</td>
+              <td>{item.student.vacation}</td>
             </tr>
           ))}
         </tbody>

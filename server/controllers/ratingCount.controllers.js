@@ -33,61 +33,79 @@ class RatingCountController {
 
     return res.json(courseCount);
   }
-  async delete(req, res) {
-    const courses = await Reating.findAll({ include: [{ all: true }] });
-    //console.log(JSON.stringify(courses, null, 2));
-    return res.json(courses);
-  }
+
   async update(req, res) {
-    const { title, count } = req.body;
-    const courses = await Students.update(
-      {
-        count: count,
-      },
-      {
-        include: [
-          {
-            model: models.Courses,
-            attributes: ["title"],
+    if (!req.body) return response.sendStatus(400);
+    console.log(req.body.nidInput)
+    
+    await RatingCountController.updateCountCourse("НИД", req.body.nidInput);
+    await RatingCountController.updateCountCourse("УД", req.body.udInput);
+    await RatingCountController.updateCountCourse("СД", req.body.sdInput);
+    await RatingCountController.updateCountCourse("ОД", req.body.odInput);
+    await RatingCountController.updateCountCourse("КТД", req.body.ktdInput);
+
+    ///////////ПОСЛЕ ОБНОВЛЕНИЯ НАДО ПЕРЕРАСЧИТЫВАТЬ МЕСТА И ПОЛУЧАЮЩИХ////////////
+    calculateRatingController.calculation();
+    res.send("ОК");
+  }
+  static async updateCountCourse(title1, count1) {
+    const list = await models.RatingCount.findOne({
+      attributes: ["id"],
+      include: [
+        {
+          model: models.Courses,
+          where: {
+            title: title1,
           },
-          {
-            model: models.DateTable,
-            //attributes: ['id','date'],
-            required: true,
-            where: {
-              date: {
-                [Op.contains]: [
-                  { value: new Date(), inclusive: true },
-                  { value: new Date(), inclusive: true },
-                  //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                  //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
-                ],
-              },
+        },
+        {
+          model: models.DateTable,
+          required: true,
+          where: {
+            date: {
+              [Op.contains]: [
+                { value: new Date(), inclusive: true },
+                { value: new Date(), inclusive: true },
+              ],
             },
           },
-        ],
-      },
+        },
+      ],
+    });
+
+    await models.RatingCount.update(
+      { count: parseInt(count1) },
       {
         where: {
-          id: id,
+          id: list.id,
         },
       }
     );
-
-    ///////////ПОСЛЕ ОБНОВЛЕНИЯ НАДО ПЕРЕРАСЧИТЫВАТЬ МЕСТА И ПОЛУЧАЮЩИХ///////////////////////////////////////////////////////////////////////////////////////
-    calculateRatingController.calculation();
-
-    //console.log(JSON.stringify(courses, null, 2));
-    return res.json(courses);
+    
   }
-
-  async getOne(req, res) {
-    const { id } = req.params;
-    const device = await Device.findOne({
-      where: { id },
-      include: [{ model: DeviceInfo, as: "info" }],
+  async getCountFromSad(req, res) {
+    const list = await models.StudentsSAD.findAll({
+      required: true,
+      include: [
+        {
+          model: models.DateTable,
+          attributes: ["id", "date"],
+          required: true,
+          where: {
+            date: {
+              [Op.contains]: [
+                { value: new Date(), inclusive: true },
+                { value: new Date(), inclusive: true },
+                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
+                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
+              ],
+            },
+          },
+        },
+      ],
     });
-    return res.json(device);
+
+    return res.json(list.length * 0.1);
   }
 }
 

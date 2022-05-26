@@ -5,6 +5,10 @@ import { useState } from "react";
 
 function Dropdown({ selected, setSelected }) {
   const [isActive, setIsActive] = useState(false);
+
+  // нужно сделать переключение активности при мисклике
+  // https://www.youtube.com/watch?v=pE4bwPykUF4
+
   const options = [
     "НАУЧНАЯ ДЕЯТЕЛЬНОСТЬ",
     "УЧЕБНАЯ ДЕЯТЕЛЬНОСТЬ",
@@ -18,16 +22,16 @@ function Dropdown({ selected, setSelected }) {
 
   return (
     <div className="dropdown">
-      <div className="dropdown-btn" onClick={(e) => setIsActive(!isActive)}>
+      <div className="dropdown-btn" onClick={() => setIsActive(!isActive)}>
         <b className="me-2">{selected}</b>
-        <FontAwesomeIcon icon={faAngleDown}/>
+        <FontAwesomeIcon icon={faAngleDown} />
       </div>
 
       {isActive && (
         <div className="dropdown-content">
           {options.map((option) => (
             <div
-                onClick={(e) => {
+              onClick={() => {
                 setSelected(option);
                 setIsActive(false);
               }}

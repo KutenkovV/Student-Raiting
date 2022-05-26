@@ -4,10 +4,17 @@ const { Op } = require("sequelize");
 
 class CalculateRatingController {
   async calculation(req, res) {
-    //вызовем 5 раз метод расчета для всех направлений
-    await CalculateRatingController.calculationCourse("СД");
+    //вызовем 5 раз метод очистки и расчета для всех направлений
+    await CalculateRatingController.deleteCourse();
 
-    const result = await models.StudentsRating.findAll({
+    await CalculateRatingController.calculationCourse("НИД");
+    await CalculateRatingController.calculationCourse("УД");
+    await CalculateRatingController.calculationCourse("СД");
+    await CalculateRatingController.calculationCourse("ОД");
+    await CalculateRatingController.calculationCourse("КТД");
+    
+
+    /*const result = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
       order: [
         [models.Students, "sad", "DESC NULLS LAST"],
@@ -38,7 +45,7 @@ class CalculateRatingController {
                   model: models.Courses,
 
                   where: {
-                    title: "СД",
+                    title: "НИД",
                   },
                 },
                 {
@@ -67,52 +74,14 @@ class CalculateRatingController {
       ],
     });
 
-    return res.json(result);
+    return res.json(result);*/
   }
 
-  static async deleteCourse(title) {
+  static async deleteCourse() {
     const list = await models.StudentsRating.findAll({
-      attributes: ["id", "destination"],
-      order: [
-        [models.Students, "sad", "DESC NULLS LAST"],
-        [models.Rating, "points", "DESC"],
-      ],
+      attributes: ["id", "destination","cause"],
       required: true,
       include: [
-        {
-          model: models.Students,
-          attributes: [
-            "studnumber",
-            "fullname",
-            "educationgroup",
-            "institute",
-            "sad",
-          ],
-        },
-        {
-          model: models.Rating,
-          attributes: ["points"],
-          required: true,
-          include: [
-            {
-              model: models.RatingCourses,
-              required: true,
-              include: [
-                {
-                  model: models.Courses,
-
-                  where: {
-                    title: title,
-                  },
-                },
-                {
-                  model: models.CourseLevels,
-                  attributes: ["level"],
-                },
-              ],
-            },
-          ],
-        },
         {
           model: models.DateTable,
           attributes: ["id", "date"],
@@ -132,8 +101,8 @@ class CalculateRatingController {
     });
 
     for (let i = 0; i < list.length; i++) {
-      const r = await models.StudentsRating.update(
-        { destination: false },
+      await models.StudentsRating.update(
+        { destination: false, cause: null  },
         {
           where: {
             id: list[i].dataValues.id,
@@ -144,6 +113,7 @@ class CalculateRatingController {
   }
 
   static async calculationCourse(title) {
+    //ищу количество мест по заданному направлению
     const counts = await models.RatingCount.findAll({
       required: true,
       attributes: ["count"],
@@ -173,8 +143,10 @@ class CalculateRatingController {
       ],
     });
 
-    const c = counts[0].dataValues.count;
-
+    //получаю первое количество мест
+    const count = counts[0].dataValues.count;
+    //console.log(count);
+    //список студентов по заданному направлению
     const list = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
       order: [
@@ -234,30 +206,63 @@ class CalculateRatingController {
         },
       ],
     });
-    console.log(list[0]);
 
+    //счетчик в который кладется послдений балл прошедшего студента
     var c1 = 0;
+    //счетчик на оставшиеся места
+    var countRemained = count;
 
-    for (let i = 0; i < c; i++) {
+    //цикл на начисление стипендии по количеству мест
+    for (let i = 0; i < list.length; i++) {
+      //если студент получает ГАС
       if (list[i].student.dataValues.sad == true) {
+        // если еще остались места, то назначить рейтинговую стипендию
+        if (countRemained > 0) {
+          await models.StudentsRating.update(
+            { destination: true ,cause: null},
+            {
+              where: {
+                id: list[i].dataValues.id,
+              },
+            }
+          );
+          //обновление последнего балла
+          c1 = list[i].rating.dataValues.points;
+          //уменьшение оставшихся мест
+          countRemained--;
+        }
+        //иначе пишем не достаточно баллов
+        else {
+          await models.StudentsRating.update(
+            { cause: "Не дост. баллов" },
+            {
+              where: {
+                id: list[i].dataValues.id,
+              },
+            }
+          );
+        }
+      }
+      //иначе пишем нет академической стипендии
+      else {
         await models.StudentsRating.update(
-          { destination: true },
+          { cause: "Нет академ. ст." },
           {
             where: {
               id: list[i].dataValues.id,
             },
           }
         );
-        c1 = list[i].rating.dataValues.points;
       }
     }
-    for (let i = c; i < list.length; i++) {
+    //цикл на начисление стипендии если после последнего прошедшего стоят люди с таким же количеством
+    for (let i = 0; i < list.length; i++) {
       if (
         list[i].rating.dataValues.points == c1 &&
         list[i].student.dataValues.sad == true
       ) {
         await models.StudentsRating.update(
-          { destination: true },
+          { destination: true ,cause: null},
           {
             where: {
               id: list[i].dataValues.id,

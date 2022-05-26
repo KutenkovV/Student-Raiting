@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import FinalTable from "../components/tables/FinalTable";
-import Final from "../Data/Final.json";
 
 
 function FinalList() {
   document.title = "Итоговый список"
-  const [data] = useState(Final);
+  const [items, setItems] = useState([]);
+
+  
+  //Гет запроса на список
+  useEffect(() => {
+    axios.get('http://localhost:8080/api/finalList')
+        .then(response => setItems(response.data))
+        .catch(error => console.log(error));
+}, []);
 
   return (
     <div>
       <h1 className="header">Итоговый список</h1>
-      <FinalTable data={data} itemsPerPage={15} />
+      <FinalTable data={items} itemsPerPage={10} />
     </div>
   )
 }
