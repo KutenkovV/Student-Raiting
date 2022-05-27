@@ -7,6 +7,9 @@ const SeveralDirectionsTable = ({ data, itemsPerPage, startFrom }) => {
   const { slicedData, pagination, prevPage, nextPage, changePage } =
     usePagination({ itemsPerPage, data, startFrom });
 
+  if (data.length === 0) 
+  return <div>Загрузите данные</div> // Сюда по хорошему заглушку какую-нибудь
+
   return (
     <>
       <table className="tableSeveralDirections">
@@ -37,7 +40,7 @@ const SeveralDirectionsTable = ({ data, itemsPerPage, startFrom }) => {
               <td className={item.ktd.destination ? "tdTrue" : "tdFalse"}>{item.ktd.point}</td>
               <td>{item.educationgroup}</td>
               <td>{item.institute}</td>
-              <td><StudentMenu/></td>
+              <td><StudentMenu /></td>
             </tr>
           ))}
         </tbody>

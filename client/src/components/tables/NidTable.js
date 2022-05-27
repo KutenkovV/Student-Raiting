@@ -14,6 +14,9 @@ const NidTable = ({ data, itemsPerPage, startFrom }) => {
   const { slicedData, pagination, prevPage, nextPage, changePage } =
     usePagination({ data, itemsPerPage, startFrom });
 
+  if (data.length === 0)
+    return <div>Загрузите данные</div> // Сюда по хорошему заглушку какую-нибудь
+
   return (
     <>
       <table className="NidTable">
@@ -42,7 +45,7 @@ const NidTable = ({ data, itemsPerPage, startFrom }) => {
           ))}
         </tbody>
       </table>
-      
+
       {/* блок с пагинацией */}
       <nav className="pagination nav-pagination mt-3">
         {/* Кнопка "<< Назад" */}
