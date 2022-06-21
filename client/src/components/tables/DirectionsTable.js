@@ -12,6 +12,9 @@ const DirectionsTable = ({ data, itemsPerPage, startFrom }) => {
   const { slicedData, pagination, prevPage, nextPage, changePage } =
     usePagination({ itemsPerPage, data, startFrom });
 
+  if (data.length === 0)
+    return <div>Загрузите данные</div> // Сюда по хорошему заглушку какую-нибудь
+
   return (
     <>
       <table className="DirectionsTable">
@@ -28,7 +31,7 @@ const DirectionsTable = ({ data, itemsPerPage, startFrom }) => {
         <tbody>
           {slicedData.map((item) => (
             <tr key={item.id} className={item.destination ? "destinationTrue" : "destinationFalse"}>
-               <td>{item.student.studnumber}</td>
+              <td>{item.student.studnumber}</td>
               <td>{item.rating.points}</td>
               <td>{item.student.fullname}</td>
               <td>{item.student.institute}</td>
@@ -38,7 +41,7 @@ const DirectionsTable = ({ data, itemsPerPage, startFrom }) => {
           ))}
         </tbody>
       </table>
-      
+
       {/* блок с пагинацией */}
       <nav className="pagination nav-pagination mt-3">
         {/* Кнопка "<< Назад" */}

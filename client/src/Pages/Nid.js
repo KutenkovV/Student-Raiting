@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import NidTable from "../components/tables/NidTable";
 
 function Nid() {
   document.title = "Научная";
   const [items, setItems] = useState([]);
+  const { promiseInProgress } = usePromiseTracker();
 
-  //Гет запроса на список
+  //Гет запрос на список "Научная деятельность"
   useEffect(() => {
-    axios.get('http://localhost:8080/api/nid')
+    trackPromise(axios.get('http://localhost:8080/api/nid'))
       .then(response => setItems(response.data))
       .catch(error => console.log(error));
   }, []);
@@ -16,7 +18,11 @@ function Nid() {
   return (
     <div>
       <h1 className="header">Научная деятельность</h1>
-      <NidTable data={items} itemsPerPage={10} />
+
+      {/* блокс с промисом "загрузка..." */}
+      {promiseInProgress
+        ? <div>Загрузка...</div> : <NidTable data={items} itemsPerPage={10} />
+      }
     </div>
   );
 }

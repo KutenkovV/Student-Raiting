@@ -3,8 +3,12 @@ import "../LoadTable/LoadTable.css"
 import usePagination from "../../hooks/usePagination";
 
 const SummaryTable = ({ data, itemsPerPage, startFrom }) => {
+
     const { slicedData, pagination, prevPage, nextPage, changePage } =
         usePagination({ itemsPerPage, data, startFrom });
+
+    if (data.length === 0)
+        return <div>Загрузите данные</div> // Сюда по хорошему заглушку какую-нибудь
 
     return (
         <>
@@ -20,7 +24,7 @@ const SummaryTable = ({ data, itemsPerPage, startFrom }) => {
                 </thead>
                 <tbody>
                     {slicedData.map((item) => (
-                        <tr key={item.title}  className = "loadTr">
+                        <tr key={item.title} className="loadTr">
                             <td>{item.title}</td>
                             <td>{item.totalSubmitted}</td>
                             <td>{item.count}</td>
