@@ -3,7 +3,7 @@ const models = require("../models/models");
 const { Op } = require("sequelize");
 
 class ListController {
-  async getAllWithOrder(title) {
+  async getWithOrder(title) {
     const result = await models.StudentsRating.findAll({
       attributes: ["id", "destination","cause"],
       order: [
@@ -72,7 +72,7 @@ class ListController {
     return result;
   }
 
-  async getAll(title) {
+  async get(title) {
     const result = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
       required: true,
@@ -158,7 +158,7 @@ class ListController {
 
     return result;
   }
-  async getAllSad(req, res) {
+  async getSad(req, res) {
     const result = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
       required: true,
@@ -238,7 +238,7 @@ class ListController {
     return res.json(result);
   }
 
-  async getAllVacation(req, res) {
+  async getVacation(req, res) {
     const result = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
       required: true,
@@ -317,7 +317,7 @@ class ListController {
     }
     return res.json(result);
   }
-  async getAllFree(req, res) {
+  async getFree(req, res) {
     const result = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
       required: true,

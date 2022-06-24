@@ -1,67 +1,57 @@
 const models = require("../models/models");
-const ApiError = require("../error/ApiError");
 const { Op } = require("sequelize");
-const sequelize = require("../db");
+
+//класс отвечающий за сводку 
 
 class ReportController {
-  async getAll(req, res) {
-    // объект JavaScript
+  
+  async getReport(req, res) {    
+    // объект с данными для сводки
     var result = [
       {
         title: "Научно-исследовательская деятельность",
-        totalSubmitted: (
-          await ReportController.getTotalSubmitted("НИД")
-        ).toString(),
+        totalSubmitted: ( await ReportController.getTotalSubmitted("НИД") ).toString(),
         count: (await ReportController.getСount("НИД")).toString(),
         borderPoint: (await ReportController.getBorderPoint("НИД")).toString(),
         nextPoint: (await ReportController.getNextPoint("НИД")).toString(),
       },
       {
         title: "Учебная деятельность",
-        totalSubmitted: (
-          await ReportController.getTotalSubmitted("УД")
-        ).toString(),
+        totalSubmitted: ( await ReportController.getTotalSubmitted("УД") ).toString(),
         count: (await ReportController.getСount("УД")).toString(),
         borderPoint:  (await ReportController.getBorderPoint("УД")).toString(),
         nextPoint: (await ReportController.getNextPoint("УД")).toString(),
       },
       {
         title: "Спортивная деятельность",
-        totalSubmitted: (
-          await ReportController.getTotalSubmitted("СД")
-        ).toString(),
+        totalSubmitted: ( await ReportController.getTotalSubmitted("СД") ).toString(),
         count: (await ReportController.getСount("СД")).toString(),
         borderPoint:  (await ReportController.getBorderPoint("СД")).toString(),
         nextPoint: (await ReportController.getNextPoint("СД")).toString(),
       },
       {
         title: "Общественная деятельность",
-        totalSubmitted: (
-          await ReportController.getTotalSubmitted("ОД")
-        ).toString(),
+        totalSubmitted: ( await ReportController.getTotalSubmitted("ОД")).toString(),
         count: (await ReportController.getСount("ОД")).toString(),
         borderPoint:  (await ReportController.getBorderPoint("ОД")).toString(),
         nextPoint: (await ReportController.getNextPoint("ОД")).toString(),
       },
       {
         title: "Культурно-творческая деятельность",
-        totalSubmitted: (
-          await ReportController.getTotalSubmitted("КТД")
-        ).toString(),
+        totalSubmitted: ( await ReportController.getTotalSubmitted("КТД")).toString(),
         count: (await ReportController.getСount("КТД")).toString(),
         borderPoint:  (await ReportController.getBorderPoint("КТД")).toString(),
         nextPoint: (await ReportController.getNextPoint("КТД")).toString(),
       },
     ];
 
-    //return res.json(JSON.strigify(result));
     return res.json(result);
   }
 
   static async getTotalSubmitted(title) {
+    //получаем число поданных заявок
     const totalSubmitted = await models.StudentsRating.count({
       required: true,
-
       include: [
         {
           model: models.Rating,
@@ -73,7 +63,6 @@ class ReportController {
               include: [
                 {
                   model: models.Courses,
-
                   where: {
                     title: title,
                   },
@@ -91,7 +80,6 @@ class ReportController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-               
               ],
             },
           },
@@ -102,7 +90,8 @@ class ReportController {
     return totalSubmitted;
   }
   static async getСount(title) {
-    const totalSubmitted = await models.RatingCount.findAll({
+    //получаем количество заданных стипендий
+    const count = await models.RatingCount.findAll({
       required: true,
       attributes: ["count"],
       include: [
@@ -129,11 +118,11 @@ class ReportController {
         },
       ],
     });
-    //console.log(totalSubmitted[0]);
-    //console.log(totalSubmitted[0].dataValues.count);
-    return totalSubmitted[0].dataValues.count;
+
+    return count[0].dataValues.count;
   }
   static async getNextPoint(title) {
+    //получаем список заявок студентов за актуальную дату по заданному направлению
     const list = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
       order: [
@@ -186,32 +175,32 @@ class ReportController {
         },
       ],
     });
-    var p=list[0].rating.dataValues.points;
+    var borderPoint=list[0].rating.dataValues.points;
     for (let y = 0; y < list.length; y++) {
-      //в цикле находим последнего кто прошел
+      //в цикле находим последнего кто прошел и его баллы записываем
       if (
-        list[y].rating.dataValues.points < p &&
+        list[y].rating.dataValues.points < borderPoint &&
         list[y].student.dataValues.sad == true &&
         list[y].destination == true
       ) {
-        p = list[y].rating.dataValues.points;
+        borderPoint = list[y].rating.dataValues.points;
       }
+      //если добрались до перового непрошедшего то получаем его балл и выходим из цикла
       else if (
-        list[y].rating.dataValues.points < p &&
+        list[y].rating.dataValues.points < borderPoint &&
         list[y].student.dataValues.sad == true &&
         list[y].destination == false
       ) {
-        //если стипендия есть то назначить ему рейтинговую стипендию
-        //выход из цикла
-        p = list[y].rating.dataValues.points;
+        borderPoint = list[y].rating.dataValues.points;
         break;
-      } //смотрим имеет ли следующий чел стипендию
+      } 
     }
 
-    return p;
+    return borderPoint;
   }
 
   static async getBorderPoint(title) {
+    //получаем список заявок студентов за актуальную дату по заданному направлению
     const list = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
       order: [
@@ -264,19 +253,19 @@ class ReportController {
         },
       ],
     });
-    var p=list[0].rating.dataValues.points;
+    var borderPoint=list[0].rating.dataValues.points;
     for (let y = 0; y < list.length; y++) {
-      //в цикле находим последнего кто прошел
+      //в цикле находим последнего кто прошел и получаем его балл
       if (
-        list[y].rating.dataValues.points < p &&
+        list[y].rating.dataValues.points < borderPoint &&
         list[y].student.dataValues.sad == true &&
         list[y].destination == true
       ) {
-        p = list[y].rating.dataValues.points;
-      } //смотрим имеет ли следующий чел стипендию
+        borderPoint = list[y].rating.dataValues.points;
+      }
     }
-
-    return p;
+    return borderPoint;
   }
 }
+
 module.exports = new ReportController();

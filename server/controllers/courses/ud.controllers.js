@@ -1,14 +1,14 @@
 const listController = require("../list.controllers");
 
 class UdController {
-  async getAllWithOrder(req, res) {
-    const result = await listController.getAllWithOrder("УД");
+  async getWithOrder(req, res) {
+    const result = await listController.getWithOrder("УД");
 
     return res.json(result);
   }
 
-  async getAll(req, res) {
-    const result = await listController.getAll("УД");
+  async get(req, res) {
+    const result = await listController.get("УД");
     return res.json(result);
   }
 }
