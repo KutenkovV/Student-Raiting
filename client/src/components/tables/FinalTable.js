@@ -23,13 +23,13 @@ const FinalTable = ({ data, itemsPerPage, startFrom }) => {
                 <tbody>
                     {slicedData.map((item) => (
                         <tr key={item.id}>
-                            <td>{item.id}</td>
-                            <td>{item.points}</td>
-                            <td>{item.direction}</td>
-                            <td>{item.fio}</td>
-                            <td>{item.group}</td>
-                            <td>{item.institute}</td>
-                            <td>{item.status}</td>
+                            <td>{item.student.studnumber}</td>
+                            <td>{item.rating.points}</td>
+                            <td>{item.rating.ratingcourse.course.title}</td>
+                            <td>{item.student.fullname}</td>
+                            <td>{item.student.educationgroup}</td>
+                            <td>{item.student.institute}</td>
+                            <td>{item.cause}</td>
                         </tr>
                     ))}
                 </tbody>

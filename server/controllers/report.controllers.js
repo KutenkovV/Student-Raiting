@@ -91,8 +91,7 @@ class ReportController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
+               
               ],
             },
           },
@@ -123,8 +122,7 @@ class ReportController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
+               
               ],
             },
           },

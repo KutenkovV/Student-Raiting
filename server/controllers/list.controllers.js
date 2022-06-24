@@ -61,8 +61,7 @@ class ListController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
+               
               ],
             },
           },
@@ -101,7 +100,6 @@ class ListController {
               include: [
                 {
                   model: models.Courses,
-
                   where: {
                     title: title,
                   },
@@ -123,8 +121,6 @@ class ListController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
               ],
             },
           },
@@ -190,7 +186,6 @@ class ListController {
               model: models.RatingCourses,
               required: true,
               include: [
-
                 {
                   model: models.CourseLevels,
                   attributes: ["level"],
@@ -208,8 +203,6 @@ class ListController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
               ],
             },
           },
@@ -273,7 +266,6 @@ class ListController {
               model: models.RatingCourses,
               required: true,
               include: [
-
                 {
                   model: models.CourseLevels,
                   attributes: ["level"],
@@ -291,8 +283,6 @@ class ListController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
               ],
             },
           },
@@ -355,7 +345,6 @@ class ListController {
               model: models.RatingCourses,
               required: true,
               include: [
-
                 {
                   model: models.CourseLevels,
                   attributes: ["level"],
@@ -373,8 +362,7 @@ class ListController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
+               
               ],
             },
           },
@@ -407,6 +395,77 @@ class ListController {
         result[i].student.dataValues.free ="Нет"
       }
     }
+    return res.json(result);
+  }
+  async getFinal(req, res) {
+    const result = await models.StudentsRating.findAll({
+      attributes: ["id", "destination","cause"],
+      order: [
+        [
+          models.Rating,
+          models.RatingCourses,
+          { model: models.Courses },
+          "id",
+          "ASC",
+        ],
+        
+        [models.Rating, "points", "DESC"],
+        [
+          models.Rating,
+          models.RatingCourses,
+          { model: models.CourseLevels },
+          "level",
+          "ASC",
+        ],
+      ],
+      required: true,
+      include: [
+        {
+          model: models.Students,
+          attributes: [
+            "studnumber",
+            "fullname",
+            "educationgroup",
+            "institute",
+            "sad",
+          ],
+        },
+        {
+          model: models.Rating,
+          attributes: ["points"],
+          required: true,
+          include: [
+            {
+              model: models.RatingCourses,
+              required: true,
+              include: [
+                {
+                  model: models.Courses,
+                },
+                {
+                  model: models.CourseLevels,
+                  attributes: ["level"],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          model: models.DateTable,
+          attributes: ["id", "date"],
+          required: true,
+          where: {
+            date: {
+              [Op.contains]: [
+                { value: new Date(), inclusive: true },
+                { value: new Date(), inclusive: true },
+              ],
+            },
+          },
+        },
+      ],
+    });
+    //console.log(result)
     return res.json(result);
   }
 }

@@ -15,8 +15,6 @@ class ListLoadController {
       return;
     }
 
-    //console.log('req.files >>>', req.files); // eslint-disable-line
-
     sampleFile = req.files.file;
 
     uploadPath = "./uploads/" + sampleFile.name;
@@ -228,7 +226,7 @@ class ListLoadController {
       ],
     });
 
-    const listF = await models.StudentsFree.findAll({
+    const listFree = await models.StudentsFree.findAll({
       required: true,
       include: [
         {
@@ -240,8 +238,7 @@ class ListLoadController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
+               
               ],
             },
           },
@@ -249,7 +246,7 @@ class ListLoadController {
       ],
     });
 
-    const listV = await models.StudentsVacation.findAll({
+    const listVacation = await models.StudentsVacation.findAll({
       required: true,
       include: [
         {
@@ -261,8 +258,7 @@ class ListLoadController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
+               
               ],
             },
           },
@@ -270,7 +266,7 @@ class ListLoadController {
       ],
     });
 
-    const listS = await models.StudentsSAD.findAll({
+    const listSAD = await models.StudentsSAD.findAll({
       required: true,
       include: [
         {
@@ -282,8 +278,7 @@ class ListLoadController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
+             
               ],
             },
           },
@@ -292,8 +287,8 @@ class ListLoadController {
     });
 
     for (let i = 0; i < list.length; i++) {
-      for (let y = 0; y < listS.length; y++) {
-        if (list[i].student.dataValues.studnumber == listS[y].studnumber) {
+      for (let y = 0; y < listSAD.length; y++) {
+        if (list[i].student.dataValues.studnumber == listSAD[y].studnumber) {
           await models.Students.update(
             { sad: true },
             {
@@ -304,8 +299,8 @@ class ListLoadController {
           );
         }
       }
-      for (let y = 0; y < listV.length; y++) {
-        if (list[i].student.dataValues.studnumber == listV[y].studnumber) {
+      for (let y = 0; y < listVacation.length; y++) {
+        if (list[i].student.dataValues.studnumber == listVacation[y].studnumber) {
           await models.Students.update(
             { vacation: true },
             {
@@ -316,8 +311,8 @@ class ListLoadController {
           );
         }
       }
-      for (let y = 0; y < listF.length; y++) {
-        if (list[i].student.dataValues.studnumber == listF[y].studnumber) {
+      for (let y = 0; y < listFree.length; y++) {
+        if (list[i].student.dataValues.studnumber == listFree[y].studnumber) {
           await models.Students.update(
             { free: true },
             {

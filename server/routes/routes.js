@@ -1,9 +1,8 @@
 const Router = require("express");
 const router = new Router();
-const RatingCountController = require("../controllers/ratingCount.controllers");
+const ratingCountController = require("../controllers/ratingCount.controllers");
 const listLoadController = require("../controllers/listLoad.controllers");
 const reportController = require("../controllers/report.controllers");
-
 const listController = require("../controllers/list.controllers");
 const ktdController = require("../controllers/courses/ktd.controllers");
 const nidController = require("../controllers/courses/nid.controllers");
@@ -31,9 +30,9 @@ router.post("/listLoad/vacation", listLoadController.loadVacation);
 router.post("/listLoad/sad", listLoadController.loadSad);
 
 //маршрут для настроек мест рейтинга
-router.get("/ratingCount", RatingCountController.getAll);
-router.get("/ratingCountFromSAD", RatingCountController.getCountFromSad);
-router.put("/ratingCount", RatingCountController.update);
+router.get("/ratingCount", ratingCountController.getAll);
+router.get("/ratingCountFromSAD", ratingCountController.getCountFromSad);
+router.put("/ratingCount", ratingCountController.update);
 
 //маршрут для тестирования алгоритма расчета
 router.get("/test", CalculateRatingController.calculation);
@@ -53,6 +52,6 @@ router.put("/studentRatingManyCourses", studentRatingManyCourses.update);
 router.get("/report", reportController.getAll);
 
 //маршрут для итогового списка
-router.get("/finalList", reportController.getAll);
+router.get("/finalList", listController.getFinal);
 
 module.exports = router;
