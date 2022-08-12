@@ -1,1 +1,10 @@
 node_modules
+#Удалить строчки ниже если что-то сломается
+server/.env
+server/parserApp/.vs/parserApp/DesignTimeBuild/.dtbcache.v2
+server/parserApp/.vs/parserApp/v17/.suo
+server/parserApp/parserApp/obj/parserApp.csproj.nuget.dgspec.json
+server/parserApp/parserApp/obj/parserApp.csproj.nuget.g.props
+server/parserApp/parserApp/obj/project.assets.json
+server/parserApp/parserApp/obj/project.nuget.cache
+server/parserApp/parserApp/obj/Debug/net6.0/parserApp.csproj.AssemblyReference.cache

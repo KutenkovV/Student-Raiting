@@ -32,7 +32,6 @@ function ListLoad() {
     document.getElementById("formFile").value = "";
   }, [selected]);
 
-
   ////////////////// Загрузка списков
   const [file, setFile] = useState();
   const onInputChange = (e) => {
