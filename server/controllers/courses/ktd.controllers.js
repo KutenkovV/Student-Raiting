@@ -1,14 +1,13 @@
 const listController = require("../list.controllers");
 
 class KtdController {
-  async getAllWithOrder(req, res) {
-    const result = await listController.getAllWithOrder("КТД");
-
+  async getWithOrder(req, res) {
+    const result = await listController.getWithOrder("КТД");
     return res.json(result);
   }
 
-  async getAll(req, res) {
-    const result = await listController.getAll("КТД");
+  async get(req, res) {
+    const result = await listController.get("КТД");
     return res.json(result);
   }
 }

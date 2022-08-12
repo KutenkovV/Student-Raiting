@@ -3,207 +3,194 @@ const ApiError = require("../error/ApiError");
 const path = require("path");
 const { Op } = require("sequelize");
 
+//Класс отвечающий за загрузку файлов и последующий запуск парсера
+//Файлы загружаются в папку uploads
+//Перед запуском проекта обязательно собрать и запустить один раз парсер(что бы получился файл exe),который находится в папке parserApp
+
 class ListLoadController {
-  async loadAll(req, res) {
-    //что то похожее на загрузку файла
-
-    let sampleFile;
-    let uploadPath;
-
+  
+  async loadCourses(req, res) { 
+    //загрузка файлов по направлениям
     if (!req.files || Object.keys(req.files).length === 0) {
       res.status(400).send("No files were uploaded.");
       return;
     }
 
-    //console.log('req.files >>>', req.files); // eslint-disable-line
+    let file=req.files.file;
+    let uploadPath ="./uploads/" + file.name;
 
-    sampleFile = req.files.file;
-
-    uploadPath = "./uploads/" + sampleFile.name;
-
-    sampleFile.mv(uploadPath, function (err) {
+    //перемещаем файл из запроса в папку uploads
+    file.mv(uploadPath, function (err) {
       if (err) {
         return res.status(500).send(err);
       }
-
-      console.log("File uploaded to " + uploadPath);
     });
 
-    console.log(path.resolve("../server/uploads/" + sampleFile.name));
-
-    //что то похожее на запуск exe файла
+    //запуск exe файла парсера
     const { execFile } = require("child_process");
     execFile(
+      //путь к файлу exe
       path.resolve(
         "../server/parserApp/parserApp/bin/Debug/net6.0/parserApp.exe"
       ),
-      ["-s", path.resolve("../server/uploads/" + sampleFile.name)],
+      //ключ + сам файл excel
+      ["-s", path.resolve("../server/uploads/" + file.name)],
       (err, stdout, stderr) => {
         if (err) {
-          // node couldn't execute the command
-          console.log(err);
           res.status(400).send("node couldnt execute the command");
           return;
         }
-
-        // the *entire* stdout and stderr (buffered)
-        console.log(`stdout: ${stdout}`);
         res.send("ОК");
       }
     );
 
-    ListLoadController.selectionBooleanVariables();
+    //обновляем значения 
+    ListLoadController.updateFreeVacationSAD();
   }
+  //метод загрузки файлов по направлениям
   async loadFree(req, res) {
-    //что то похожее на загрузку файла
-
-    let sampleFile;
-    let uploadPath;
-
+   
     if (!req.files || Object.keys(req.files).length === 0) {
       res.status(400).send("No files were uploaded.");
       return;
     }
+    let file=req.files.file;
+    let uploadPath ="./uploads/" + file.name;
 
-    //console.log('req.files >>>', req.files); // eslint-disable-line
-
-    sampleFile = req.files.file;
-
-    uploadPath = "./uploads/" + sampleFile.name;
-
-    sampleFile.mv(uploadPath, function (err) {
+    //перемещаем файл из запроса в папку uploads
+    file.mv(uploadPath, function (err) {
       if (err) {
         return res.status(500).send(err);
       }
-
-      console.log("File uploaded to " + uploadPath);
     });
 
-    console.log(path.resolve("../server/uploads/" + sampleFile.name));
-
-    //что то похожее на запуск exe файла
+    //запуск exe файла парсера
     const { execFile } = require("child_process");
     execFile(
+      //путь к файлу exe
       path.resolve(
         "../server/parserApp/parserApp/bin/Debug/net6.0/parserApp.exe"
       ),
-      ["-f", path.resolve("../server/uploads/" + sampleFile.name)],
+      //ключ + сам файл excel
+      ["-f", path.resolve("../server/uploads/" + file.name)],
       (err, stdout, stderr) => {
         if (err) {
-          // node couldn't execute the command
-          console.log(err);
           res.status(400).send("node couldnt execute the command");
           return;
         }
-
-        // the *entire* stdout and stderr (buffered)
-        console.log(`stdout: ${stdout}`);
         res.send("ОК");
       }
     );
-    
-    ListLoadController.selectionBooleanVariables();
+
+    //обновляем значения 
+    ListLoadController.updateFreeVacationSAD();
   }
+  //метод загрузки файла с номерами студентов находящихся на каникулах
   async loadVacation(req, res) {
-    //что то похожее на загрузку файла
-
-    let sampleFile;
-    let uploadPath;
-
+    
     if (!req.files || Object.keys(req.files).length === 0) {
       res.status(400).send("No files were uploaded.");
       return;
     }
+    let file=req.files.file;
+    let uploadPath ="./uploads/" + file.name;
 
-    //console.log('req.files >>>', req.files); // eslint-disable-line
-
-    sampleFile = req.files.file;
-
-    uploadPath = "./uploads/" + sampleFile.name;
-
-    sampleFile.mv(uploadPath, function (err) {
+    //перемещаем файл из запроса в папку uploads
+    file.mv(uploadPath, function (err) {
       if (err) {
         return res.status(500).send(err);
       }
-
-      console.log("File uploaded to " + uploadPath);
     });
 
-    console.log(path.resolve("../server/uploads/" + sampleFile.name));
-
-    //что то похожее на запуск exe файла
+    //запуск exe файла парсера
     const { execFile } = require("child_process");
     execFile(
+      //путь к файлу exe
       path.resolve(
         "../server/parserApp/parserApp/bin/Debug/net6.0/parserApp.exe"
       ),
-      ["-v", path.resolve("../server/uploads/" + sampleFile.name)],
+      //ключ + сам файл excel
+      ["-v", path.resolve("../server/uploads/" + file.name)],
       (err, stdout, stderr) => {
         if (err) {
-          // node couldn't execute the command
-          console.log(err);
           res.status(400).send("node couldnt execute the command");
           return;
         } else {
-          // the *entire* stdout and stderr (buffered)
-          console.log(`stdout: ${stdout}`);
           res.send("ОК");
         }
       }
     );
-    ListLoadController.selectionBooleanVariables();
+    //обновляем значения 
+    ListLoadController.updateFreeVacationSAD();
   }
+  //метод загрузки файла с номерами студентов получающих ГАС
   async loadSad(req, res) {
-    //что то похожее на загрузку файла
-
-    let sampleFile;
-    let uploadPath;
-
+    
     if (!req.files || Object.keys(req.files).length === 0) {
       res.status(400).send("No files were uploaded.");
       return;
     }
+    let file=req.files.file;
+    let uploadPath ="./uploads/" + file.name;
 
-    //console.log('req.files >>>', req.files); // eslint-disable-line
-
-    sampleFile = req.files.file;
-
-    uploadPath = "./uploads/" + sampleFile.name;
-
-    sampleFile.mv(uploadPath, function (err) {
+    //перемещаем файл из запроса в папку uploads
+    file.mv(uploadPath, function (err) {
       if (err) {
         return res.status(500).send(err);
       }
-
-      console.log("File uploaded to " + uploadPath);
     });
 
-    console.log(path.resolve("../server/uploads/" + sampleFile.name));
-
-    //что то похожее на запуск exe файла
+    //запуск exe файла парсера
     const { execFile } = require("child_process");
     execFile(
+      //путь к файлу exe
       path.resolve(
         "../server/parserApp/parserApp/bin/Debug/net6.0/parserApp.exe"
       ),
-      ["-g", path.resolve("../server/uploads/" + sampleFile.name)],
+      //ключ + сам файл excel
+      ["-g", path.resolve("../server/uploads/" + file.name)],
       (err, stdout, stderr) => {
         if (err) {
-          // node couldn't execute the command
-          console.log(err);
           res.status(400).send("node couldnt execute the command");
           return;
         }
-
-        // the *entire* stdout and stderr (buffered)
-        console.log(`stdout: ${stdout}`);
         res.send("ОК");
       }
     );
-    ListLoadController.selectionBooleanVariables();
+     //обновляем значения 
+    ListLoadController.updateFreeVacationSAD();
+    console.log("Загрузка завершена")
+
+      //получаем все заявки студентов на текущий период
+    const list = await models.StudentsRating.findAll({
+      attributes: ["id", "destination"],
+      required: true,
+      include: [
+        {
+          model: models.Students,
+          attributes: ["id", "studnumber","sad","free","vacation"],
+        },
+        {
+          model: models.DateTable,
+          attributes: ["id", "date"],
+          required: true,
+          where: {
+            date: {
+              [Op.contains]: [
+                { value: new Date(), inclusive: true },
+                { value: new Date(), inclusive: true },
+              ],
+            },
+          },
+        },
+      ],
+    });
+    console.log(list)
   }
 
-  static async selectionBooleanVariables () {
+  //метод обновления полей каникулы,свободный график и ГАС после загрузки любого списка
+  static async updateFreeVacationSAD () {
+    //получаем все заявки студентов на текущий период
     const list = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
       required: true,
@@ -227,8 +214,8 @@ class ListLoadController {
         },
       ],
     });
-
-    const listF = await models.StudentsFree.findAll({
+    //получаем номера студентов которые сдают сессию согласно свободному графику
+    const listFree = await models.StudentsFree.findAll({
       required: true,
       include: [
         {
@@ -240,16 +227,15 @@ class ListLoadController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
+               
               ],
             },
           },
         },
       ],
     });
-
-    const listV = await models.StudentsVacation.findAll({
+    //получаем номера студентов которые находятся на каникулах
+    const listVacation = await models.StudentsVacation.findAll({
       required: true,
       include: [
         {
@@ -261,16 +247,15 @@ class ListLoadController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
+               
               ],
             },
           },
         },
       ],
     });
-
-    const listS = await models.StudentsSAD.findAll({
+    //получаем номера студентов которые получают ГАС 
+    const listSAD = await models.StudentsSAD.findAll({
       required: true,
       include: [
         {
@@ -282,18 +267,19 @@ class ListLoadController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
+             
               ],
             },
           },
         },
       ],
     });
-
+    //перебираем все заявки студентов на текущий период
     for (let i = 0; i < list.length; i++) {
-      for (let y = 0; y < listS.length; y++) {
-        if (list[i].student.dataValues.studnumber == listS[y].studnumber) {
+      //перебираем номера студентов которые получают ГАС 
+      for (let y = 0; y < listSAD.length; y++) {
+        //если студент из списка заявок получает ГАС,то ставим ему значение true
+        if (list[i].student.dataValues.studnumber == listSAD[y].studnumber) {
           await models.Students.update(
             { sad: true },
             {
@@ -304,8 +290,10 @@ class ListLoadController {
           );
         }
       }
-      for (let y = 0; y < listV.length; y++) {
-        if (list[i].student.dataValues.studnumber == listV[y].studnumber) {
+      //перебираем номера студентов которые находятся на каникулах
+      for (let y = 0; y < listVacation.length; y++) {
+        //если студент из списка заявок находится на каникулах,то ставим ему значение true
+        if (list[i].student.dataValues.studnumber == listVacation[y].studnumber) {
           await models.Students.update(
             { vacation: true },
             {
@@ -316,8 +304,10 @@ class ListLoadController {
           );
         }
       }
-      for (let y = 0; y < listF.length; y++) {
-        if (list[i].student.dataValues.studnumber == listF[y].studnumber) {
+      //перебираем номера студентов которые сдают сессию согласно свободному графику
+      for (let y = 0; y < listFree.length; y++) {
+        //если студент из списка заявок сдает сессию согласно свободному графику,то ставим ему значение true
+        if (list[i].student.dataValues.studnumber == listFree[y].studnumber) {
           await models.Students.update(
             { free: true },
             {
@@ -329,6 +319,7 @@ class ListLoadController {
         }
       }
     }
+    
   }
 }
 

@@ -1,14 +1,14 @@
 const listController = require("../list.controllers");
 
 class OdController {
-  async getAllWithOrder(req, res) {
-    const result = await listController.getAllWithOrder("ОД");
+  async getWithOrder(req, res) {
+    const result = await listController.getWithOrder("ОД");
 
     return res.json(result);
   }
 
-  async getAll(req, res) {
-    const result = await listController.getAll("ОД");
+  async get(req, res) {
+    const result = await listController.get("ОД");
     return res.json(result);
   }
 

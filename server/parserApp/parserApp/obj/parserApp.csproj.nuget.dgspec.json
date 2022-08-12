@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Web\\Student-Raiting\\server\\parserApp\\parserApp\\parserApp.csproj": {}
+    "C:\\Users\\Yulia\\Study\\Student-Raiting\\server\\parserApp\\parserApp\\parserApp.csproj": {}
   },
   "projects": {
-    "D:\\Web\\Student-Raiting\\server\\parserApp\\parserApp\\parserApp.csproj": {
+    "C:\\Users\\Yulia\\Study\\Student-Raiting\\server\\parserApp\\parserApp\\parserApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Web\\Student-Raiting\\server\\parserApp\\parserApp\\parserApp.csproj",
+        "projectUniqueName": "C:\\Users\\Yulia\\Study\\Student-Raiting\\server\\parserApp\\parserApp\\parserApp.csproj",
         "projectName": "parserApp",
-        "projectPath": "D:\\Web\\Student-Raiting\\server\\parserApp\\parserApp\\parserApp.csproj",
-        "packagesPath": "C:\\Users\\Vladislav\\.nuget\\packages\\",
-        "outputPath": "D:\\Web\\Student-Raiting\\server\\parserApp\\parserApp\\obj\\",
+        "projectPath": "C:\\Users\\Yulia\\Study\\Student-Raiting\\server\\parserApp\\parserApp\\parserApp.csproj",
+        "packagesPath": "C:\\Users\\Yulia\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Yulia\\Study\\Student-Raiting\\server\\parserApp\\parserApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Vladislav\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Yulia\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
