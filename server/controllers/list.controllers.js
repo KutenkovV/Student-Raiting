@@ -2,7 +2,10 @@ const models = require("../models/models");
 
 const { Op } = require("sequelize");
 
+//класс,
+
 class ListController {
+  //
   async getWithOrder(title) {
     const result = await models.StudentsRating.findAll({
       attributes: ["id", "destination","cause"],
@@ -71,7 +74,7 @@ class ListController {
 
     return result;
   }
-
+  //
   async get(title) {
     const result = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
@@ -158,6 +161,7 @@ class ListController {
 
     return result;
   }
+  //
   async getSad(req, res) {
     const result = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
@@ -237,7 +241,7 @@ class ListController {
     }
     return res.json(result);
   }
-
+  //
   async getVacation(req, res) {
     const result = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
@@ -317,6 +321,7 @@ class ListController {
     }
     return res.json(result);
   }
+  //
   async getFree(req, res) {
     const result = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
@@ -397,6 +402,7 @@ class ListController {
     }
     return res.json(result);
   }
+  //
   async getFinal(req, res) {
     const result = await models.StudentsRating.findAll({
       attributes: ["id", "destination","cause"],

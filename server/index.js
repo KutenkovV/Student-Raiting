@@ -6,8 +6,6 @@ const cors = require("cors");
 const sequelize = require("./db");
 const router = require("./routes/routes");
 const fileUpload = require('express-fileupload');
-const RatingCountController = require("./controllers/ratingCount.controllers");
-
 const PORT = process.env.PORT || 8080;
 const app = express();
 

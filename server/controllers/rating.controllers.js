@@ -2,11 +2,13 @@ const models = require("../models/models");
 const ApiError = require("../error/ApiError");
 const { Op } = require("sequelize");
 
-class RatingController {
-  
-  
-    
+//класс отвечающий за студентов, которые подали на несколько направлений
+
+class RatingManyCoursesController {
+  //метод ,который возвращает студентов,которые подали на несколько направлений
   async getStudentRatingManyCourses(req, res) {
+    
+    //Получаем список студентов 
     const list = await models.Students.findAll({
       attributes: ["id"],
     });
@@ -142,7 +144,7 @@ class RatingController {
 
     return res.json(result);
   }
-
+  //метод для определения направления по которому студент будет получать стипендию 
   async updateStudentRatingManyCourses(req, res) {
     //надо что бы на вход был ID студента которого определяют и направление которое нужно поставить destination=true
 
@@ -317,9 +319,8 @@ class RatingController {
       }
     }
 
-    
     return res.send("ОК");;
   }
 }
 
-module.exports = new RatingController();
+module.exports = new RatingManyCoursesController();

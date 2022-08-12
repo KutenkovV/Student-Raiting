@@ -1,5 +1,7 @@
 const sequelize = require("../db");
 const { DataTypes } = require("sequelize");
+//Тут лежат все модели данных для работы с БД
+//Сначала написаны сущности, потом связи между ними
 
 const Courses = sequelize.define(
   "courses",
@@ -24,9 +26,8 @@ const CourseLevels = sequelize.define(
     level: { type: DataTypes.INTEGER, allowNull: false },
   },
   {
-    // Отключаем `createdAt`
+   
     createdAt: false,
-    // Изменяем название `updatedAt`
     updatedAt: false,
   }
 );
@@ -38,11 +39,9 @@ const DateTable = sequelize.define(
     date: { type: DataTypes.RANGE(DataTypes.DATEONLY), allowNull: false },
   },
   {
-    // define the table's name
+
     tableName: "datetable",
-    // Отключаем `createdAt`
     createdAt: false,
-    // Изменяем название `updatedAt`
     updatedAt: false,
   }
 );
@@ -53,9 +52,7 @@ const RatingCourses = sequelize.define(
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   },
   {
-    // Отключаем `createdAt`
     createdAt: false,
-    // Изменяем название `updatedAt`
     updatedAt: false,
   }
 );
@@ -67,11 +64,8 @@ const RatingCount = sequelize.define(
     count: { type: DataTypes.INTEGER, allowNull: false },
   },
   {
-    // define the table's name
     tableName: "ratingcount",
-    // Отключаем `createdAt`
     createdAt: false,
-    // Изменяем название `updatedAt`
     updatedAt: false,
   }
 );
@@ -83,11 +77,8 @@ const StudentsSAD = sequelize.define(
     studnumber: { type: DataTypes.INTEGER, allowNull: false },
   },
   {
-    // define the table's name
     tableName: "studentssad",
-    // Отключаем `createdAt`
     createdAt: false,
-    // Изменяем название `updatedAt`
     updatedAt: false,
   }
 );
@@ -99,11 +90,8 @@ const StudentsVacation = sequelize.define(
     studnumber: { type: DataTypes.INTEGER, allowNull: false },
   },
   {
-    // define the table's name
     tableName: "studentsvacation",
-    // Отключаем `createdAt`
     createdAt: false,
-    // Изменяем название `updatedAt`
     updatedAt: false,
   }
 );
@@ -115,11 +103,9 @@ const StudentsFree = sequelize.define(
     studnumber: { type: DataTypes.INTEGER, allowNull: false },
   },
   {
-    // define the table's name
+
     tableName: "studentsfree",
-    // Отключаем `createdAt`
     createdAt: false,
-    // Изменяем название `updatedAt`
     updatedAt: false,
   }
 );
@@ -131,11 +117,9 @@ const Rating = sequelize.define(
     points: { type: DataTypes.DOUBLE, allowNull: false },
   },
   {
-    // define the table's name
+
     tableName: "rating",
-    // Отключаем `createdAt`
     createdAt: false,
-    // Изменяем название `updatedAt`
     updatedAt: false,
   }
 );
@@ -154,11 +138,9 @@ const Students = sequelize.define(
     free: { type: DataTypes.BOOLEAN, allowNull: false },
   },
   {
-    // define the table's name
+
     tableName: "students",
-    // Отключаем `createdAt`
     createdAt: false,
-    // Изменяем название `updatedAt`
     updatedAt: false,
   }
 );
@@ -171,11 +153,8 @@ const StudentsRating = sequelize.define(
     cause: { type: DataTypes.STRING(20), allowNull: true},
   },
   {
-    // define the table's name
     tableName: "studentsrating",
-    // Отключаем `createdAt`
     createdAt: false,
-    // Изменяем название `updatedAt`
     updatedAt: false,
   }
 );

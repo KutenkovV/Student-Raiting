@@ -9,7 +9,7 @@ const nidController = require("../controllers/courses/nid.controllers");
 const odController = require("../controllers/courses/od.controllers");
 const sdController = require("../controllers/courses/sd.controllers");
 const udController = require("../controllers/courses/ud.controllers");
-const RatingController = require("../controllers/rating.controllers");
+const RatingManyCoursesController = require("../controllers/rating.controllers");
 
 //маршруты для запросов get загруженных списков
 router.get("/listLoad/ud", udController.get);
@@ -27,9 +27,9 @@ router.post("/listLoad/free", listLoadController.loadFree);
 router.post("/listLoad/vacation", listLoadController.loadVacation);
 router.post("/listLoad/sad", listLoadController.loadSad);
 
-//маршрут для настроек мест рейтинга
+//маршрут количества мест рейтинга
 router.get("/ratingCount", ratingCountController.get);
-
+//маршрут количества студентов получающих ГАС
 router.get("/ratingCountFromSAD", ratingCountController.getCountFromSad);
 //маршрут изменения количества мест
 router.put("/ratingCount", ratingCountController.update);
@@ -42,9 +42,9 @@ router.get("/od", odController.getWithOrder);
 router.get("/ud", udController.getWithOrder);
 
 //маршрут для списка студентов которые подали на несколько направлений
-router.get("/studentRatingManyCourses", RatingController.getStudentRatingManyCourses);
+router.get("/studentRatingManyCourses", RatingManyCoursesController.getStudentRatingManyCourses);
 //маршрут для опеределения направления по которому будет получать студент стипендию
-router.put("/studentRatingManyCourses", RatingController.updateStudentRatingManyCourses);
+router.put("/studentRatingManyCourses", RatingManyCoursesController.updateStudentRatingManyCourses);
 
 //маршрут для сводки
 router.get("/report", reportController.getReport);
