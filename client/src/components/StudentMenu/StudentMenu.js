@@ -3,7 +3,7 @@ import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import "./StudentMenu.css";
 
-function StudentMenu() {
+function StudentMenu({ selected, setSelected }) {
   const [isActive, setIsActive] = useState(false);
   const options = [
     "НАУЧНАЯ ДЕЯТЕЛЬНОСТЬ",
@@ -16,13 +16,14 @@ function StudentMenu() {
   return (
     <div className="studentMenu">
       <div className="studentMenu-btn" onClick={(e) => setIsActive(!isActive)}>
-        <FontAwesomeIcon icon={faEllipsisVertical }/>
+        <FontAwesomeIcon icon={faEllipsisVertical} />
       </div>
+
       {isActive && (
         <div className="studentMenu-content">
           {options.map((option) => (
             <div
-                onClick={(e) => {
+              onClick={(e) => {
                 setSelected(option);
                 setIsActive(false);
               }}
