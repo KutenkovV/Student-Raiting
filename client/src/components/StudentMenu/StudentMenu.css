@@ -1,10 +1,18 @@
 .studentMenu .studentMenu-btn {
-  display: inline-flex;
-  justify-items: center;
-  align-items: center;
   cursor: pointer;
-  width: 1rem;
-  height: 1rem;
+  width: 2rem;
+  height: 2rem;
+  padding-top: 6px; /* очень тупая строчка */
+}
+
+.studentMenu .studentMenu-btn:hover {
+  border-radius: 100%;
+  background-color: #d8d6d6;
+}
+
+.studentMenu .studentMenu-btn:focus {
+  border-radius: 100%;
+  background-color: #c0c0c0;
 }
 
 .studentMenu .studentMenu-content {
@@ -14,6 +22,7 @@
   background: #fff;
   box-shadow: 2px 2px 5px 2px rgb(183, 183, 183);
   color: #333;
+  border-radius: 5px;
 }
 
 .studentMenu .studentMenu-content .studentMenu-item {

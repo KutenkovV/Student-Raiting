@@ -1,7 +1,23 @@
-.destinationTrue{
+.destinationTrue {
     background-color: #b9e7cc;
 }
 
-.tdTrue{
+.tdTrue {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+    width: 3rem;
+    border-radius: 25%;
     background-color: #b9e7cc;
+}
+
+.tdFalse {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+    width: 3rem;
 }

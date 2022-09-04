@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../LoadTable/LoadTable.css";
 import usePagination from "../../hooks/usePagination";
 import StudentMenu from "../StudentMenu/StudentMenu";
@@ -7,8 +7,17 @@ const SeveralDirectionsTable = ({ data, itemsPerPage, startFrom }) => {
   const { slicedData, pagination, prevPage, nextPage, changePage } =
     usePagination({ itemsPerPage, data, startFrom });
 
-  if (data.length === 0) 
-  return <div>Загрузите данные</div> // Сюда по хорошему заглушку какую-нибудь
+  const [selected, setSelected] = useState();
+  const [cellValue, setCellValue] = useState();
+
+  console.log(selected);
+
+  const getCellValue = (cell) => {
+    setCellValue(cell);
+  }
+
+  if (data.length === 0)
+    return <div>Загрузите данные</div> // Сюда по хорошему заглушку какую-нибудь
 
   return (
     <>
@@ -24,23 +33,22 @@ const SeveralDirectionsTable = ({ data, itemsPerPage, startFrom }) => {
             <th>Ктд</th>
             <th>Группа</th>
             <th>Институт</th>
-            <th>Гас</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           {slicedData.map((item) => (
-            <tr key={item.id}>
+            <tr key={item.id} className="loadTr">
               <td>{item.studnumber}</td>
               <td>{item.fullname}</td>
-              <td className={item.nid.destination ? "tdTrue" : "tdFalse"} >{item.nid.point}</td>
-              <td className={item.ud.destination ? "tdTrue" : "tdFalse"} >{item.ud.point}</td>
-              <td className={item.sd.destination ? "tdTrue" : "tdFalse"}>{item.sd.point}</td>
-              <td className={item.od.destination ? "tdTrue" : "tdFalse"}>{item.od.point}</td>
-              <td className={item.ktd.destination ? "tdTrue" : "tdFalse"}>{item.ktd.point}</td>
+              <td><div className={item.nid.destination ? "tdTrue" : "tdFalse"}>{item.nid.point}</div></td>
+              <td><div className={item.ud.destination ? "tdTrue" : "tdFalse"}>{item.ud.point}</div></td>
+              <td><div className={item.sd.destination ? "tdTrue" : "tdFalse"}>{item.sd.point}</div></td>
+              <td><div className={item.od.destination ? "tdTrue" : "tdFalse"}>{item.od.point}</div></td>
+              <td><div className={item.ktd.destination ? "tdTrue" : "tdFalse"}>{item.ktd.point}</div></td>
               <td>{item.educationgroup}</td>
               <td>{item.institute}</td>
-              <td><StudentMenu /></td>
+              <td onClick={() => getCellValue(item.studnumber)}><StudentMenu stNum={cellValue} items={slicedData} selected={selected} setSelected={setSelected}/></td>
             </tr>
           ))}
         </tbody>

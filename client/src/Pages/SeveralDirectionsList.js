@@ -16,8 +16,12 @@ function SeveralDirectionsList() {
       .catch(error => console.log(error));
   }, []);
 
-  //пут запрос
-  // axios.put(`http://localhost:8080/api/studentRatingManyCourses/`)
+  // const data = new FormData();
+  // data.append('id', file);
+  // data.append('course', file);
+
+  // //пут запрос
+  // axios.put(`http://localhost:8080/api/studentRatingManyCourses/`, data)
   //   .then(() => {
   //     console.log("Success!");
   //   })
