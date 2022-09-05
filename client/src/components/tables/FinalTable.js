@@ -1,6 +1,12 @@
 import React from 'react'
 import "../LoadTable/LoadTable.css"
 import usePagination from "../../hooks/usePagination";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faChevronRight,
+    faChevronLeft,
+    faEllipsis,
+  } from "@fortawesome/free-solid-svg-icons";
 
 const FinalTable = ({ data, itemsPerPage, startFrom }) => {
     const { slicedData, pagination, prevPage, nextPage, changePage } =
@@ -22,7 +28,7 @@ const FinalTable = ({ data, itemsPerPage, startFrom }) => {
                 </thead>
                 <tbody>
                     {slicedData.map((item) => (
-                        <tr key={item.id}>
+                        <tr key={item.id} className="loadTr">
                             <td>{item.student.studnumber}</td>
                             <td>{item.rating.points}</td>
                             <td>{item.rating.ratingcourse.course.title}</td>
@@ -34,6 +40,68 @@ const FinalTable = ({ data, itemsPerPage, startFrom }) => {
                     ))}
                 </tbody>
             </table>
+
+            {/* блок с пагинацией */}
+            <nav className="pagination nav-pagination mt-3">
+                {/* Кнопка "<< Назад" */}
+                <li className="page-item">
+                    <a
+                        href="#"
+                        className="page-link"
+                        aria-label="Previous"
+                        onClick={prevPage}
+                    >
+                        <span aria-hidden="true" className=" arrow">
+                            <FontAwesomeIcon icon={faChevronLeft} />
+                        </span>
+                    </a>
+                </li>
+
+                {/* Сам лист-пагинация  */}
+                <ul className="pagination">
+                    {pagination.map((page) => {
+                        if (!page.ellipsis) {
+                            return (
+                                <li
+                                    className={page.current ? "page-item active" : "page-item"}
+                                    key={page.id}
+                                >
+                                    <a
+                                        href="#"
+                                        className="page-link"
+                                        onClick={(e) => changePage(page.id, e)}
+                                    >
+                                        {" "}
+                                        {page.id}
+                                    </a>
+                                </li>
+                            );
+                        } else {
+                            return (
+                                <li key={page.id} className="page-item mt-3">
+                                    <span className="pagination-ellipsis">
+                                        <FontAwesomeIcon icon={faEllipsis} />
+                                    </span>
+                                </li>
+                            );
+                        }
+                    })}
+                </ul>
+
+                {/* Кнопка "Вперед >>" */}
+                <li className="page-item">
+                    <a
+                        href="#"
+                        className="page-link"
+                        aria-label="Next"
+                        onClick={nextPage}
+                    >
+                        <span aria-hidden="true" className=" arrow">
+                            <FontAwesomeIcon icon={faChevronRight} />
+                        </span>
+                    </a>
+                </li>
+            </nav>
         </>
     )
 }

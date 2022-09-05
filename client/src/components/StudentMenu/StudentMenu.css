@@ -1,30 +1,38 @@
 .studentMenu .studentMenu-btn {
-    display: inline-flex;
-    justify-items: center;
-    align-items: center; 
-    cursor: pointer;
-    width: 1rem;
-    height: 1rem;
-  }
-  .studentMenu .studentMenu-content {
-    position: absolute;
-    padding: 15px;
-    background: #fff;
-    box-shadow: 2px 2px 5px 2px rgb(183, 183, 183);
-    color: #333;
-  }
-  .studentMenu .studentMenu-content .studentMenu-item {
-    font-size: 0.7vw;
-    color: #9eadbd;
-    padding: 10px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  
-  .studentMenu .studentMenu-content .studentMenu-item:hover {
-    background: #f4f4f4;
-  }
-  
-  .studentMenu{
-    position: relative;
-  }
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  padding-top: 6px; /* очень тупая строчка */
+}
+
+.studentMenu .studentMenu-btn:hover {
+  border-radius: 100%;
+  background-color: #d8d6d6;
+}
+
+.studentMenu .studentMenu-btn:focus {
+  border-radius: 100%;
+  background-color: #c0c0c0;
+}
+
+.studentMenu .studentMenu-content {
+  position: absolute;
+  right: 5%;
+  padding: 15px;
+  background: #fff;
+  box-shadow: 2px 2px 5px 2px rgb(183, 183, 183);
+  color: #333;
+  border-radius: 5px;
+}
+
+.studentMenu .studentMenu-content .studentMenu-item {
+  font-size: 0.7vw;
+  color: #9eadbd;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.studentMenu .studentMenu-content .studentMenu-item:hover {
+  background: #f4f4f4;
+}

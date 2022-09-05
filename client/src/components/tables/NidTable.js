@@ -33,7 +33,7 @@ const NidTable = ({ data, itemsPerPage, startFrom }) => {
         </thead>
         <tbody>
           {slicedData.map((item) => (
-            <tr key={item.id} className={item.destination ? "destinationTrue" : "destinationFalse"}>
+            <tr key={item.id} className={item.destination ? "destinationTrue" : "loadTr destinationFalse"}>
               <td>{item.student.studnumber}</td>
               <td>{item.rating.points}</td>
               <td>{item.rating.ratingcourse.courselevel.level}</td>
