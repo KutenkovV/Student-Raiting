@@ -161,31 +161,7 @@ class ListLoadController {
     ListLoadController.updateFreeVacationSAD();
     console.log("Загрузка завершена")
 
-      //получаем все заявки студентов на текущий период
-    const list = await models.StudentsRating.findAll({
-      attributes: ["id", "destination"],
-      required: true,
-      include: [
-        {
-          model: models.Students,
-          attributes: ["id", "studnumber","sad","free","vacation"],
-        },
-        {
-          model: models.DateTable,
-          attributes: ["id", "date"],
-          required: true,
-          where: {
-            date: {
-              [Op.contains]: [
-                { value: new Date(), inclusive: true },
-                { value: new Date(), inclusive: true },
-              ],
-            },
-          },
-        },
-      ],
-    });
-    console.log(list)
+
   }
 
   //метод обновления полей каникулы,свободный график и ГАС после загрузки любого списка
