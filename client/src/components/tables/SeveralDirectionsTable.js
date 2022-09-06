@@ -7,10 +7,7 @@ const SeveralDirectionsTable = ({ data, itemsPerPage, startFrom }) => {
   const { slicedData, pagination, prevPage, nextPage, changePage } =
     usePagination({ itemsPerPage, data, startFrom });
 
-  const [selected, setSelected] = useState();
   const [cellValue, setCellValue] = useState();
-
-  console.log(selected);
 
   const getCellValue = (cell) => {
     setCellValue(cell);
@@ -48,7 +45,7 @@ const SeveralDirectionsTable = ({ data, itemsPerPage, startFrom }) => {
               <td><div className={item.ktd.destination ? "tdTrue" : "tdFalse"}>{item.ktd.point}</div></td>
               <td>{item.educationgroup}</td>
               <td>{item.institute}</td>
-              <td onClick={() => getCellValue(item.studnumber)}><StudentMenu stNum={cellValue} items={slicedData} selected={selected} setSelected={setSelected}/></td>
+              <td onClick={() => getCellValue(item.studnumber)}><StudentMenu stNum={cellValue} items={slicedData}/></td>
             </tr>
           ))}
         </tbody>
