@@ -4,6 +4,7 @@ const ratingCountController = require("../controllers/ratingCount.controllers");
 const listLoadController = require("../controllers/listLoad.controllers");
 const reportController = require("../controllers/report.controllers");
 const listController = require("../controllers/list.controllers");
+const finallistController = require("../controllers/finalList.controllers");
 const ktdController = require("../controllers/courses/ktd.controllers");
 const nidController = require("../controllers/courses/nid.controllers");
 const odController = require("../controllers/courses/od.controllers");
@@ -29,7 +30,7 @@ router.post("/listLoad/sad", listLoadController.loadSad);
 
 //маршрут количества мест рейтинга
 router.get("/ratingCount", ratingCountController.get);
-//маршрут количества студентов получающих ГАС
+//маршрут 10% от количества студентов получающих ГАС
 router.get("/ratingCountFromSAD", ratingCountController.getCountFromSad);
 //маршрут изменения количества мест
 router.put("/ratingCount", ratingCountController.update);
@@ -50,6 +51,8 @@ router.put("/studentRatingManyCourses", RatingManyCoursesController.updateStuden
 router.get("/report", reportController.getReport);
 
 //маршрут для итогового списка
-router.get("/finalList", listController.getFinal);
+router.get("/finalList", finallistController.getFinal);
+//маршрут для итогового списка
+router.get("/finalListFile", finallistController.getFinalFile);
 
 module.exports = router;

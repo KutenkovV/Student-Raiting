@@ -107,9 +107,6 @@ class RatingManyCoursesController {
         for (let y = 0; y < listStudentRating.length; y++) {
           //если заявка прошла то увеличить счетчик
           if (listStudentRating[y].destination == true) {
-            console.log(listStudentRating[y].student.dataValues.fullname)
-            console.log(listStudentRating[y].destination)
-
             countDestinationTrue++;
             //добавление инфы из заявки в переменную stud
             switch (

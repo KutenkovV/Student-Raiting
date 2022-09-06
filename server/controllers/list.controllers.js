@@ -1,8 +1,5 @@
 const models = require("../models/models");
-
 const { Op } = require("sequelize");
-
-//класс,
 
 class ListController {
   //
@@ -400,78 +397,6 @@ class ListController {
         result[i].student.dataValues.free ="Нет"
       }
     }
-    return res.json(result);
-  }
-  //
-  async getFinal(req, res) {
-    const result = await models.StudentsRating.findAll({
-      attributes: ["id", "destination","cause"],
-      order: [
-        [
-          models.Rating,
-          models.RatingCourses,
-          { model: models.Courses },
-          "id",
-          "ASC",
-        ],
-        
-        [models.Rating, "points", "DESC"],
-        [
-          models.Rating,
-          models.RatingCourses,
-          { model: models.CourseLevels },
-          "level",
-          "ASC",
-        ],
-      ],
-      required: true,
-      include: [
-        {
-          model: models.Students,
-          attributes: [
-            "studnumber",
-            "fullname",
-            "educationgroup",
-            "institute",
-            "sad",
-          ],
-        },
-        {
-          model: models.Rating,
-          attributes: ["points"],
-          required: true,
-          include: [
-            {
-              model: models.RatingCourses,
-              required: true,
-              include: [
-                {
-                  model: models.Courses,
-                },
-                {
-                  model: models.CourseLevels,
-                  attributes: ["level"],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          model: models.DateTable,
-          attributes: ["id", "date"],
-          required: true,
-          where: {
-            date: {
-              [Op.contains]: [
-                { value: new Date(), inclusive: true },
-                { value: new Date(), inclusive: true },
-              ],
-            },
-          },
-        },
-      ],
-    });
-    //console.log(result)
     return res.json(result);
   }
 }
