@@ -27,10 +27,10 @@ function ListLoad() {
       .catch(error => console.error(error));
   }
 
-  useEffect(() => {
-    fetchData();
-    document.getElementById("formFile").value = "";
-  }, [selected]);
+  // useEffect(() => {
+  //   fetchData();
+  //   document.getElementById("formFile").value = "";
+  // }, [selected]);
 
   ////////////////// Загрузка списков
   const [file, setFile] = useState();
@@ -72,7 +72,10 @@ function ListLoad() {
 
   return (
     <div>
-      <Dropdown selected={selected} setSelected={setSelected} />
+      <div>
+        Новый компонент
+      </div>
+      {/* <Dropdown selected={selected} setSelected={setSelected} />
       <form method="post" action="#" id="#" onSubmit={onSubmit}>
         <div class="row align-items-start mt-2 me-0 ">
           <div class="mb-3 col-6">
@@ -82,12 +85,12 @@ function ListLoad() {
             Загрузить
           </button>
         </div>
-      </form>
+      </form> */}
 
       {/* Передаю данные как параметр в компонент */}
-      {promiseInProgress
+      {/* {promiseInProgress
         ? <div>Загрузка...</div> : <LoadTable data={items} />
-      }
+      } */}
     </div>
   );
 }
