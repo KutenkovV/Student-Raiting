@@ -80,23 +80,12 @@ class FinalListController {
     //получаем список к назначению
     const result = await models.StudentsRating.findAll({
       attributes: ["id", "destination", "cause"],
+      where: {
+        destination: true,
+      },
       order: [
-        [
-          models.Rating,
-          models.RatingCourses,
-          { model: models.Courses },
-          "id",
-          "ASC",
-        ],
-
-        [models.Rating, "points", "DESC"],
-        [
-          models.Rating,
-          models.RatingCourses,
-          { model: models.CourseLevels },
-          "level",
-          "ASC",
-        ],
+        [models.Students, "institute","ASC",],
+        [models.Students, "educationgroup","ASC",],
       ],
       required: true,
       include: [
@@ -171,35 +160,36 @@ class FinalListController {
       { header: 'Направление', key: 'courses', width: 10 },
       { header: 'Балл', key: 'points', width: 10 },
       { header: 'Категория', key: 'level', width: 10 },
-      { header: 'Сумма', key: 'summ', width: 10 },
-      { header: 'Период', key: 'date', width: 10 },
+      { header: 'Сумма', key: 'sum', width: 10 },
+      { header: 'Период', key: 'period', width: 10 },
       { header: 'Статус', key: 'cause', width: 10 },
       { header: 'ПГАС', key: 'destination', width: 10 },
       { header: 'ID', key: 'studnumber', width: 10 },
       //{ header: 'Факультет', key: 'dob', width: 10, outlineLevel: 1, type: 'date', formulae: [new Date(2016, 0, 1)] }
     ];
-
-    //worksheet.addRow({ id: 1, name: 'John Doe', dob: new Date(1970, 1, 1) });
-    //worksheet.addRow({ id: 2, name: 'Jane Doe', dob: new Date(1965, 1, 7) });
-
+    
     for (let i = 0; i < result.length; i++) {
-      
+      var sum =0;
+
+        (result[i].rating.ratingcourse.dataValues.courselevel.dataValues.level ==1 ) ? sum=12500 :
+        (result[i].rating.ratingcourse.dataValues.courselevel.dataValues.level ==2) ? sum=11250 :
+        (result[i].rating.ratingcourse.dataValues.courselevel.dataValues.level ==3) ? sum=10000 :
+        sum=9300;
+
       worksheet.addRow({ 
         position: 1, 
         fullname: result[i].student.dataValues.fullname , 
         institute: result[i].student.dataValues.institute,
         educationgroup: result[i].student.dataValues.educationgroup,
-        courses: result[i].student.dataValues.courses,
-        
-      
+        courses: result[i].rating.dataValues.ratingcourse.dataValues.course.dataValues.title,
+        points: result[i].rating.dataValues.points,
+        level: result[i].rating.ratingcourse.dataValues.courselevel.dataValues.level==0 ? "" : result[i].rating.ratingcourse.dataValues.courselevel.dataValues.level,
+        sum: sum,
+        period: "На срок академич.",
+        cause:   result[i].cause ? result[i].cause : "",
+        destination: result[i].destination ? "Назначить" : result[i].destination,
+        studnumber:result[i].student.dataValues.studnumber
       });
-      
-      // if (
-      //   result[i].rating.dataValues.points == c1 &&
-      //   result[i].student.dataValues.sad == true
-      // ) {
-       
-      // }
     }
 
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
