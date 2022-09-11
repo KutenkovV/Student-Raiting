@@ -17,7 +17,6 @@ const LoadTable = ({ data, startForm }) => {
 
   return (
     <>
-      <div className="success">Список загружен!</div>
       <table>
         <thead>
           <tr>
