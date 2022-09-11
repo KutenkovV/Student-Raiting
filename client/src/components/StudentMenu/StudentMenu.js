@@ -68,7 +68,7 @@ function StudentMenu({ StudentDirections, stNum, items }) {
         </div>
 
         {isActive && (
-          <div className="studentMenu-content">
+          <div ref={itemRef} className="studentMenu-content">
             {StudentDirections.map((option) => (
               <div
                 onClick={() => {
@@ -86,7 +86,7 @@ function StudentMenu({ StudentDirections, stNum, items }) {
               </div>
             ))}
             <div className="studentMenu-define">
-              <button class="btn btn-primary">
+              <button ref={itemRef} class="btn btn-primary">
                 Определить
               </button>
             </div>

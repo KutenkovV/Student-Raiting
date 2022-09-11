@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import "./ListLoad.css"
 import LoadTable from "../components/LoadTable/LoadTable";
 import Dropdown from "../components/Dropdown/Dropdown";
+import DropFileInput from "../components/DropFileInput/DropFileInput";
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import axios from "axios";
 
@@ -34,8 +36,14 @@ function ListLoad() {
 
   ////////////////// Загрузка списков
   const [file, setFile] = useState();
+
+  const onFileChange = (files) => {
+    console.log(files);
+  }
+
   const onInputChange = (e) => {
     setFile(e.target.files[0]);
+    console.log(file);
   };
 
   //обработка нажатия
@@ -55,17 +63,18 @@ function ListLoad() {
 
     const data = new FormData();
     data.append('file', file);
+    console.log(data);
 
     //сам пост запрос
-    await axios.post(`http://localhost:8080/api/listLoad/${url}`, data)
-      .then(() => {
-        console.log("Success!");
-      })
-      .catch((e) => {
-        console.error('Error!', e);
-      })
+    // await axios.post(`http://localhost:8080/api/listLoad/${url}`, data)
+    //   .then(() => {
+    //     console.log("Success!");
+    //   })
+    //   .catch((e) => {
+    //     console.error('Error!', e);
+    //   })
 
-    document.getElementById("formFile").value = ""; // Чистим выбранный файл после загрузки
+    //document.getElementById("formFile").value = ""; // Чистим выбранный файл после загрузки
     fetchData(); // Ещё раз делаем запрос
     setItems([...items]); // И ещё раз (это не обязательно) загружаем файлы в стейт
   };
@@ -73,10 +82,10 @@ function ListLoad() {
   return (
     <div>
       <div>
-        Новый компонент
+        <DropFileInput onFileChange={(files) => onFileChange(files)} />
       </div>
-      {/* <Dropdown selected={selected} setSelected={setSelected} />
-      <form method="post" action="#" id="#" onSubmit={onSubmit}>
+      {/* <Dropdown selected={selected} setSelected={setSelected} /> */}
+      {/* <form method="post" action="#" id="#" onSubmit={onSubmit}>
         <div class="row align-items-start mt-2 me-0 ">
           <div class="mb-3 col-6">
             <input onChange={onInputChange} class="form-control" type="file" id="formFile" />

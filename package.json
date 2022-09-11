@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "react-dropzone": "^14.2.2",
     "react-paginate": "^8.1.3"
   }
 }
