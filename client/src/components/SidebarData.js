@@ -18,7 +18,7 @@ export const SidebarlistWork = [
     cName: "nav-text",
   },
   {
-    title: "НАСТРОЙКА РЕЙТИНГА",
+    title: "ВАКАНСИИ",
     path: "/settings",
     icon: <FontAwesomeIcon icon={faEdit} size="2x" />,
     cName: "nav-text",

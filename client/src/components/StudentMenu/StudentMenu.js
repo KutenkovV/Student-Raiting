@@ -4,25 +4,19 @@ import { useEffect, useRef, useState } from "react";
 import "./StudentMenu.css";
 import axios from "axios";
 
-function StudentMenu({ stNum, items }) {
+function StudentMenu({ StudentDirections, stNum, items }) {
 
   const [selected, setSelected] = useState();
 
   const btnRef = useRef();
-  const [isActive, setIsActive] = useState(false);
+  const itemRef = useRef();
 
-  const options = [
-    "НАУЧНАЯ ДЕЯТЕЛЬНОСТЬ",
-    "УЧЕБНАЯ ДЕЯТЕЛЬНОСТЬ",
-    "ОБЩЕСТВЕННАЯ ДЕЯТЕЛЬНОСТЬ",
-    "СПОРТИВНАЯ ДЕЯТЕЛЬНОСТЬ",
-    "КУЛЬТУРНО-ТВОРЧЕСКАЯ ДЕЯТЕЛЬНОСТЬ",
-  ];
+  const [isActive, setIsActive] = useState(false);
 
   //обработка мисклилка для скрытия дроплиста
   useEffect(() => {
     const closeContent = e => {
-      if (e.path[0] !== btnRef.current) {
+      if ((e.path[0] !== btnRef.current) && (e.path[0] !== itemRef.current)) {
         setIsActive(false);
       }
     };
@@ -70,12 +64,12 @@ function StudentMenu({ stNum, items }) {
     <form method="put" action="#" id="#" onSubmit={onSubmit}>
       <div className="studentMenu">
         <div class="btn" tabIndex={1} ref={btnRef} className="studentMenu-btn" onClick={() => setIsActive(!isActive)}>
-          <FontAwesomeIcon icon={faEllipsisVertical} />
+          <FontAwesomeIcon className="studentMenu-fontBtn" icon={faEllipsisVertical} />
         </div>
 
         {isActive && (
-          <div className="studentMenu-content">
-            {options.map((option) => (
+          <div ref={itemRef} className="studentMenu-content">
+            {StudentDirections.map((option) => (
               <div
                 onClick={() => {
                   setSelected(option);
@@ -91,9 +85,11 @@ function StudentMenu({ stNum, items }) {
                 {option}
               </div>
             ))}
-            <button class="btn btn-primary">
-              Определить
-            </button>
+            <div className="studentMenu-define">
+              <button ref={itemRef} class="btn btn-primary">
+                Определить
+              </button>
+            </div>
           </div>
         )}
       </div>

@@ -3,7 +3,7 @@ import "./Settings.css";
 import axios from "axios";
 
 const Settings = () => {
-  document.title = "Настройка рейтинга";
+  document.title = "Вакансии";
 
   const [items, setItems] = useState([]);
 
@@ -69,7 +69,7 @@ const Settings = () => {
   // километры кода
   return (
     <div>
-      <h1 className="header">Настройка рейтинга</h1>
+      <h1 className="header">Вакансии</h1>
       <form action="#" id="#" method="put" onSubmit={onSubmit}>
         <div class="mainSettings row mt-4">
           <div class="col">

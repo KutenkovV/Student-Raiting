@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import "./ListLoad.css"
 import LoadTable from "../components/LoadTable/LoadTable";
 import Dropdown from "../components/Dropdown/Dropdown";
+import DropFileInput from "../components/DropFileInput/DropFileInput";
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import axios from "axios";
 
@@ -29,13 +31,19 @@ function ListLoad() {
 
   useEffect(() => {
     fetchData();
-    document.getElementById("formFile").value = "";
+    //document.getElementById("formFile").value = "";
   }, [selected]);
 
   ////////////////// Загрузка списков
   const [file, setFile] = useState();
+
+  const onFileChange = (files) => {
+    console.log(files);
+  }
+
   const onInputChange = (e) => {
     setFile(e.target.files[0]);
+    console.log(file);
   };
 
   //обработка нажатия
@@ -55,6 +63,7 @@ function ListLoad() {
 
     const data = new FormData();
     data.append('file', file);
+    console.log(data);
 
     //сам пост запрос
     await axios.post(`http://localhost:8080/api/listLoad/${url}`, data)
@@ -71,24 +80,29 @@ function ListLoad() {
   };
 
   return (
-    <div>
-      <Dropdown selected={selected} setSelected={setSelected} />
+    <>
       <form method="post" action="#" id="#" onSubmit={onSubmit}>
-        <div class="row align-items-start mt-2 me-0 ">
-          <div class="mb-3 col-6">
-            <input onChange={onInputChange} class="form-control" type="file" id="formFile" />
-          </div>
-          <button class="btn btn-primary col-1">
-            Загрузить
-          </button>
-        </div>
+        <DropFileInput onChange={onInputChange} onFileChange={(files) => onFileChange(files)} />
+        <button class="btn m-2 btn-primary col-1">
+          Загрузить
+        </button>
       </form>
 
+      {/* <div class="row align-items-start mt-2 me-0 ">
+        <div class="mb-3 col-6">
+          <input onChange={onInputChange} class="form-control" type="file" id="formFile" />
+        </div>
+        <button class="btn btn-primary col-1">
+          Загрузить
+        </button>
+      </div> */}
+
+      <Dropdown selected={selected} setSelected={setSelected} />
       {/* Передаю данные как параметр в компонент */}
       {promiseInProgress
         ? <div>Загрузка...</div> : <LoadTable data={items} />
       }
-    </div>
+    </>
   );
 }
 
