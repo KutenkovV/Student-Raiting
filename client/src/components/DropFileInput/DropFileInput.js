@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCloudArrowUp, faFileExcel, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCloudArrowUp, faFileCsv, faXmark } from "@fortawesome/free-solid-svg-icons";
 import "./DropFileInput.css";
 
 const DropFileInput = props => {
@@ -29,37 +29,40 @@ const DropFileInput = props => {
 
     return (
         <>
-            <div className="drop-file-input"
-                ref={wrapperRef}
-                onDragEnter={onDragEnter}
-                onDragLeave={onDragLeave}
-                onDrop={onDrop}
-            >
-                <div className="drop-file-input__label">
-                    <FontAwesomeIcon size="5x" icon={faCloudArrowUp} />
-                    <p>Перетащите сюда файлы или нажмите чтобы загрузить</p>
-                </div>
-                <input multiple type="file" accept=".csv" value="" onChange={onFileDrop} />
-            </div>
-            {
-                fileList.length > 0 ? (
-                    <div className="drop-file-preview">
-                        <p className="drop-file-preview__title">Готовы к загрузке</p> {
-                            fileList.map((item, index) => (
-                                <div key={index} className="drop-file-preview__item">
-                                    <FontAwesomeIcon size="2x" className="icon" icon={faFileExcel} />
-                                    <div className="drop-file-preview__item__info">
-                                        <p>{item.name}</p>
-                                    </div>
-                                    <span className="drop-file-preview__item__del" onClick={() => fileRemove(item)}>
-                                        <FontAwesomeIcon icon={faXmark} />
-                                    </span>
-                                </div>
-                            ))
-                        }
+            <div className="col-md-6 offset-md-3 fileLoad_container">
+                <div className="drop-file-input"
+                    ref={wrapperRef}
+                    onDragEnter={onDragEnter}
+                    onDragLeave={onDragLeave}
+                    onDrop={onDrop}
+                >
+                    <div className="drop-file-input__label">
+                        <FontAwesomeIcon size="5x" icon={faCloudArrowUp} className="cloud_icon"/>
+                        <p className='load_text'>Перетащите сюда файлы или нажмите чтобы загрузить</p>
                     </div>
-                ) : null
-            }
+                    <input multiple type="file" accept=".csv" value="" onChange={onFileDrop} />
+                </div>
+                {
+                    fileList.length > 0 ? (
+                        <div className="drop-file-preview">
+                            <p className="drop-file-preview__title">Готовы к загрузке</p> {
+                                fileList.map((item, index) => (
+                                    <div key={index} className="drop-file-preview__item">
+                                        <FontAwesomeIcon size="2x" className="file_icon" icon={faFileCsv} />
+                                        <div className="drop-file-preview__item__info">
+                                            <p className='fileName'>{item.name}</p>
+                                            <p className='fileSize'>{item.size}</p>
+                                        </div>
+                                        <span className="drop-file-preview__item__del" onClick={() => fileRemove(item)}>
+                                            <FontAwesomeIcon icon={faXmark} />
+                                        </span>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    ) : null
+                }
+            </div>
         </>
     )
 }

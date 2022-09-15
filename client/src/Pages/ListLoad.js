@@ -87,21 +87,6 @@ function ListLoad() {
           Загрузить
         </button>
       </form>
-
-      {/* <div class="row align-items-start mt-2 me-0 ">
-        <div class="mb-3 col-6">
-          <input onChange={onInputChange} class="form-control" type="file" id="formFile" />
-        </div>
-        <button class="btn btn-primary col-1">
-          Загрузить
-        </button>
-      </div> */}
-
-      <Dropdown selected={selected} setSelected={setSelected} />
-      {/* Передаю данные как параметр в компонент */}
-      {promiseInProgress
-        ? <div>Загрузка...</div> : <LoadTable data={items} />
-      }
     </>
   );
 }

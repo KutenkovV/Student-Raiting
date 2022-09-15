@@ -22,7 +22,9 @@ function Od() {
 
       {/* блок с промисом "загрузка..." */}
       {promiseInProgress
-        ? <div>Загрузка...</div> : <DirectionsTable data={items} itemsPerPage={10} />
+        ? <div class="spinner-border spinner-border-sm load_spinner" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div> : <DirectionsTable data={items} itemsPerPage={10} />
       }
     </div>
   );
