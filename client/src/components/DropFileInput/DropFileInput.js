@@ -1,8 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import { faCloudArrowUp, faFileCsv, faXmark } from "@fortawesome/free-solid-svg-icons";
 import "./DropFileInput.css";
+import axios from "axios";
 
 const DropFileInput = props => {
 
@@ -20,11 +22,40 @@ const DropFileInput = props => {
         }
     }
 
+    //Штука которая удаляет файл из списка
     const fileRemove = (file) => {
         const updatedList = [...fileList];
         updatedList.splice(fileList.indexOf(file), 1);
         setFileList(updatedList);
         props.onFileChange(updatedList);
+    }
+
+    //Гет запрос на список "Сводка"
+    useEffect(() => {
+        trackPromise(axios.get('http://localhost:8080/api/report'))
+            .then(response => setItems(response.data))
+            .catch(error => console.log(error));
+    }, []);
+
+    //обработка кнопки
+    const onSubmit = async (e) => {
+
+        const formatData = new FormData();
+        formatData.append("files", fileList);
+
+        console.log("Значения таргета ниже:");
+        console.log(fileList);
+
+        e.preventDefault();
+
+        //сам пост запрос
+        await axios.post(`http://localhost:8080/api/listLoad/all`, formatData)
+            .then(() => {
+                console.log("Success!");
+            })
+            .catch((e) => {
+                console.error('Error!', e);
+            })
     }
 
     return (
@@ -37,7 +68,7 @@ const DropFileInput = props => {
                     onDrop={onDrop}
                 >
                     <div className="drop-file-input__label">
-                        <FontAwesomeIcon size="5x" icon={faCloudArrowUp} className="cloud_icon"/>
+                        <FontAwesomeIcon size="5x" icon={faCloudArrowUp} className="cloud_icon" />
                         <p className='load_text'>Перетащите сюда файлы или нажмите чтобы загрузить</p>
                     </div>
                     <input multiple type="file" accept=".csv" value="" onChange={onFileDrop} />
@@ -63,6 +94,13 @@ const DropFileInput = props => {
                     ) : null
                 }
             </div>
+
+            {/* Ниже форма с кнопкой которая делает запрос */}
+            <form method="post" action="#" id="#" onSubmit={onSubmit}>
+                <button class="btn m-2 btn-primary col-1">
+                    Загрузить
+                </button>
+            </form>
         </>
     )
 }
