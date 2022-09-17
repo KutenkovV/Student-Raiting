@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Settings.css";
+import "../style/Settings.css";
 import axios from "axios";
 
 const Settings = () => {

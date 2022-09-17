@@ -21,7 +21,9 @@ function Nid() {
 
       {/* блокс с промисом "загрузка..." */}
       {promiseInProgress
-        ? <div>Загрузка...</div> : <NidTable data={items} itemsPerPage={10} />
+        ? <div class="spinner-border spinner-border-sm load_spinner" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>: <NidTable data={items} itemsPerPage={10} />
       }
     </div>
   );

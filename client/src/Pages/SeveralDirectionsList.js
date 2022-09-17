@@ -22,7 +22,9 @@ function SeveralDirectionsList() {
 
       {/* блокс с промисом "загрузки..." */}
       {promiseInProgress
-        ? <div>Загрузка...</div> : <SeveralDirectionsTable data={items} itemsPerPage={10} />
+        ? <div class="spinner-border spinner-border-sm load_spinner" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>  : <SeveralDirectionsTable data={items} itemsPerPage={10} />
       }
     </div>
   )

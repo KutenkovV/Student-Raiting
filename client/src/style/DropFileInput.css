@@ -2,15 +2,15 @@
     position: relative;
     width: auto;
     height: 200px;
-    border: 5px dashed rgb(148, 148, 148);
-    border-radius: 15px;
-    
+    border: 4px dashed var(--font-grey);
+    border-radius: 16px;
+    background: var(--default-white);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.drop-file-input input {
+.drop-file-input input {        
     opacity: 0;
     position: absolute;
     width: 100%;
@@ -38,12 +38,9 @@
     margin-bottom: 1rem;
     padding: 5px;
     border-radius: 15px;
-    background-color:#ecf2fe;;
+    background-color:#ecf2fe;
 }
 
-.drop-file-preview__item:hover {
-    background-color: rgb(229, 241, 252);
-}
 
 .drop-file-preview__item__del {
     width: 35px;
@@ -53,7 +50,7 @@
     align-items: center;
     justify-content: center;
     position: absolute;
-    right: 10px;
+    right: 20px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
@@ -67,7 +64,42 @@
     opacity: 1;
 }
 
-.icon {
-    color: rgb(192, 192, 192);
-    padding-right: 5px;
+.file_icon {
+    color: var(--excel-file);
+    margin: 1rem;
+    margin-right: 2rem;
+}
+
+.drop-file-preview__title{
+    font-family: var(--main-font);
+    font-size: var(--default-font-size);
+    color: var(--dark-grey);
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+}
+
+.cloud_icon{
+    color: #92a2b5;
+}
+
+.load_text{
+    color: #92a2b5;
+}
+
+.fileLoad_container{
+    margin-top: 2rem;
+    padding: 2rem;
+    box-shadow: var(--default-shadow);
+    border-radius: var(--default-radius);
+}
+
+.fileName{
+    font-family: var(--main-font);
+    font-size: var(--default-font-size);
+    color: var(--dark-grey);
+    margin-top: var(--default-navbar-indent);
+    text-transform: uppercase;
+    font-weight: bold;
 }
