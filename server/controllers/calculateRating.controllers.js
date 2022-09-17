@@ -78,10 +78,89 @@ class CalculateRatingController {
         },
       ],
     });
-
-    //получаю первое количество мест
-    const count = counts[0].dataValues.count;
+    const count = 0 ;
+    if ( ! counts[0].dataValues.count) {
+      res.status(400).send("Настройки не были загружены!");
+      return;
+    } else{
+      //получаю первое количество мест
+      count = counts[0].dataValues.count;
+    }
+    
     //список студентов по заданному направлению
+    const listVacation = await models.StudentsRating.findAll({
+      attributes: ["id", "destination"],
+      order: [
+        [models.Students, "sad", "DESC NULLS LAST"],
+        [models.Rating, "points", "DESC"],
+      ],
+      required: true,
+      include: [
+        {
+          model: models.Students,
+          where: {
+            sad: true,
+            vacation: true,
+          },
+          attributes: [
+            "studnumber",
+            "fullname",
+            "educationgroup",
+            "institute",
+            "sad",
+          ],
+        },
+        {
+          model: models.Rating,
+          attributes: ["points"],
+          required: true,
+          include: [
+            {
+              model: models.RatingCourses,
+              required: true,
+              include: [
+                {
+                  model: models.Courses,
+
+                  where: {
+                    title: title,
+                  },
+                },
+                {
+                  model: models.CourseLevels,
+                  attributes: ["level"],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          model: models.DateTable,
+          attributes: ["id", "date"],
+          required: true,
+          where: {
+            date: {
+              [Op.contains]: [
+                { value: new Date(), inclusive: true },
+                { value: new Date(), inclusive: true },
+               
+              ],
+            },
+          },
+        },
+      ],
+    });
+    for (let i = 0; i < listVacation.length; i++) {
+          await models.StudentsRating.update(
+            { destination: true ,cause: "Каникулы"},
+            {
+              where: {
+                id: listVacation[i].dataValues.id,
+              },
+            }
+          );
+          }
+
     const list = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
       order: [
@@ -92,6 +171,10 @@ class CalculateRatingController {
       include: [
         {
           model: models.Students,
+          where: {
+            sad: true,
+            vacation: false,
+          },
           attributes: [
             "studnumber",
             "fullname",

@@ -23,10 +23,7 @@ router.get("/listLoad/vacation", listController.getVacation);
 router.get("/listLoad/free", listController.getFree);
 
 //маршруты для загрузки списков
-router.post("/listLoad/all", listLoadController.loadCourses);
-router.post("/listLoad/free", listLoadController.loadFree);
-router.post("/listLoad/vacation", listLoadController.loadVacation);
-router.post("/listLoad/sad", listLoadController.loadSad);
+router.post("/listLoad/all", listLoadController.loadFile);
 
 //маршрут количества мест рейтинга
 router.get("/ratingCount", ratingCountController.get);

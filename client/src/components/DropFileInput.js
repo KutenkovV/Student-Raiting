@@ -41,21 +41,26 @@ const DropFileInput = props => {
     const onSubmit = async (e) => {
 
         const formatData = new FormData();
-        formatData.append("files", fileList);
-
+        //formatData.append("files", fileList);
+        //fileList.forEach(file => formatData.append("files", file))
+        for(let i =0; i < fileList.length; i++) {
+            formatData.append("files", fileList[i]);
+        }
         console.log("Значения таргета ниже:");
         console.log(fileList);
 
         e.preventDefault();
 
         //сам пост запрос
-        await axios.post(`http://localhost:8080/api/listLoad/all`, formatData)
-            .then(() => {
-                console.log("Success!");
-            })
-            .catch((e) => {
-                console.error('Error!', e);
-            })
+        
+        await axios({
+                method: "POST",
+                url: "http://localhost:8080/api/listLoad/all",
+                data: formatData,
+                headers: {
+                "Content-Type": "multipart/form-data"
+                }
+                })
     }
 
     return (

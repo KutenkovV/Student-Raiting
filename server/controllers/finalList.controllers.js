@@ -134,6 +134,7 @@ class FinalListController {
         },
       ],
     });
+    
     //создаем файл excel
     var workbook = new Excel.Workbook();
 
