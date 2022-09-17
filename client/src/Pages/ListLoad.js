@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import "./ListLoad.css"
+import "../style/ListLoad.css"
 import LoadTable from "../components/LoadTable/LoadTable";
 import Dropdown from "../components/Dropdown/Dropdown";
-import DropFileInput from "../components/DropFileInput/DropFileInput";
+import DropFileInput from "../components/DropFileInput";
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import axios from "axios";
 
@@ -29,7 +29,12 @@ function ListLoad() {
 
   return (
     <>
-      <DropFileInput onChange={(e) => onInputChange(e)} onFileChange={(files) => onFileChange(files)} />
+    <div className="row">
+      <DropFileInput onChange={(e) => onInputChange(e)} onFileChange={(files) => onFileChange(files)}/>
+      <div className="checkList">
+
+      </div>
+    </div>
     </>
   );
 }

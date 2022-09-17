@@ -1,5 +1,5 @@
 .destinationTrue {
-    background-color: #b9e7cc;
+    background-color: var(--success-color);
 }
 
 .tdTrue {
@@ -10,7 +10,7 @@
     height: 3rem;
     width: 3rem;
     border-radius: 25%;
-    background-color: #b9e7cc;
+    background-color: var(--success-color);
 }
 
 .tdFalse {

@@ -2,9 +2,9 @@
     position: relative;
     width: auto;
     height: 200px;
-    border: 4px dashed #92a2b5;
+    border: 4px dashed var(--font-grey);
     border-radius: 16px;
-    background: #ecf2fe;
+    background: var(--default-white);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -38,7 +38,7 @@
     margin-bottom: 1rem;
     padding: 5px;
     border-radius: 15px;
-    background-color:#ecf2fe;;
+    background-color:#ecf2fe;
 }
 
 
@@ -65,16 +65,15 @@
 }
 
 .file_icon {
-    color: #14CC60;
+    color: var(--excel-file);
     margin: 1rem;
     margin-right: 2rem;
 }
 
 .drop-file-preview__title{
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-    font-size: 0.8rem;
-    color: #576372;
+    font-family: var(--main-font);
+    font-size: var(--default-font-size);
+    color: var(--dark-grey);
     text-transform: uppercase;
     font-weight: bold;
     margin-bottom: 1rem;
@@ -92,14 +91,15 @@
 .fileLoad_container{
     margin-top: 2rem;
     padding: 2rem;
-    box-shadow: 2px 2px 5px 2px rgb(219, 219, 219);
+    box-shadow: var(--default-shadow);
+    border-radius: var(--default-radius);
 }
 
 .fileName{
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-    font-size: 0.8rem;
-    color: #576372;
+    font-family: var(--main-font);
+    font-size: var(--default-font-size);
+    color: var(--dark-grey);
+    margin-top: var(--default-navbar-indent);
     text-transform: uppercase;
     font-weight: bold;
 }

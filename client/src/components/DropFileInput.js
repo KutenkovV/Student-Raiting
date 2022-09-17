@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import { faCloudArrowUp, faFileCsv, faXmark } from "@fortawesome/free-solid-svg-icons";
-import "./DropFileInput.css";
+import "../style/DropFileInput.css";
 import axios from "axios";
 
 const DropFileInput = props => {
@@ -60,7 +60,7 @@ const DropFileInput = props => {
 
     return (
         <>
-            <div className="col-md-6 offset-md-3 fileLoad_container">
+            <div className="col-md-8 fileLoad_container">
                 <div className="drop-file-input"
                     ref={wrapperRef}
                     onDragEnter={onDragEnter}
@@ -93,14 +93,16 @@ const DropFileInput = props => {
                         </div>
                     ) : null
                 }
-            </div>
 
             {/* Ниже форма с кнопкой которая делает запрос */}
             <form method="post" action="#" id="#" onSubmit={onSubmit}>
-                <button class="btn m-2 btn-primary col-1">
-                    Загрузить
-                </button>
+                <div className="row d-flex justify-content-end">
+                    <button class="btn mt-4 m-3 btn-primary col-2">
+                        Загрузить
+                    </button>
+                </div>
             </form>
+        </div>
         </>
     )
 }
