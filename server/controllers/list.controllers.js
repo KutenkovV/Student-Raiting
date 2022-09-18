@@ -2,11 +2,13 @@ const models = require("../models/models");
 const { Op } = require("sequelize");
 
 class ListController {
-  //
-  async getWithOrder(title) {
+  
+  static async getWithOrder(title) {
     const result = await models.StudentsRating.findAll({
       attributes: ["id", "destination","cause"],
       order: [
+        [ "destination", "DESC"],
+        [ "cause", "DESC"],
         [models.Rating, "points", "DESC"],
         [
           models.Rating,
@@ -26,6 +28,8 @@ class ListController {
             "educationgroup",
             "institute",
             "sad",
+            "vacation",
+            "free",
           ],
         },
         {
@@ -71,333 +75,25 @@ class ListController {
 
     return result;
   }
-  //
-  async get(title) {
-    const result = await models.StudentsRating.findAll({
-      attributes: ["id", "destination"],
-      required: true,
-      include: [
-        {
-          model: models.Students,
-          attributes: [
-            "studnumber",
-            "fullname",
-            "educationgroup",
-            "institute",
-            "sad",
-            "vacation",
-            "free",
-          ],
-        },
-        {
-          model: models.Rating,
-          attributes: ["points"],
-          required: true,
-          include: [
-            {
-              model: models.RatingCourses,
-              required: true,
-              include: [
-                {
-                  model: models.Courses,
-                  where: {
-                    title: title,
-                  },
-                },
-                {
-                  model: models.CourseLevels,
-                  attributes: ["level"],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          model: models.DateTable,
-          attributes: ["id", "date"],
-          required: true,
-          where: {
-            date: {
-              [Op.contains]: [
-                { value: new Date(), inclusive: true },
-                { value: new Date(), inclusive: true },
-              ],
-            },
-          },
-        },
-      ],
-    });
 
-    //цикл на начисление стипендии если после последнего прошедшего стоят люди с таким же количеством
-    for (let i = 0; i < result.length; i++) {
-      if (
-        result[i].student.dataValues.sad == true
-      ) {
-        result[i].student.dataValues.sad ="Да"
-      }
-      else {
-        result[i].student.dataValues.sad ="Нет"
-      }
-      if (
-        result[i].student.dataValues.vacation == true
-      ) {
-        result[i].student.dataValues.vacation ="Да"
-      }
-      else {
-        result[i].student.dataValues.vacation ="Нет"
-      }
-      if (
-        result[i].student.dataValues.free == true
-      ) {
-        result[i].student.dataValues.free ="Да"
-      }
-      else {
-        result[i].student.dataValues.free ="Нет"
-      }
-    }
+  async getKtd(req, res) {
+    return res.json(await ListController.getWithOrder("КТД"));
+  }
+  
+  async getNid(req, res) {
+    return res.json(await ListController.getWithOrder("НИД"));
+  }
 
-    return result;
+  async getUd(req, res) {
+    return res.json(await ListController.getWithOrder("УД"));
   }
-  //
-  async getSad(req, res) {
-    const result = await models.StudentsRating.findAll({
-      attributes: ["id", "destination"],
-      required: true,
-      include: [
-        {
-          model: models.Students,
-          attributes: [
-            "studnumber",
-            "fullname",
-            "educationgroup",
-            "institute",
-            "sad",
-            "vacation",
-            "free",
-          ],
-          required: true,
-          where: { sad: "true" },
-        },
-        {
-          model: models.Rating,
-          attributes: ["points"],
-          required: true,
-          include: [
-            {
-              model: models.RatingCourses,
-              required: true,
-              include: [
-                {
-                  model: models.CourseLevels,
-                  attributes: ["level"],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          model: models.DateTable,
-          attributes: ["id", "date"],
-          required: true,
-          where: {
-            date: {
-              [Op.contains]: [
-                { value: new Date(), inclusive: true },
-                { value: new Date(), inclusive: true },
-              ],
-            },
-          },
-        },
-      ],
-    });
-    for (let i = 0; i < result.length; i++) {
-      if (
-        result[i].student.dataValues.sad == true
-      ) {
-        result[i].student.dataValues.sad ="Да"
-      }
-      else {
-        result[i].student.dataValues.sad ="Нет"
-      }
-      if (
-        result[i].student.dataValues.vacation == true
-      ) {
-        result[i].student.dataValues.vacation ="Да"
-      }
-      else {
-        result[i].student.dataValues.vacation ="Нет"
-      }
-      if (
-        result[i].student.dataValues.free == true
-      ) {
-        result[i].student.dataValues.free ="Да"
-      }
-      else {
-        result[i].student.dataValues.free ="Нет"
-      }
-    }
-    return res.json(result);
+  
+  async getSd(req, res) {
+    return res.json(await ListController.getWithOrder("СД"));
   }
-  //
-  async getVacation(req, res) {
-    const result = await models.StudentsRating.findAll({
-      attributes: ["id", "destination"],
-      required: true,
-      include: [
-        {
-          model: models.Students,
-          attributes: [
-            "studnumber",
-            "fullname",
-            "educationgroup",
-            "institute",
-            "sad",
-            "vacation",
-            "free",
-          ],
-          required: true,
-          where: { vacation: "true" },
-        },
-        {
-          model: models.Rating,
-          attributes: ["points"],
-          required: true,
-          include: [
-            {
-              model: models.RatingCourses,
-              required: true,
-              include: [
-                {
-                  model: models.CourseLevels,
-                  attributes: ["level"],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          model: models.DateTable,
-          attributes: ["id", "date"],
-          required: true,
-          where: {
-            date: {
-              [Op.contains]: [
-                { value: new Date(), inclusive: true },
-                { value: new Date(), inclusive: true },
-              ],
-            },
-          },
-        },
-      ],
-    });
-    for (let i = 0; i < result.length; i++) {
-      if (
-        result[i].student.dataValues.sad == true
-      ) {
-        result[i].student.dataValues.sad ="Да"
-      }
-      else {
-        result[i].student.dataValues.sad ="Нет"
-      }
-      if (
-        result[i].student.dataValues.vacation == true
-      ) {
-        result[i].student.dataValues.vacation ="Да"
-      }
-      else {
-        result[i].student.dataValues.vacation ="Нет"
-      }
-      if (
-        result[i].student.dataValues.free == true
-      ) {
-        result[i].student.dataValues.free ="Да"
-      }
-      else {
-        result[i].student.dataValues.free ="Нет"
-      }
-    }
-    return res.json(result);
-  }
-  //
-  async getFree(req, res) {
-    const result = await models.StudentsRating.findAll({
-      attributes: ["id", "destination"],
-      required: true,
-      include: [
-        {
-          model: models.Students,
-          attributes: [
-            "studnumber",
-            "fullname",
-            "educationgroup",
-            "institute",
-            "sad",
-            "vacation",
-            "free",
-          ],
-          required: true,
-          where: { free: "true" },
-        },
-        {
-          model: models.Rating,
-          attributes: ["points"],
-          required: true,
-          include: [
-            {
-              model: models.RatingCourses,
-              required: true,
-              include: [
-                {
-                  model: models.CourseLevels,
-                  attributes: ["level"],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          model: models.DateTable,
-          attributes: ["id", "date"],
-          required: true,
-          where: {
-            date: {
-              [Op.contains]: [
-                { value: new Date(), inclusive: true },
-                { value: new Date(), inclusive: true },
-               
-              ],
-            },
-          },
-        },
-      ],
-    });
-    for (let i = 0; i < result.length; i++) {
-      if (
-        result[i].student.dataValues.sad == true
-      ) {
-        result[i].student.dataValues.sad ="Да"
-      }
-      else {
-        result[i].student.dataValues.sad ="Нет"
-      }
-      if (
-        result[i].student.dataValues.vacation == true
-      ) {
-        result[i].student.dataValues.vacation ="Да"
-      }
-      else {
-        result[i].student.dataValues.vacation ="Нет"
-      }
-      if (
-        result[i].student.dataValues.free == true
-      ) {
-        result[i].student.dataValues.free ="Да"
-      }
-      else {
-        result[i].student.dataValues.free ="Нет"
-      }
-    }
-    return res.json(result);
+
+  async getOd(req, res) {
+    return res.json(await ListController.getWithOrder("ОД"));
   }
 }
 module.exports = new ListController();
