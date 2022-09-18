@@ -78,11 +78,17 @@ class CalculateRatingController {
         },
       ],
     });
+    let count = 0 ;
+    if ( ! counts[0].dataValues.count) {
+      res.status(400).send("Настройки не были загружены!");
+      return;
+    } else{
+      //получаю первое количество мест
+      count = counts[0].dataValues.count;
+    }
 
-    //получаю первое количество мест
-    const count = counts[0].dataValues.count;
-    //список студентов по заданному направлению
-    const list = await models.StudentsRating.findAll({
+    //отметили всех без ГАС
+    const listSadFalse = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
       order: [
         [models.Students, "sad", "DESC NULLS LAST"],
@@ -92,6 +98,9 @@ class CalculateRatingController {
       include: [
         {
           model: models.Students,
+          where:{
+            sad:false
+          },
           attributes: [
             "studnumber",
             "fullname",
@@ -140,71 +149,219 @@ class CalculateRatingController {
         },
       ],
     });
+    for (let i = 0; i < listSadFalse.length; i++) {
+      await models.StudentsRating.update(
+        { cause: "Нет академ. ст." },
+        {
+          where: {
+            id: listSadFalse[i].dataValues.id,
+          },
+        }
+      );
+    }
 
+    //
+    const listSadTrueVacationFalse = await models.StudentsRating.findAll({
+      attributes: ["id", "destination"],
+      order: [
+        [models.Students, "sad", "DESC NULLS LAST"],
+        [models.Rating, "points", "DESC"],
+      ],
+      required: true,
+      include: [
+        {
+          model: models.Students,
+          where:{
+            sad:true,
+            vacation:false
+          },
+          attributes: [
+            "studnumber",
+            "fullname",
+            "educationgroup",
+            "institute",
+            "sad",
+          ],
+        },
+        {
+          model: models.Rating,
+          attributes: ["points"],
+          required: true,
+          include: [
+            {
+              model: models.RatingCourses,
+              required: true,
+              include: [
+                {
+                  model: models.Courses,
+
+                  where: {
+                    title: title,
+                  },
+                },
+                {
+                  model: models.CourseLevels,
+                  attributes: ["level"],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          model: models.DateTable,
+          attributes: ["id", "date"],
+          required: true,
+          where: {
+            date: {
+              [Op.contains]: [
+                { value: new Date(), inclusive: true },
+                { value: new Date(), inclusive: true },
+               
+              ],
+            },
+          },
+        },
+      ],
+    });
     //счетчик в который кладется последний балл прошедшего студента
-    var c1 = 0;
+    var lastPoint = 0;
     //счетчик на оставшиеся места
     var countRemained = count;
-
     //цикл на начисление стипендии по количеству мест
-    for (let i = 0; i < list.length; i++) {
-      //если студент получает ГАС
-      if (list[i].student.dataValues.sad == true) {
-        // если еще остались места, то назначить рейтинговую стипендию
-        if (countRemained > 0) {
-          await models.StudentsRating.update(
-            { destination: true ,cause: null},
-            {
-              where: {
-                id: list[i].dataValues.id,
-              },
-            }
-          );
-          //обновление последнего балла
-          c1 = list[i].rating.dataValues.points;
-          //уменьшение оставшихся мест
-          countRemained--;
-        }
-        //иначе пишем не достаточно баллов
-        else {
-          await models.StudentsRating.update(
-            { cause: "Не дост. баллов" },
-            {
-              where: {
-                id: list[i].dataValues.id,
-              },
-            }
-          );
-        }
-      }
-      //иначе пишем нет академической стипендии
-      else {
+    for (let i = 0; i < listSadTrueVacationFalse.length; i++) {
+      // если еще остались места, то назначить рейтинговую стипендию
+      if (countRemained > 0) {
         await models.StudentsRating.update(
-          { cause: "Нет академ. ст." },
+          { destination: true ,cause: null},
           {
             where: {
-              id: list[i].dataValues.id,
+              id: listSadTrueVacationFalse[i].dataValues.id,
+            },
+          }
+        );
+        //обновление последнего балла
+        lastPoint = listSadTrueVacationFalse[i].rating.dataValues.points;
+        //уменьшение оставшихся мест
+        countRemained--;
+      }
+      //иначе пишем не достаточно баллов
+      else {
+        await models.StudentsRating.update(
+          { cause: "Не дост. баллов" },
+          {
+            where: {
+              id: listSadTrueVacationFalse[i].dataValues.id,
             },
           }
         );
       }
     }
     //цикл на начисление стипендии если после последнего прошедшего стоят люди с таким же количеством
-    for (let i = 0; i < list.length; i++) {
+    for (let i = 0; i < listSadTrueVacationFalse.length; i++) {
       if (
-        list[i].rating.dataValues.points == c1 &&
-        list[i].student.dataValues.sad == true
+        listSadTrueVacationFalse[i].rating.dataValues.points == lastPoint &&
+        listSadTrueVacationFalse[i].student.dataValues.sad == true
       ) {
         await models.StudentsRating.update(
           { destination: true ,cause: null},
           {
             where: {
-              id: list[i].dataValues.id,
+              id: listSadTrueVacationFalse[i].dataValues.id,
             },
           }
         );
       }
     }
+
+    //список студентов каникулы
+    const listVacation = await models.StudentsRating.findAll({
+      attributes: ["id", "destination"],
+      order: [
+        [models.Students, "sad", "DESC NULLS LAST"],
+        [models.Rating, "points", "DESC"],
+      ],
+      required: true,
+      include: [
+        {
+          model: models.Students,
+          where: {
+            sad: true,
+            vacation: true,
+          },
+          attributes: [
+            "studnumber",
+            "fullname",
+            "educationgroup",
+            "institute",
+            "sad",
+          ],
+        },
+        {
+          model: models.Rating,
+          attributes: ["points"],
+          required: true,
+          include: [
+            {
+              model: models.RatingCourses,
+              required: true,
+              include: [
+                {
+                  model: models.Courses,
+
+                  where: {
+                    title: title,
+                  },
+                },
+                {
+                  model: models.CourseLevels,
+                  attributes: ["level"],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          model: models.DateTable,
+          attributes: ["id", "date"],
+          required: true,
+          where: {
+            date: {
+              [Op.contains]: [
+                { value: new Date(), inclusive: true },
+                { value: new Date(), inclusive: true },
+              
+              ],
+            },
+          },
+        },
+      ],
+    });
+
+    for (let i = 0; i < listVacation.length; i++) {
+      // 
+      if (listVacation[i].rating.dataValues.points >= lastPoint) {
+        await models.StudentsRating.update(
+          { destination: true ,cause: "Каникулы"},
+          {
+            where: {
+              id: listVacation[i].dataValues.id,
+            },
+          }
+        );
+      }
+      //иначе пишем не достаточно баллов
+      else {
+        await models.StudentsRating.update(
+          { cause: "Не дост. баллов К" },
+          {
+            where: {
+              id: listSadTrueVacationFalse[i].dataValues.id,
+            },
+          }
+        );
+      }
+    }
+
   }
 }
 module.exports = new CalculateRatingController();

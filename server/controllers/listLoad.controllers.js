@@ -1,191 +1,102 @@
 const models = require("../models/models");
 const ApiError = require("../error/ApiError");
+const multer = require('multer');
 const path = require("path");
 const { Op } = require("sequelize");
 
 //Класс отвечающий за загрузку файлов и последующий запуск парсера
 //Файлы загружаются в папку uploads
 //Перед запуском проекта обязательно собрать и запустить один раз парсер(что бы получился файл exe),который находится в папке parserApp
+  
 
 class ListLoadController {
-  
-  async loadCourses(req, res) { 
-    //загрузка файлов по направлениям
-    if (!req.files || Object.keys(req.files).length === 0) {
-      res.status(400).send("No files were uploaded.");
+
+  async loadFile(req, res) { 
+    if (!req.files || Object.keys(req.files.files).length === 0) {
+      res.status(400).send("Не удалось загрузить файлы");
       return;
     }
+    let files=req.files.files;
 
-    let file=req.files.file;
-    let uploadPath ="./uploads/" + file.name;
+    let message=[];
 
-    //перемещаем файл из запроса в папку uploads
-    file.mv(uploadPath, function (err) {
-      if (err) {
-        return res.status(500).send(err);
-      }
-    });
-
-    //запуск exe файла парсера
-    const { execFile } = require("child_process");
-    execFile(
-      //путь к файлу exe
-      path.resolve(
-        "../server/parserApp/parserApp/bin/Debug/net6.0/parserApp.exe"
-      ),
-      //ключ + сам файл excel
-      ["-s", path.resolve("../server/uploads/" + file.name)],
-      (err, stdout, stderr) => {
+    for (let i = 0; i < files.length; i++) {
+      let uploadPath ="./uploads/" + files[i].name;
+      //перемещаем файл из запроса в папку uploads
+      files[i].mv(uploadPath, function (err) {
         if (err) {
-          res.status(400).send("node couldnt execute the command");
-          return;
+          message.push({
+            title: files[i].name,
+            status: err
+          })
         }
-        res.send("ОК");
-      }
-    );
+      });
 
-    //обновляем значения 
-    ListLoadController.updateFreeVacationSAD();
-  }
-  //метод загрузки файлов по направлениям
-  async loadFree(req, res) {
-   
-    if (!req.files || Object.keys(req.files).length === 0) {
-      res.status(400).send("No files were uploaded.");
-      return;
+      var key="";
+      switch (
+        files[i].name
+        ) {
+          case "НИД.csv":
+          case "КТД.csv":
+          case "ОД.csv":
+          case "СД.csv":
+          case "УД.csv":
+            key="-s";
+            break;
+          case "Свободный график.csv":
+            key="-f";
+            break;
+          case "Каникулы.csv":
+            key="-v";
+            break;
+          case "ГАС.csv":
+            key="-g";
+            break;
+          default:
+            
+            message.push( {
+              title: files[i].name,
+              status: "Проверьте название файла"
+            });
+            continue;
+        }
+
+      let promise = new Promise((resolve, reject) => {
+        let m={};
+        //запуск exe файла парсера
+        const { execFile } = require("child_process");
+        execFile(
+          //путь к файлу exe
+          path.resolve(
+            "../server/parserApp/parserApp/bin/Debug/net6.0/parserApp.exe"
+          ),
+          //ключ + сам файл excel
+          [key, path.resolve("../server/uploads/" + files[i].name)],
+          (err, stdout, stderr) => {
+            if (err) {
+              m={
+                title: files[i].name,
+                status: err
+              };
+              return;
+            }
+            else {
+              m={
+                title: files[i].name,
+                status: "OK"
+              };
+            }
+          }
+        );
+        setTimeout(() => resolve(m), 3000)
+        })
+      
+      message.push( await promise); // будет ждать, пока промис не выполнится (*)
+      ListLoadController.updateFreeVacationSAD();
     }
-    let file=req.files.file;
-    let uploadPath ="./uploads/" + file.name;
 
-    //перемещаем файл из запроса в папку uploads
-    file.mv(uploadPath, function (err) {
-      if (err) {
-        return res.status(500).send(err);
-      }
-    });
-
-    //запуск exe файла парсера
-    const { execFile } = require("child_process");
-    execFile(
-      //путь к файлу exe
-      path.resolve(
-        "../server/parserApp/parserApp/bin/Debug/net6.0/parserApp.exe"
-      ),
-      //ключ + сам файл excel
-      ["-f", path.resolve("../server/uploads/" + file.name)],
-      (err, stdout, stderr) => {
-        if (err) {
-          res.status(400).send("node couldnt execute the command");
-          return;
-        }
-        res.send("ОК");
-      }
-    );
-
-    //обновляем значения 
-    ListLoadController.updateFreeVacationSAD();
-  }
-  //метод загрузки файла с номерами студентов находящихся на каникулах
-  async loadVacation(req, res) {
-    
-    if (!req.files || Object.keys(req.files).length === 0) {
-      res.status(400).send("No files were uploaded.");
-      return;
-    }
-    let file=req.files.file;
-    let uploadPath ="./uploads/" + file.name;
-
-    //перемещаем файл из запроса в папку uploads
-    file.mv(uploadPath, function (err) {
-      if (err) {
-        return res.status(500).send(err);
-      }
-    });
-
-    //запуск exe файла парсера
-    const { execFile } = require("child_process");
-    execFile(
-      //путь к файлу exe
-      path.resolve(
-        "../server/parserApp/parserApp/bin/Debug/net6.0/parserApp.exe"
-      ),
-      //ключ + сам файл excel
-      ["-v", path.resolve("../server/uploads/" + file.name)],
-      (err, stdout, stderr) => {
-        if (err) {
-          res.status(400).send("node couldnt execute the command");
-          return;
-        } else {
-          res.send("ОК");
-        }
-      }
-    );
-    //обновляем значения 
-    ListLoadController.updateFreeVacationSAD();
-  }
-  //метод загрузки файла с номерами студентов получающих ГАС
-  async loadSad(req, res) {
-    
-    if (!req.files || Object.keys(req.files).length === 0) {
-      res.status(400).send("No files were uploaded.");
-      return;
-    }
-    let file=req.files.file;
-    let uploadPath ="./uploads/" + file.name;
-
-    //перемещаем файл из запроса в папку uploads
-    file.mv(uploadPath, function (err) {
-      if (err) {
-        return res.status(500).send(err);
-      }
-    });
-
-    //запуск exe файла парсера
-    const { execFile } = require("child_process");
-    execFile(
-      //путь к файлу exe
-      path.resolve(
-        "../server/parserApp/parserApp/bin/Debug/net6.0/parserApp.exe"
-      ),
-      //ключ + сам файл excel
-      ["-g", path.resolve("../server/uploads/" + file.name)],
-      (err, stdout, stderr) => {
-        if (err) {
-          res.status(400).send("node couldnt execute the command");
-          return;
-        }
-        res.send("ОК");
-      }
-    );
-     //обновляем значения 
-    ListLoadController.updateFreeVacationSAD();
-    console.log("Загрузка завершена")
-
-      //получаем все заявки студентов на текущий период
-    const list = await models.StudentsRating.findAll({
-      attributes: ["id", "destination"],
-      required: true,
-      include: [
-        {
-          model: models.Students,
-          attributes: ["id", "studnumber","sad","free","vacation"],
-        },
-        {
-          model: models.DateTable,
-          attributes: ["id", "date"],
-          required: true,
-          where: {
-            date: {
-              [Op.contains]: [
-                { value: new Date(), inclusive: true },
-                { value: new Date(), inclusive: true },
-              ],
-            },
-          },
-        },
-      ],
-    });
-    console.log(list)
+    console.log(message)
+    res.send(message);
   }
 
   //метод обновления полей каникулы,свободный график и ГАС после загрузки любого списка

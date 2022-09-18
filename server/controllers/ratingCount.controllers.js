@@ -41,11 +41,14 @@ class RatingCountController {
   async update(req, res) {
     if (!req.body) return response.sendStatus(400);
     
-    await RatingCountController.updateCountCourse("НИД", req.body.nidInput);
-    await RatingCountController.updateCountCourse("УД", req.body.udInput);
-    await RatingCountController.updateCountCourse("СД", req.body.sdInput);
-    await RatingCountController.updateCountCourse("ОД", req.body.odInput);
-    await RatingCountController.updateCountCourse("КТД", req.body.ktdInput);
+    console.log(req.body)
+
+    await RatingCountController.updateCountCourse("НИД", parseInt(req.body.nidInput));
+    await RatingCountController.updateCountCourse("УД", parseInt(req.body.udInput));
+    await RatingCountController.updateCountCourse("СД", parseInt(req.body.sdInput));
+    await RatingCountController.updateCountCourse("ОД", parseInt(req.body.odInput));
+    await RatingCountController.updateCountCourse("КТД", parseInt(req.body.ktdInput));
+
 
     //после обновления количества мест нужно выполнить процедуру начисления рейтинговой стипендии заново
     calculateRatingController.calculation();

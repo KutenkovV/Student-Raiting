@@ -3,23 +3,24 @@ const ApiError = require("../error/ApiError");
 const { Op } = require("sequelize");
 
 //класс отвечающий за студентов, которые подали на несколько направлений
-
 class RatingManyCoursesController {
   //метод ,который возвращает студентов,которые подали на несколько направлений
   async getStudentRatingManyCourses(req, res) {
-    
+
     //Получаем список студентов 
     const list = await models.Students.findAll({
       attributes: ["id"],
     });
-
     var result = [];
 
-    //цикл на поиск людей с несколькими направлениями
+    //цикл на поиск студентов с несколькими направлениями
     for (let i = 0; i < list.length; i++) {
       //получаю список заявок студента
       const listStudentRating = await models.StudentsRating.findAll({
         attributes: ["id", "destination"],
+        where: {
+          destination: true,
+        },
         include: [
           {
             model: models.Students,
@@ -101,42 +102,43 @@ class RatingManyCoursesController {
         };
         //счетчик на количество заявок с которыми стдуент прошел
         var countDestinationTrue = 0;
-
+        
         //цикл на перебор заявок стдуента
         for (let y = 0; y < listStudentRating.length; y++) {
           //если заявка прошла то увеличить счетчик
           if (listStudentRating[y].destination == true) {
             countDestinationTrue++;
-          }
-
-          //добавление инфы из заявки в переменную stud
-          switch (
+            //добавление инфы из заявки в переменную stud
+            switch (
             listStudentRating[y].rating.dataValues.ratingcourse.dataValues
               .course.dataValues.title
-          ) {
-            case "НИД":
-              stud.nid.point = listStudentRating[y].rating.dataValues.points;
-              stud.nid.destination = listStudentRating[y].destination;
-              break;
-            case "КТД":
-              stud.ktd.point = listStudentRating[y].rating.dataValues.points;
-              stud.ktd.destination = listStudentRating[y].destination;
-              break;
-            case "ОД":
-              stud.od.point = listStudentRating[y].rating.dataValues.points;
-              stud.od.destination = listStudentRating[y].destination;
-              break;
-            case "СД":
-              stud.sd.point = listStudentRating[y].rating.dataValues.points;
-              stud.sd.destination = listStudentRating[y].destination;
-              break;
-            case "УД":
-              stud.ud.point = listStudentRating[y].rating.dataValues.points;
-              stud.ud.destination = listStudentRating[y].destination;
-              break;
+            ) {
+              case "НИД":
+                stud.nid.point = listStudentRating[y].rating.dataValues.points;
+                stud.nid.destination = listStudentRating[y].destination;
+                break;
+              case "КТД":
+                stud.ktd.point = listStudentRating[y].rating.dataValues.points;
+                stud.ktd.destination = listStudentRating[y].destination;
+                break;
+              case "ОД":
+                stud.od.point = listStudentRating[y].rating.dataValues.points;
+                stud.od.destination = listStudentRating[y].destination;
+                break;
+              case "СД":
+                stud.sd.point = listStudentRating[y].rating.dataValues.points;
+                stud.sd.destination = listStudentRating[y].destination;
+                break;
+              case "УД":
+                stud.ud.point = listStudentRating[y].rating.dataValues.points;
+                stud.ud.destination = listStudentRating[y].destination;
+                break;
+            }
           }
         }
+
         if (countDestinationTrue > 1) {
+
           result.push(stud);
         }
       }
@@ -262,7 +264,7 @@ class RatingManyCoursesController {
         });
         //ставим студенту отметку destination=false где надо
         await models.StudentsRating.update(
-          { destination: false ,cause: "Другое направление"},
+          { destination: false, cause: "Другое направление" },
           {
             where: {
               id: list[i].dataValues.id,
