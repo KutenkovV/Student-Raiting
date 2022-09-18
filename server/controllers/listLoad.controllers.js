@@ -16,8 +16,9 @@ class ListLoadController {
       res.status(400).send("Не удалось загрузить файлы");
       return;
     }
-    let files=req.files.files;
 
+    let files= Array.isArray(req.files.files) ? req.files.files :  [req.files.files];
+    
     let message=[];
 
     for (let i = 0; i < files.length; i++) {
@@ -88,14 +89,13 @@ class ListLoadController {
             }
           }
         );
-        setTimeout(() => resolve(m), 3000)
+        setTimeout(() => resolve(m), files[i].name=="ГАС.csv"? 4000 : 1000)
         })
       
       message.push( await promise); // будет ждать, пока промис не выполнится (*)
       ListLoadController.updateFreeVacationSAD();
     }
 
-    console.log(message)
     res.send(message);
   }
 
