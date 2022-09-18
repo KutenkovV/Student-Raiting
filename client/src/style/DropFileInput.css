@@ -1,7 +1,7 @@
 .drop-file-input {
     position: relative;
     width: auto;
-    height: 200px;
+    height: 10rem;
     border: 4px dashed var(--font-grey);
     border-radius: 16px;
     background: var(--default-white);
@@ -36,7 +36,6 @@
     align-items: center;
     justify-content: flex-start;
     margin-bottom: 1rem;
-    padding: 5px;
     border-radius: 15px;
     background-color:#ecf2fe;
 }
@@ -76,8 +75,7 @@
     color: var(--dark-grey);
     text-transform: uppercase;
     font-weight: bold;
-    margin-bottom: 1rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 .cloud_icon{
@@ -89,10 +87,10 @@
 }
 
 .fileLoad_container{
-    margin-top: 2rem;
-    padding: 2rem;
+    padding: 1rem;
     box-shadow: var(--default-shadow);
     border-radius: var(--default-radius);
+    margin-bottom: 2.5rem;
 }
 
 .fileName{

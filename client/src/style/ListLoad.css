@@ -3,22 +3,27 @@
   --box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 } 
 
-/* Ух ты, выше это переменные в CSS к которым обращаемся */
-
-/* .box {
-  padding: 30px;
-  border-radius: 15px;
+.checkList{
+  padding: 1rem;
+  box-shadow: var(--default-shadow);
+  border-radius: var(--default-radius);
+  margin-left: 2.5rem;
+  margin-bottom: 2.5rem;
+  height: 20rem;
 }
 
-.header {
-  /* text-transform: uppercase;
-  font-size: 1.4rem;
-  color: #576372;
+.checkText{
+  font-family: var(--main-font);
+  font-size: var(--default-font-size);
+  color: var(--dark-grey);
+  text-transform: uppercase;
   font-weight: bold;
-  cursor: pointer; */
-/* }
+}
 
-.header-upload {
-  text-align: center;
-  padding: 30px;
-} */
+.checkItem{
+  margin-left: 2rem;
+}
+
+.succesIcon{
+  color: var(--check-success-color);
+}
