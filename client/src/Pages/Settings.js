@@ -107,7 +107,7 @@ const Settings = () => {
             </div>
             <div className="col m-4">
               <div class="mt-5 d-flex flex-row-reverse">
-                <div className={saveActive ? "settingSafe activeSafe" : "settingSafe"} >Настройки сохранены!</div>
+                <div className={saveActive ? "settingSafe activeSafe" : "settingSafe"} >Вакансии сохранены!</div>
               </div>
             </div>
           </div>

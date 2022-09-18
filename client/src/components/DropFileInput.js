@@ -1,9 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import { faCloudArrowUp, faFileCsv, faXmark } from "@fortawesome/free-solid-svg-icons";
 import "../style/DropFileInput.css";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 const DropFileInput = props => {
@@ -30,20 +30,42 @@ const DropFileInput = props => {
         props.onFileChange(updatedList);
     }
 
-    //Гет запрос на список "Сводка"
+    //Сюда записываю статус ответа от сервера ("ОК" вот эти вот)
+    const [status, setStatus] = useState([]);
+
+    const [nidValue, setnidValue] = useState(false)
+    const [udValue, setudValue] = useState(false)
+    const [sdValue, setsdValue] = useState(false)
+    const [odValue, setodValue] = useState(false)
+    const [ktdValue, setktdValue] = useState(false)
+
+    const [freeValue, setfreeValue] = useState(false)
+    const [vacationValue, setvacationValue] = useState(false)
+    const [gasValue, setgasValue] = useState(false)
+
+
     useEffect(() => {
-        trackPromise(axios.get('http://localhost:8080/api/report'))
-            .then(response => setItems(response.data))
-            .catch(error => console.log(error));
-    }, []);
+        status.map((item) => {
+            if (item.title === 'НИД.csv') { setnidValue(true) }
+            if (item.title === 'УД.csv') { setudValue(true) }
+            if (item.title === 'СД.csv') { setsdValue(true) }
+            if (item.title === 'ОД.csv') { setodValue(true) }
+            if (item.title === 'КТД.csv') { setktdValue(true) }
+
+            if (item.title === 'Каникулы.csv') { setvacationValue(true) }
+            if (item.title === 'Свободный график.csv') { setfreeValue(true) }
+            if (item.title === 'ГАС.csv') { setgasValue(true) }
+        })
+
+        console.log(nidValue);
+    }, [status]);
+
 
     //обработка кнопки
     const onSubmit = async (e) => {
 
         const formatData = new FormData();
-        //formatData.append("files", fileList);
-        //fileList.forEach(file => formatData.append("files", file))
-        for(let i =0; i < fileList.length; i++) {
+        for (let i = 0; i < fileList.length; i++) {
             formatData.append("files", fileList[i]);
         }
         console.log("Значения таргета ниже:");
@@ -52,19 +74,22 @@ const DropFileInput = props => {
         e.preventDefault();
 
         //сам пост запрос
-        
         await axios({
-                method: "POST",
-                url: "http://localhost:8080/api/listLoad/all",
-                data: formatData,
-                headers: {
+            method: "POST",
+            url: "http://localhost:8080/api/listLoad/all",
+            data: formatData,
+            headers: {
                 "Content-Type": "multipart/form-data"
-                }
-                })
+            }
+        })
+            .then(response => setStatus(response.data))
+
+            //Вот так чистим содержимое, что загружали  
+            setFileList([]);
     }
 
     return (
-        <>
+        <div className="row">
             <div className="col-md-6 fileLoad_container">
                 <div className="drop-file-input"
                     ref={wrapperRef}
@@ -98,16 +123,68 @@ const DropFileInput = props => {
                     ) : null
                 }
 
-            {/* Ниже форма с кнопкой которая делает запрос */}
-            <form method="post" action="#" id="#" onSubmit={onSubmit}>
-                <div className="row d-flex justify-content-end">
-                    <button class="btn btn-primary col-2 m-4">
-                        Загрузить
-                    </button>
+                {/* Ниже форма с кнопкой которая делает запрос */}
+                <form method="post" action="#" id="#" onSubmit={onSubmit}>
+                    <div className="row d-flex justify-content-end">
+                        <button class="btn btn-primary col-2 m-4">
+                            Загрузить
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            {/* Чек-листы, которые загрузили/не загрузили */}
+            <div className="checkList col">
+                <div className="checkItem row">
+                    <FontAwesomeIcon icon={faCheck} className={nidValue ? "col-1 succesIcon" : "col-1"} />
+                    <p className="checkText col">
+                        Научная деятельность
+                    </p>
                 </div>
-            </form>
+                <div className="checkItem row">
+                    <FontAwesomeIcon icon={faCheck} className={udValue ? "col-1 succesIcon" : "col-1"} />
+                    <p className="checkText col">
+                        Учебная деятельность
+                    </p>
+                </div>
+                <div className="checkItem row">
+                    <FontAwesomeIcon icon={faCheck} className={odValue ? "col-1 succesIcon" : "col-1"} />
+                    <p className="checkText col">
+                        Общественная деятельность
+                    </p>
+                </div>
+                <div className="checkItem row">
+                    <FontAwesomeIcon icon={faCheck} className={sdValue ? "col-1 succesIcon" : "col-1"} />
+                    <p className="checkText col">
+                        Спортивная деятельность
+                    </p>
+                </div>
+                <div className="checkItem row">
+                    <FontAwesomeIcon icon={faCheck} className={ktdValue ? "col-1 succesIcon" : "col-1"} />
+                    <p className="checkText col">
+                        Культурно-творческая деятельность
+                    </p>
+                </div>
+                <div className="checkItem row">
+                    <FontAwesomeIcon icon={faCheck} className={freeValue ? "col-1 succesIcon" : "col-1"} />
+                    <p className="checkText col">
+                        Студенты со свободным графиком
+                    </p>
+                </div>
+                <div className="checkItem row">
+                    <FontAwesomeIcon icon={faCheck} className={vacationValue ? "col-1 succesIcon" : "col-1"} />
+                    <p className="checkText col">
+                        Студенты на каникулах
+                    </p>
+                </div>
+                <div className="checkItem row">
+                    <FontAwesomeIcon icon={faCheck} className={gasValue ? "col-1 succesIcon" : "col-1"} />
+                    <p className="checkText col">
+                        Студенты, получающие государственную академическую стипендию
+                    </p>
+                </div>
+            </div>
         </div>
-        </>
     )
 }
 
