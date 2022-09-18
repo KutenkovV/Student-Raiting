@@ -341,7 +341,7 @@ class CalculateRatingController {
       // 
       if (listVacation[i].rating.dataValues.points >= lastPoint) {
         await models.StudentsRating.update(
-          { destination: true ,cause: "Каникулы"},
+          { destination: true },
           {
             where: {
               id: listVacation[i].dataValues.id,
@@ -352,7 +352,7 @@ class CalculateRatingController {
       //иначе пишем не достаточно баллов
       else {
         await models.StudentsRating.update(
-          { cause: "Не дост. баллов К" },
+          { destination: false ,cause: "Не дост. баллов" },
           {
             where: {
               id: listSadTrueVacationFalse[i].dataValues.id,
