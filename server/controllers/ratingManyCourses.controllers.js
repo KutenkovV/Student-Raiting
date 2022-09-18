@@ -152,7 +152,7 @@ class RatingManyCoursesController {
 
     //console.log(req.query.id);
     //{ id: '20', course: '"НИД"' }
-    //узнаем в каких направлениях нужно добавить студентов в прошедшие
+    //узнаем в каких направлениях нужно добавить студента в прошедшие
     const list = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
       include: [

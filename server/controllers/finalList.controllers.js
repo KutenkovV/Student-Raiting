@@ -143,33 +143,6 @@ class FinalListController {
       ],
     });
 
-    // list1.map(item=>{
-      
-    //   var sum =0;
-
-    //     (item.rating.ratingcourse.dataValues.courselevel.dataValues.level ==1 ) ? sum=12500 :
-    //     (item.rating.ratingcourse.dataValues.courselevel.dataValues.level ==2) ? sum=11250 :
-    //     (item.rating.ratingcourse.dataValues.courselevel.dataValues.level ==3) ? sum=10000 :
-    //     sum=9300;
-
-    //     list1[i].rating.dataValues.ratingcourse.dataValues.course.dataValues.title != list1[i-1]?.rating.dataValues.ratingcourse.dataValues.course.dataValues.title
-        // ? position=1 : position ++;
-    //   {
-    //     item.student.dataValues.fullname,
-    //     item.student.dataValues.institute,
-    //     item.student.dataValues.educationgroup,
-    //     item.rating.dataValues.ratingcourse.dataValues.course.dataValues.title,
-    //     item.rating.dataValues.points,
-    //     item.rating.ratingcourse.dataValues.courselevel.dataValues.level==0 ? "" : list1[i].rating.ratingcourse.dataValues.courselevel.dataValues.level,
-    //     sum,
-    //     "На срок академич.",
-    //     item.cause ?  item.cause : item.student.dataValues.vacation==true? "Каникулы"  : "",
-    //     item.destination ? "Назначить" : item.destination,
-    //     item.student.dataValues.studnumber
-    //   }
-    // })
-
-
     //создаем файл excel
     var workbook = new Excel.Workbook();
 
@@ -227,6 +200,8 @@ class FinalListController {
     let position=1;
     for (let i = 0; i < list1.length; i++) {
       
+      list1[i].rating.dataValues.ratingcourse.dataValues.course.dataValues.title != list1[i-1]?.rating.dataValues.ratingcourse.dataValues.course.dataValues.title
+       ? position=1 : position ++;
 
       worksheet.addRow({ 
         position: list1[i].student.dataValues.vacation==true? "" : position, 
