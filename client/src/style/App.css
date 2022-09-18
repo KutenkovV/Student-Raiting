@@ -10,6 +10,8 @@
   --blue-action: #007bff;
   /*Для всех успешных действий*/
   --success-color: #b3f2dd;
+  /*Для успешно загруженных списков*/
+  --check-success-color: #87A878;
   /*Цвет ошибок и провальных действий*/
   --error-color: #F39B6D;
   /*Белый цвет*/
@@ -44,15 +46,16 @@
 
 .App {
   text-align: center;
+  height: 100vh;
 }
 
 .content {
   display: flex;
-  height: 100vh;
 }
 
 .sidebar {
   background-color: var(--light-blue);
+  min-height: 100vh;
 }
 
 .pageContent {
@@ -79,4 +82,3 @@
 .load_spinner{
   color: var(--dark-grey);
 }
-

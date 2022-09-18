@@ -27,7 +27,7 @@ function App() {
               className="burger-btn"
               onClick={() => setMenuActive(!menuActive)}
             >
-              <FontAwesomeIcon icon={faBars} size="2x" />
+              <FontAwesomeIcon icon={faBars} size="2x"/>
             </div>
             <Navbar active={menuActive} />
           </div>

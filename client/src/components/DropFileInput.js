@@ -60,7 +60,7 @@ const DropFileInput = props => {
 
     return (
         <>
-            <div className="col-md-8 fileLoad_container">
+            <div className="col-md-6 fileLoad_container">
                 <div className="drop-file-input"
                     ref={wrapperRef}
                     onDragEnter={onDragEnter}
@@ -82,7 +82,6 @@ const DropFileInput = props => {
                                         <FontAwesomeIcon size="2x" className="file_icon" icon={faFileCsv} />
                                         <div className="drop-file-preview__item__info">
                                             <p className='fileName'>{item.name}</p>
-                                            <p className='fileSize'>{item.size}</p>
                                         </div>
                                         <span className="drop-file-preview__item__del" onClick={() => fileRemove(item)}>
                                             <FontAwesomeIcon icon={faXmark} />
@@ -97,7 +96,7 @@ const DropFileInput = props => {
             {/* Ниже форма с кнопкой которая делает запрос */}
             <form method="post" action="#" id="#" onSubmit={onSubmit}>
                 <div className="row d-flex justify-content-end">
-                    <button class="btn mt-4 m-3 btn-primary col-2">
+                    <button class="btn btn-primary col-2 m-4">
                         Загрузить
                     </button>
                 </div>
