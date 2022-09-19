@@ -17,9 +17,9 @@ const SummaryTable = ({ data, itemsPerPage, startFrom }) => {
                     <tr>
                         <th>Направление</th>
                         <th>Всего подано</th>
-                        <th>Количество стипендий</th>
+                        <th>Количество вакансий</th>
+                        <th>Количество получивших</th>
                         <th>Граница баллов</th>
-                        <th>Следующий балл</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,8 +28,8 @@ const SummaryTable = ({ data, itemsPerPage, startFrom }) => {
                             <td>{item.title}</td>
                             <td>{item.totalSubmitted}</td>
                             <td>{item.count}</td>
+                            <td>{item.numberReceived}</td>
                             <td>{item.borderPoint}</td>
-                            <td>{item.nextPoint}</td>
                         </tr>
                     ))}
                 </tbody>
