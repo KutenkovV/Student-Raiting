@@ -36,28 +36,24 @@ function StudentMenu({ StudentDirections, stNum, items }) {
     else if (course === "КУЛЬТУРНО-ТВОРЧЕСКАЯ ДЕЯТЕЛЬНОСТЬ") { course = "КТД" }
 
 
-    const data = new FormData();
-    data.append('id', id);
-    data.append('course', course)
+    // const data = new FormData();
+    // data.append('id', id);
+    // data.append('course', course)
 
     console.log(id);
     console.log(course);
 
-    // for (var pair of data.entries()) {
-    //   console.log(pair[0] + ', ' + pair[1]);
-    // } Вывод содержимого формдаты
-
     //пут запрос
-    // await axios.put(`http://localhost:8080/api/studentRatingManyCourses/`, {
-    //   id: id,
-    //   course: course
-    // })
-    //   .then(() => {
-    //     console.log("Success!");
-    //   })
-    //   .catch((e) => {
-    //     console.error('Error!', e);
-    //   })
+    await axios.put("http://localhost:8080/api/studentRatingManyCourses/", {
+      id: id,
+      course: course
+    })
+      .then(() => {
+        console.log("Success!");
+      })
+      .catch((e) => {
+        console.error('Error!', e);
+      })
   }
 
   return (
