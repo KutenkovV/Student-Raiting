@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../LoadTable/LoadTable.css";
 import usePagination from "../../hooks/usePagination";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,6 +12,20 @@ const DirectionsTable = ({ data, itemsPerPage, startFrom }) => {
   const { slicedData, pagination, prevPage, nextPage, changePage } =
     usePagination({ itemsPerPage, data, startFrom });
 
+  var countTd = 0;
+
+
+  // useEffect(() => {
+  //   pagination.map((page) => {
+  //     if(page.current === 0){countTd = 0}
+  //     else countTd = page.current;
+  //     console.log(page.current);
+  //   })
+    
+  // }, [pagination])
+
+  // console.log(countTd);
+
   if (data.length === 0)
     return <div>Загрузите данные</div> // Сюда по хорошему заглушку какую-нибудь
 
@@ -20,6 +34,7 @@ const DirectionsTable = ({ data, itemsPerPage, startFrom }) => {
       <table className="DirectionsTable">
         <thead>
           <tr>
+            {/* <th>№</th> */}
             <th>Номер студента</th>
             <th>Баллы</th>
             <th>ФИО</th>
@@ -31,6 +46,7 @@ const DirectionsTable = ({ data, itemsPerPage, startFrom }) => {
         <tbody>
           {slicedData.map((item) => (
             <tr key={item.id} className={item.destination ? "destinationTrue" : "loadTr destinationFalse"}>
+              {/* <td>{countTd = countTd + 1}</td> */}
               <td>{item.student.studnumber}</td>
               <td>{item.rating.points}</td>
               <td>{item.student.fullname}</td>

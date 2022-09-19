@@ -56,8 +56,6 @@ const DropFileInput = props => {
             if (item.title === 'Свободный график.csv') { setfreeValue(true) }
             if (item.title === 'ГАС.csv') { setgasValue(true) }
         })
-
-        console.log(nidValue);
     }, [status]);
 
 
@@ -87,6 +85,8 @@ const DropFileInput = props => {
             //Вот так чистим содержимое, что загружали  
             setFileList([]);
     }
+
+    console.log(status);
 
     return (
         <div className="row">
