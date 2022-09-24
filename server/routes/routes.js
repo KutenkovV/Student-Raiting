@@ -27,15 +27,14 @@ router.get("/ud", listController.getUd);
 //маршрут для списка студентов которые подали на несколько направлений
 router.get("/studentRatingManyCourses", ratingManyCoursesController.getStudentRatingManyCourses);
 
-//маршрут для проверки есть ли еще студенты не определлные с направлением
-router.get("/isStudentRatingManyCourses", ratingManyCoursesController.getIsStudentRatingManyCourses);
-
 //маршрут для опеределения направления по которому будет получать студент стипендию
 router.put("/studentRatingManyCourses", ratingManyCoursesController.updateStudentRatingManyCourses);
 
 //маршрут для сводки
 router.get("/report", reportController.getReport);
 
+//маршрут для проверки готов ли финальный список
+router.get("/getTheFinalFileIsReady", finallistController.getTheFinalFileIsReady);
 
 //маршрут для итогового списка
 router.get("/finalList", finallistController.getFinal);

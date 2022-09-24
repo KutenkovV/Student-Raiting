@@ -131,7 +131,6 @@ class ReportController {
     }
   }
   static async getNumberReceived(title) {
-
     try {
       //получаем список заявок студентов за актуальную дату по заданному направлению
       const count = await models.StudentsRating.findAll({
@@ -181,80 +180,63 @@ class ReportController {
   }
 
   static async getBorderPoint(title) {
-    
-
     try {
-
       //получаем список заявок студентов за актуальную дату по заданному направлению
-    const list = await models.StudentsRating.findAll({
-      attributes: ["id", "destination"],
-      order: [
-        [models.Students, "sad", "DESC NULLS LAST"],
-        [models.Rating, "points", "DESC"],
-      ],
-      include: [
-        {
-          model: models.Students,
-          attributes: [
-            "studnumber",
-            "fullname",
-            "educationgroup",
-            "institute",
-            "sad",
-          ],
+      const list = await models.StudentsRating.findAll({
+        attributes: ["id", "destination"],
+        order: [
+          [models.Rating, "points", "DESC"],
+        ],
+        where:{
+          destination:true,
         },
-        {
-          model: models.Rating,
-          attributes: ["points"],
-          required: true,
-          include: [
-            {
-              model: models.RatingCourses,
-              required: true,
-              include: [
-                {
-                  model: models.Courses,
-                  attributes: ["title"],
-                  where: {
-                    title: title,
-                  },
-                },
-              ],
-            },
-          ],
-        },
-        {
-          model: models.DateTable,
-          attributes: ["id", "date"],
-          required: true,
-          where: {
-            date: {
-              [Op.contains]: [
-                { value: new Date(), inclusive: true },
-                { value: new Date(), inclusive: true },
-              ],
+        include: [
+          {
+            model: models.Students,
+            where:{
+              sad:true,
+              vacation:false,
+              free:false
             },
           },
-        },
-      ],
-    });
-    var borderPoint=list[0].rating.dataValues.points;
-    for (let y = 0; y < list.length; y++) {
-      //в цикле находим последнего кто прошел и получаем его балл
-      if (
-        list[y].rating.dataValues.points < borderPoint &&
-        list[y].student.dataValues.sad == true &&
-        list[y].destination == true
-      ) {
-        borderPoint = list[y].rating.dataValues.points;
-      }
-    }
-    return borderPoint.toString();
-    
+          {
+            model: models.Rating,
+            attributes: ["points"],
+            required: true,
+            include: [
+              {
+                model: models.RatingCourses,
+                required: true,
+                include: [
+                  {
+                    model: models.Courses,
+                    attributes: ["title"],
+                    where: {
+                      title: title,
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            model: models.DateTable,
+            attributes: ["id", "date"],
+            required: true,
+            where: {
+              date: {
+                [Op.contains]: [
+                  { value: new Date(), inclusive: true },
+                  { value: new Date(), inclusive: true },
+                ],
+              },
+            },
+          },
+        ],
+      });
+      return list[list.length-1].rating.dataValues.points.toString();
     } catch (err) {
-    
       return '0';
-    
     }
   }
 }

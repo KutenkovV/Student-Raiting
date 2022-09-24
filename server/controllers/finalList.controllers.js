@@ -1,7 +1,7 @@
 const models = require("../models/models");
 const { Op } = require("sequelize");
 const Excel = require('exceljs');
-
+const ReportController=require("./report.controllers");
 
 class FinalListController {
 
@@ -342,5 +342,86 @@ class FinalListController {
         res.end();
       });
   }
+
+  //метод ,который возвращает готов ли финальный список
+  async getTheFinalFileIsReady(req, res) {
+
+    //Получаем список студентов 
+    const list = await models.Students.findAll({
+      attributes: ["id"],
+      where: {
+        sad: true,
+        free: false,
+      },
+    });
+    var result = 0;
+
+    //цикл на поиск студентов с несколькими направлениями
+    for (let i = 0; i < list.length; i++) {
+      //получаю список заявок студента
+      const listStudentRating = await models.StudentsRating.findAll({
+        attributes: ["id", "destination"],
+        where: {
+          destination: true,
+        },
+        include: [
+          {
+            model: models.Students,
+            where: {
+              id: list[i].dataValues.id,
+            },
+          },
+          {
+            model: models.DateTable,
+            attributes: ["id", "date"],
+            required: true,
+            where: {
+              date: {
+                [Op.contains]: [
+                  { value: new Date(), inclusive: true },
+                  { value: new Date(), inclusive: true },
+                ],
+              },
+            },
+          },
+        ],
+      });
+      //если количество заявок больше чем 1
+      if (listStudentRating.length > 1) {
+        //счетчик на количество заявок с которыми стдуент прошел
+        var countDestinationTrue = 0;
+        //цикл на перебор заявок стдуента
+        for (let y = 0; y < listStudentRating.length; y++) {
+          //если заявка прошла то увеличить счетчик
+          if (listStudentRating[y].destination == true) {
+            countDestinationTrue++;
+          }
+        }
+        if (countDestinationTrue > 1) {
+          result++;
+        }
+      }
+    }
+
+    if (
+      await ReportController.getNumberReceived("ОД")!='0'
+      &&
+      await ReportController.getNumberReceived("НИД")!='0'
+      &&
+      await ReportController.getNumberReceived("КТД")!='0'
+      &&
+      await ReportController.getNumberReceived("СД")!='0'
+      &&
+      await ReportController.getNumberReceived("УД")!='0'
+      && 
+      result == 0 
+    ){
+      return res.json(true)
+    }
+    else{
+      return res.json(false)
+    }
+  }
+  
 }
 module.exports = new FinalListController();
