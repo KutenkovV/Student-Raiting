@@ -200,6 +200,14 @@ class FinalListController {
     let position=1;
     for (let i = 0; i < list1.length; i++) {
       
+
+      var sum =0;
+
+      (list2[i].rating.ratingcourse.dataValues.courselevel.dataValues.level ==1 ) ? sum=12500 :
+      (list2[i].rating.ratingcourse.dataValues.courselevel.dataValues.level ==2) ? sum=11250 :
+      (list2[i].rating.ratingcourse.dataValues.courselevel.dataValues.level ==3) ? sum=10000 :
+      sum=9300;
+
       list1[i].rating.dataValues.ratingcourse.dataValues.course.dataValues.title != list1[i-1]?.rating.dataValues.ratingcourse.dataValues.course.dataValues.title
        ? position=1 : position ++;
 
@@ -235,8 +243,15 @@ class FinalListController {
         destination: true,
       },
       order: [
-        [models.Students, "institute","ASC",],
-        [models.Students, "educationgroup","ASC",],
+        [
+          models.Rating,
+          models.RatingCourses,
+          { model: models.Courses },
+          "title",
+          "ASC",
+        ],
+        [models.Students, "vacation","ASC",],
+        [models.Rating, "points","DESC",],
       ],
       required: true,
       include: [
@@ -248,6 +263,7 @@ class FinalListController {
             "educationgroup",
             "institute",
             "sad",
+            "vacation",
           ],
         },
         {
@@ -285,6 +301,7 @@ class FinalListController {
         },
       ],
     });
+
     //второй лист.............................................................................
     var worksheet2 = workbook.addWorksheet('К публикации');
     //создаем колонки
@@ -297,7 +314,6 @@ class FinalListController {
       { header: 'Балл', key: 'points', width: 10 },
       { header: 'Категория', key: 'level', width: 10 },
       { header: 'Статус ПГАС', key: 'destination', width: 10 },
-
     ];
     
     for (let i = 0; i < list2.length; i++) {
