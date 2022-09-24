@@ -14,8 +14,7 @@ const NidTable = ({ data, itemsPerPage, startFrom }) => {
   const { slicedData, pagination, prevPage, nextPage, changePage } =
     usePagination({ data, itemsPerPage, startFrom });
 
-  if (data.length === 0)
-    return <div>Загрузите данные</div> // Сюда по хорошему заглушку какую-нибудь
+  if (data.length === 0) return <div>Загрузите данные</div>; // Сюда по хорошему заглушку какую-нибудь
 
   return (
     <>
@@ -29,11 +28,19 @@ const NidTable = ({ data, itemsPerPage, startFrom }) => {
             <th>Институт</th>
             <th>Группа</th>
             <th>Причина</th>
+            <th>ГАС</th>
+            <th>Каникулы</th>
+            <th>Свободный график</th>
           </tr>
         </thead>
         <tbody>
           {slicedData.map((item) => (
-            <tr key={item.id} className={item.destination ? "destinationTrue" : "loadTr destinationFalse"}>
+            <tr
+              key={item.id}
+              className={
+                item.destination ? "destinationTrue" : "loadTr destinationFalse"
+              }
+            >
               <td>{item.student.studnumber}</td>
               <td>{item.rating.points}</td>
               <td>{item.rating.ratingcourse.courselevel.level}</td>
@@ -41,6 +48,9 @@ const NidTable = ({ data, itemsPerPage, startFrom }) => {
               <td>{item.student.institute}</td>
               <td>{item.student.educationgroup}</td>
               <td>{item.cause}</td>
+              <td>{item.student.sad}</td>
+              <td>{item.student.vacation}</td>
+              <td>{item.student.free}</td>
             </tr>
           ))}
         </tbody>

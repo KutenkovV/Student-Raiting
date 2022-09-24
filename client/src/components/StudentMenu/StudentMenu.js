@@ -24,6 +24,7 @@ function StudentMenu({ StudentDirections, stNum, items }) {
     document.body.addEventListener('click', closeContent);
     return () => document.body.removeEventListener('click', closeContent);
   }, []);
+  
 
   const onSubmit = async (idd, selected) => {
     var id = idd
