@@ -1,13 +1,17 @@
 const models = require("../models/models");
 const { Op } = require("sequelize");
-const { NUMERIC } = require("sequelize");
-const { NUMBER } = require("sequelize");
+const { Sequelize } = require("../db");
 
 class ListController {
   
   static async getWithOrder(title) {
     let result = await models.StudentsRating.findAll({
-      attributes: ["id", "destination","cause"],
+      attributes: [
+        "id",
+        [Sequelize.literal('ROW_NUMBER() over (ORDER BY (select 0))'), 'rowNumber'],
+        "destination",
+        "cause",
+      ],
       order: [
         [ "destination", "DESC"],
         [ "cause", "DESC"],
@@ -75,10 +79,10 @@ class ListController {
       ],
     });
 
-    console.log(typeof(result))
+    //console.log(typeof(result))
     //цикл на изменение true=>да, false=>нет
     for (let i = 0; i < result.length; i++) {
-      Object.assign(result[i].dataValues,  {"number": i+1} );
+     // Object.assign(result[i].dataValues,  {"number": i+1} );
       if (
         result[i].student.dataValues.sad == true
       ) {
