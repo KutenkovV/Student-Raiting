@@ -14,18 +14,6 @@ const DirectionsTable = ({ data, itemsPerPage, startFrom }) => {
 
   var countTd = 0;
 
-
-  // useEffect(() => {
-  //   pagination.map((page) => {
-  //     if(page.current === 0){countTd = 0}
-  //     else countTd = page.current;
-  //     console.log(page.current);
-  //   })
-    
-  // }, [pagination])
-
-  // console.log(countTd);
-
   if (data.length === 0)
     return <div>Загрузите данные</div> // Сюда по хорошему заглушку какую-нибудь
 
@@ -34,25 +22,29 @@ const DirectionsTable = ({ data, itemsPerPage, startFrom }) => {
       <table className="DirectionsTable">
         <thead>
           <tr>
-            {/* <th>№</th> */}
             <th>Номер студента</th>
             <th>Баллы</th>
             <th>ФИО</th>
             <th>Институт</th>
             <th>Группа</th>
             <th>Причина</th>
+            <th>ГАС</th>
+            <th>Каникулы</th>
+            <th>Свободный график</th>
           </tr>
         </thead>
         <tbody>
           {slicedData.map((item) => (
             <tr key={item.id} className={item.destination ? "destinationTrue" : "loadTr destinationFalse"}>
-              {/* <td>{countTd = countTd + 1}</td> */}
               <td>{item.student.studnumber}</td>
               <td>{item.rating.points}</td>
               <td>{item.student.fullname}</td>
               <td>{item.student.institute}</td>
               <td>{item.student.educationgroup}</td>
               <td>{item.cause}</td>
+              <td>{item.student.sad}</td>
+              <td>{item.student.vacation}</td>
+              <td>{item.student.free}</td>
             </tr>
           ))}
         </tbody>
