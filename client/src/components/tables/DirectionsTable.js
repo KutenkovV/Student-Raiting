@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../LoadTable/LoadTable.css";
 import usePagination from "../../hooks/usePagination";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,6 +11,8 @@ import {
 const DirectionsTable = ({ data, itemsPerPage, startFrom }) => {
   const { slicedData, pagination, prevPage, nextPage, changePage } =
     usePagination({ itemsPerPage, data, startFrom });
+
+  var countTd = 0;
 
   if (data.length === 0)
     return <div>Загрузите данные</div> // Сюда по хорошему заглушку какую-нибудь
@@ -26,6 +28,9 @@ const DirectionsTable = ({ data, itemsPerPage, startFrom }) => {
             <th>Институт</th>
             <th>Группа</th>
             <th>Причина</th>
+            <th>ГАС</th>
+            <th>Каникулы</th>
+            <th>Свободный график</th>
           </tr>
         </thead>
         <tbody>
@@ -37,6 +42,9 @@ const DirectionsTable = ({ data, itemsPerPage, startFrom }) => {
               <td>{item.student.institute}</td>
               <td>{item.student.educationgroup}</td>
               <td>{item.cause}</td>
+              <td>{item.student.sad}</td>
+              <td>{item.student.vacation}</td>
+              <td>{item.student.free}</td>
             </tr>
           ))}
         </tbody>
