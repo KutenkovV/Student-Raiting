@@ -8,11 +8,11 @@ const Settings = () => {
   const [items, setItems] = useState([]);
 
   // изменения значений инпутов  
-  const [nidValue, setnidValue] = useState(0)
-  const [udValue, setudValue] = useState(0)
-  const [sdValue, setsdValue] = useState(0)
-  const [odValue, setodValue] = useState(0)
-  const [ktdValue, setktdValue] = useState(0)
+  const [nidValue, setnidValue] = useState()
+  const [udValue, setudValue] = useState()
+  const [sdValue, setsdValue] = useState()
+  const [odValue, setodValue] = useState()
+  const [ktdValue, setktdValue] = useState()
 
   // Гет-запрос на настройки
   useEffect(() => {

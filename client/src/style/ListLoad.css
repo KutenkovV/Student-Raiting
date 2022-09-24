@@ -27,3 +27,7 @@
 .succesIcon{
   color: var(--check-success-color);
 }
+
+.errorIcon{
+  color:var(--error-color);
+}
