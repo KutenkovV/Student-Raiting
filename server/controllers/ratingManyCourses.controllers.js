@@ -1,6 +1,7 @@
 const models = require("../models/models");
 const ApiError = require("../error/ApiError");
 const { Op } = require("sequelize");
+const CalculateRatingController = require("./calculateRating.controllers");
 
 //класс отвечающий за студентов, которые подали на несколько направлений
 class RatingManyCoursesController {
@@ -10,6 +11,10 @@ class RatingManyCoursesController {
     //Получаем список студентов 
     const list = await models.Students.findAll({
       attributes: ["id"],
+      where: {
+        sad: true,
+        free: false,
+      },
     });
     var result = [];
 
@@ -146,10 +151,75 @@ class RatingManyCoursesController {
 
     return res.json(result);
   }
+
+  //метод ,который возвращает студентов,которые подали на несколько направлений
+  async getIsStudentRatingManyCourses(req, res) {
+
+    //Получаем список студентов 
+    const list = await models.Students.findAll({
+      attributes: ["id"],
+      where: {
+        sad: true,
+        free: false,
+      },
+    });
+    var result = 0;
+
+    //цикл на поиск студентов с несколькими направлениями
+    for (let i = 0; i < list.length; i++) {
+      //получаю список заявок студента
+      const listStudentRating = await models.StudentsRating.findAll({
+        attributes: ["id", "destination"],
+        where: {
+          destination: true,
+        },
+        include: [
+          {
+            model: models.Students,
+            where: {
+              id: list[i].dataValues.id,
+            },
+          },
+          {
+            model: models.DateTable,
+            attributes: ["id", "date"],
+            required: true,
+            where: {
+              date: {
+                [Op.contains]: [
+                  { value: new Date(), inclusive: true },
+                  { value: new Date(), inclusive: true },
+                ],
+              },
+            },
+          },
+        ],
+      });
+      //если количество заявок больше чем 1
+      if (listStudentRating.length > 1) {
+        //счетчик на количество заявок с которыми стдуент прошел
+        var countDestinationTrue = 0;
+        //цикл на перебор заявок стдуента
+        for (let y = 0; y < listStudentRating.length; y++) {
+          //если заявка прошла то увеличить счетчик
+          if (listStudentRating[y].destination == true) {
+            countDestinationTrue++;
+          }
+        }
+        if (countDestinationTrue > 1) {
+          result++;
+        }
+      }
+    }
+
+    return res.json( result > 0 ? false : true);
+  }
+  
+  
   //метод для определения направления по которому студент будет получать стипендию 
   async updateStudentRatingManyCourses(req, res) {
     //надо что бы на вход был ID студента которого определяют и направление которое нужно поставить destination=true
-    //узнаем в каких направлениях нужно добавить студента в прошедшие
+    //узнаем в каких направлениях нужно нужно поставить destination=true
     const list = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
       include: [
@@ -203,13 +273,17 @@ class RatingManyCoursesController {
         const listStudentsRating = await models.StudentsRating.findAll({
           attributes: ["id", "destination"],
           order: [
-            [models.Students, "sad", "DESC NULLS LAST"],
             [models.Rating, "points", "DESC"],
           ],
 
           include: [
             {
               model: models.Students,
+              where:{
+                sad:true  ,
+                vacation:false,
+                free:false
+              },
               attributes: [
                 "studnumber",
                 "fullname",
@@ -265,25 +339,23 @@ class RatingManyCoursesController {
           }
         );
         //балл последнего кто прошел
-        var p = listStudentsRating[0].rating.dataValues.points;
+        var lastPoint= listStudentsRating[0].rating.dataValues.points;
         //запускаем цикл на завки одного из направлений
         for (let y = 0; y < listStudentsRating.length; y++) {
           //в цикле находим последнего кто прошел
           if (
-            listStudentsRating[y].rating.dataValues.points < p &&
-            listStudentsRating[y].student.dataValues.sad == true &&
+            listStudentsRating[y].rating.dataValues.points < lastPoint&&
             listStudentsRating[y].destination == true
           ) {
-            p = listStudentsRating[y].rating.dataValues.points;
+            lastPoint= listStudentsRating[y].rating.dataValues.points;
           } //смотрим имеет ли следующий чел стипендию
           else if (
-            listStudentsRating[y].rating.dataValues.points < p &&
-            listStudentsRating[y].student.dataValues.sad == true &&
+            listStudentsRating[y].rating.dataValues.points < lastPoint&&
             listStudentsRating[y].destination == false
           ) {
             //если стипендия есть то назначить ему рейтинговую стипендию
             //выход из цикла
-            p = listStudentsRating[y].rating.dataValues.points;
+            lastPoint= listStudentsRating[y].rating.dataValues.points;
             await models.StudentsRating.update(
               { destination: true, cause: null },
               {
@@ -298,7 +370,7 @@ class RatingManyCoursesController {
         //цикл на начисление стипендии если после последнего прошедшего стоят люди с таким же количеством
         for (let i = 0; i < listStudentsRating.length; i++) {
           if (
-            listStudentsRating[i].rating.dataValues.points == p &&
+            listStudentsRating[i].rating.dataValues.points == lastPoint &&
             listStudentsRating[i].student.dataValues.sad == true
           ) {
             await models.StudentsRating.update(
@@ -311,6 +383,10 @@ class RatingManyCoursesController {
             );
           }
         }
+        await CalculateRatingController.updateVacation(
+          list[i].rating.dataValues.ratingcourse.dataValues.course.dataValues.title,
+          lastPoint
+        );
       }
     }
 

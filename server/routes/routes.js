@@ -27,6 +27,9 @@ router.get("/ud", listController.getUd);
 //маршрут для списка студентов которые подали на несколько направлений
 router.get("/studentRatingManyCourses", ratingManyCoursesController.getStudentRatingManyCourses);
 
+//маршрут для проверки есть ли еще студенты не определлные с направлением
+router.get("/isStudentRatingManyCourses", ratingManyCoursesController.getIsStudentRatingManyCourses);
+
 //маршрут для опеределения направления по которому будет получать студент стипендию
 router.put("/studentRatingManyCourses", ratingManyCoursesController.updateStudentRatingManyCourses);
 

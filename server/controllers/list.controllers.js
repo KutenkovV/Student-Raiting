@@ -31,7 +31,6 @@ class ListController {
       }),
     ]
 
-
     const students = [
       includeModel(models.Students, {
         attributes: [
@@ -45,12 +44,11 @@ class ListController {
         ],
       }),
       includeModel(models.Rating,
-        {
-          attributes: ["points"],
-          required: true,
-          include: ratingCourses
-        }),
-
+      {
+        attributes: ["points"],
+        required: true,
+        include: ratingCourses
+      }),
       includeModel(models.DateTable, {
         attributes: ["id", "date"],
         required: true,
@@ -91,10 +89,8 @@ class ListController {
       include: students,
     });
 
-    //console.log(typeof(result))
     //цикл на изменение true=>да, false=>нет
     for (let i = 0; i < result.length; i++) {
-     // Object.assign(result[i].dataValues,  {"number": i+1} );
       if (
         result[i].student.dataValues.sad == true
       ) {

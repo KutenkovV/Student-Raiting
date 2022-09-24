@@ -231,7 +231,7 @@ class CalculateRatingController {
     });
 
     //счетчик в который кладется послдений балл прошедшего студента
-    var c1 = 0;
+    var lastPoint = 0;
     //счетчик на оставшиеся места
     var countRemained = count;
 
@@ -248,7 +248,7 @@ class CalculateRatingController {
             }
           );
           //обновление последнего балла
-          c1 = list[i].rating.dataValues.points;
+          lastPoint = list[i].rating.dataValues.points;
           //уменьшение оставшихся мест
           countRemained--;
         }
@@ -267,7 +267,7 @@ class CalculateRatingController {
     //цикл на начисление стипендии если после последнего прошедшего стоят люди с таким же количеством
     for (let i = 0; i < list.length; i++) {
       if (
-        list[i].rating.dataValues.points == c1
+        list[i].rating.dataValues.points == lastPoint
       ) {
         await models.StudentsRating.update(
           { destination: true ,cause: null},
@@ -279,8 +279,16 @@ class CalculateRatingController {
         );
       }
     }
+
+    await CalculateRatingController.updateVacation(title,lastPoint);
+
+   
+  }
+
+
+  static async updateVacation(title,lastPoint) {
      //список студентов по заданному направлению
-    const listVacation = await models.StudentsRating.findAll({
+     const listVacation = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
       order: [
         [models.Students, "sad", "DESC NULLS LAST"],
@@ -348,7 +356,7 @@ class CalculateRatingController {
     //цикл на начисление стипендии каникулярным
     for (let i = 0; i < listVacation.length; i++) {
       if (
-        listVacation[i].rating.dataValues.points >= c1
+        listVacation[i].rating.dataValues.points >= lastPoint
       ) {
         await models.StudentsRating.update(
           { destination: true ,cause: "Каникулы"},
