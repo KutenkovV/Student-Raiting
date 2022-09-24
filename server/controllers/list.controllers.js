@@ -9,147 +9,220 @@ class ListController {
   static async getWithOrder(title) {
 
     let result = await models.StudentsRating.findAll({
-      attributes: ["id", "destination","cause"],
-=======
-
-    function includeModel(model, params) {
-      return { model, ...params }
-    }
-
-    //make some decomposition
-    //rating decomposition
-
-    const courses = [
-      includeModel(models.Courses, {
-        where: {
-          title: title,
-        }
-      }),
-      includeModel(models.CourseLevels, { attributes: ["level"] })
-    ]
-
-
-    const ratingCourses = [
-      includeModel(models.RatingCourses, {
-        required: true,
-
-        include: courses,
-      }),
-    ]
-
-
-    const students = [
-      includeModel(models.Students, {
-        attributes: [
-          "studnumber",
-          "fullname",
-          "educationgroup",
-          "institute",
-          "sad",
-          "vacation",
-          "free",
-        ],
-      }),
-
-      includeModel(models.Rating,
-        {
-          attributes: ["points"],
-          required: true,
-
-          include: ratingCourses
-        }),
-
-      includeModel(models.DateTable, {
-        attributes: ["id", "date"],
-        required: true,
-        where: {
-          date: {
-            [Op.contains]: [
-              { value: new Date(), inclusive: true },
-              { value: new Date(), inclusive: true },
-
-            ],
-          },
-        },
-      }),
-    ]
-
-    console.log(students[1])
-    // const u =  await models.StudentsRating.
-    const result = await models.StudentsRating.findAll({
-      attributes: ["id", "destination", "cause"],
-
+      attributes: [
+      "id",
+      [Sequelize.literal('ROW_NUMBER() over (ORDER BY (select 0))'), 'rowNumber'],
+      "destination",
+      "cause",
+      ],
       order: [
-        ["destination", "DESC"],
-        ["cause", "DESC"],
-        [models.Rating, "points", "DESC"],
-        [
-          models.Rating,
-          models.RatingCourses,
-          { model: models.CourseLevels },
-          "level",
-          "ASC",
-        ],
+      [ models.Students,"sad", "DESC"],
+      [ "destination", "DESC"],
+      [ "cause", "ASC"],
+      [ models.Students,"free", "DESC"],
+      [models.Rating, "points", "DESC"],
+      [
+      models.Rating,
+      models.RatingCourses,
+      { model: models.CourseLevels },
+      "level",
+      "ASC",
+      ],
       ],
       required: true,
-// <<<<<<< Backend-line
-//       include: [
-//         {
-//           model: models.Students,
-//           attributes: [
-//             "studnumber",
-//             "fullname",
-//             "educationgroup",
-//             "institute",
-//             "sad",
-//             "vacation",
-//             "free",
-//           ],
-//         },
-//         {
-//           model: models.Rating,
-//           attributes: ["points"],
-//           required: true,
-//           include: [
-//             {
-//               model: models.RatingCourses,
-//               required: true,
-//               include: [
-//                 {
-//                   model: models.Courses,
+      include: [
+      {
+      model: models.Students,
+      attributes: [
+      "studnumber",
+      "fullname",
+      "educationgroup",
+      "institute",
+      "sad",
+      "vacation",
+      "free",
+      ],
+      },
+      {
+      model: models.Rating,
+      attributes: ["points"],
+      required: true,
+      include: [
+      {
+      model: models.RatingCourses,
+      required: true,
+      include: [
+      {
+      model: models.Courses,
+      
+      where: {
+      title: title,
+      },
+      },
+      {
+      model: models.CourseLevels,
+      attributes: ["level"],
+      },
+      ],
+      },
+      ],
+      },
+      {
+      model: models.DateTable,
+      attributes: ["id", "date"],
+      required: true,
+      where: {
+      date: {
+      [Op.contains]: [
+      { value: new Date(), inclusive: true },
+      { value: new Date(), inclusive: true },
+      
+      ],
+      },
+      },
+      },
+      ],
+      });
 
-//                   where: {
-//                     title: title,
-//                   },
-//                 },
-//                 {
-//                   model: models.CourseLevels,
-//                   attributes: ["level"],
-//                 },
-//               ],
-//             },
-//           ],
-//         },
-//         {
-//           model: models.DateTable,
-//           attributes: ["id", "date"],
-//           required: true,
-//           where: {
-//             date: {
-//               [Op.contains]: [
-//                 { value: new Date(), inclusive: true },
-//                 { value: new Date(), inclusive: true },
 
-//               ],
-//             },
-//           },
-//         },
-//       ],
-// =======
+// //     function includeModel(model, params) {
+// //       return { model, ...params }
+// //     }
 
-//       include: students,
-// >>>>>>> Backend-test
-    });
+// //     //make some decomposition
+// //     //rating decomposition
+
+// //     const courses = [
+// //       includeModel(models.Courses, {
+// //         where: {
+// //           title: title,
+// //         }
+// //       }),
+// //       includeModel(models.CourseLevels, { attributes: ["level"] })
+// //     ]
+
+
+// //     const ratingCourses = [
+// //       includeModel(models.RatingCourses, {
+// //         required: true,
+
+// //         include: courses,
+// //       }),
+// //     ]
+
+
+// //     const students = [
+// //       includeModel(models.Students, {
+// //         attributes: [
+// //           "studnumber",
+// //           "fullname",
+// //           "educationgroup",
+// //           "institute",
+// //           "sad",
+// //           "vacation",
+// //           "free",
+// //         ],
+// //       }),
+
+// //       includeModel(models.Rating,
+// //         {
+// //           attributes: ["points"],
+// //           required: true,
+
+// //           include: ratingCourses
+// //         }),
+
+// //       includeModel(models.DateTable, {
+// //         attributes: ["id", "date"],
+// //         required: true,
+// //         where: {
+// //           date: {
+// //             [Op.contains]: [
+// //               { value: new Date(), inclusive: true },
+// //               { value: new Date(), inclusive: true },
+
+// //             ],
+// //           },
+// //         },
+// //       }),
+// //     ]
+
+// //     console.log(students[1])
+// //     // const u =  await models.StudentsRating.
+// //     const result = await models.StudentsRating.findAll({
+// //       attributes: ["id", "destination", "cause"],
+
+// //       order: [
+// //         ["destination", "DESC"],
+// //         ["cause", "DESC"],
+// //         [models.Rating, "points", "DESC"],
+// //         [
+// //           models.Rating,
+// //           models.RatingCourses,
+// //           { model: models.CourseLevels },
+// //           "level",
+// //           "ASC",
+// //         ],
+// //       ],
+// //       required: true,
+// // // <<<<<<< Backend-line
+// // //       include: [
+// // //         {
+// // //           model: models.Students,
+// // //           attributes: [
+// // //             "studnumber",
+// // //             "fullname",
+// // //             "educationgroup",
+// // //             "institute",
+// // //             "sad",
+// // //             "vacation",
+// // //             "free",
+// // //           ],
+// // //         },
+// // //         {
+// // //           model: models.Rating,
+// // //           attributes: ["points"],
+// // //           required: true,
+// // //           include: [
+// // //             {
+// // //               model: models.RatingCourses,
+// // //               required: true,
+// // //               include: [
+// // //                 {
+// // //                   model: models.Courses,
+
+// // //                   where: {
+// // //                     title: title,
+// // //                   },
+// // //                 },
+// // //                 {
+// // //                   model: models.CourseLevels,
+// // //                   attributes: ["level"],
+// // //                 },
+// // //               ],
+// // //             },
+// // //           ],
+// // //         },
+// // //         {
+// // //           model: models.DateTable,
+// // //           attributes: ["id", "date"],
+// // //           required: true,
+// // //           where: {
+// // //             date: {
+// // //               [Op.contains]: [
+// // //                 { value: new Date(), inclusive: true },
+// // //                 { value: new Date(), inclusive: true },
+
+// // //               ],
+// // //             },
+// // //           },
+// // //         },
+// // //       ],
+// // // =======
+
+// // //       include: students,
+// // // >>>>>>> Backend-test
+//     });
 
     console.log(typeof(result))
     //цикл на изменение true=>да, false=>нет
