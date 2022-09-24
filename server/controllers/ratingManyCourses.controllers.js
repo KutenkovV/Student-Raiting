@@ -149,9 +149,7 @@ class RatingManyCoursesController {
   //метод для определения направления по которому студент будет получать стипендию 
   async updateStudentRatingManyCourses(req, res) {
     //надо что бы на вход был ID студента которого определяют и направление которое нужно поставить destination=true
-
-    //console.log(req.query.id);
-    //{ id: '20', course: '"НИД"' }
+    console.log(req.body)
     //узнаем в каких направлениях нужно добавить студента в прошедшие
     const list = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
@@ -159,7 +157,7 @@ class RatingManyCoursesController {
         {
           model: models.Students,
           where: {
-            id: req.query.id,
+            id: req.body.id,
           },
         },
         {
@@ -199,13 +197,9 @@ class RatingManyCoursesController {
     for (let i = 0; i < list.length; i++) {
       if (
         list[i].rating.dataValues.ratingcourse.dataValues.course.dataValues
-          .title != req.query.course &&
+          .title != req.body.course &&
         list[i].destination == true
       ) {
-        console.log(
-          list[i].rating.dataValues.ratingcourse.dataValues.course.dataValues
-            .title
-        );
         //получаем все заявки одного из направлений
         const listStudentsRating = await models.StudentsRating.findAll({
           attributes: ["id", "destination"],
