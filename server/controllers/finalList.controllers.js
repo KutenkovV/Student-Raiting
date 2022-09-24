@@ -199,13 +199,12 @@ class FinalListController {
     worksheet.getCell('A1').font ={name: 'Times New Roman', size:9,bold:true} ;
     let position=1;
     for (let i = 0; i < list1.length; i++) {
-      
 
       var sum =0;
 
-      (list2[i].rating.ratingcourse.dataValues.courselevel.dataValues.level ==1 ) ? sum=12500 :
-      (list2[i].rating.ratingcourse.dataValues.courselevel.dataValues.level ==2) ? sum=11250 :
-      (list2[i].rating.ratingcourse.dataValues.courselevel.dataValues.level ==3) ? sum=10000 :
+      (list1[i].rating.ratingcourse.dataValues.courselevel.dataValues.level ==1 ) ? sum=12500 :
+      (list1[i].rating.ratingcourse.dataValues.courselevel.dataValues.level ==2) ? sum=11250 :
+      (list1[i].rating.ratingcourse.dataValues.courselevel.dataValues.level ==3) ? sum=10000 :
       sum=9300;
 
       list1[i].rating.dataValues.ratingcourse.dataValues.course.dataValues.title != list1[i-1]?.rating.dataValues.ratingcourse.dataValues.course.dataValues.title
