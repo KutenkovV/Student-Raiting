@@ -200,8 +200,8 @@ class FinalListController {
     let position=1;
     for (let i = 0; i < list1.length; i++) {
       
-      list1[i].rating.dataValues.ratingcourse.dataValues.course.dataValues.title != list1[i-1]?.rating.dataValues.ratingcourse.dataValues.course.dataValues.title
-       ? position=1 : position ++;
+      list1[i].rating.dataValues.ratingcourse.dataValues.course.dataValues.title
+      != list1[i-1]?.rating.dataValues.ratingcourse.dataValues.course.dataValues.title ? position=1 : position ++;
 
       worksheet.addRow({ 
         position: list1[i].student.dataValues.vacation==true? "" : position, 
@@ -210,7 +210,8 @@ class FinalListController {
         educationgroup: list1[i].student.dataValues.educationgroup,
         courses: list1[i].rating.dataValues.ratingcourse.dataValues.course.dataValues.title,
         points: list1[i].rating.dataValues.points,
-        level: list1[i].rating.ratingcourse.dataValues.courselevel.dataValues.level==0 ? "" : list1[i].rating.ratingcourse.dataValues.courselevel.dataValues.level,
+        level: list1[i].rating.ratingcourse.dataValues.courselevel.dataValues.level==0 ? "" : 
+        list1[i].rating.ratingcourse.dataValues.courselevel.dataValues.level,
         sum: sum,
         period: "На срок академич.",
         cause:   list1[i].cause ?  list1[i].cause : list1[i].student.dataValues.vacation==true? "Каникулы"  : "",
@@ -289,7 +290,7 @@ class FinalListController {
     var worksheet2 = workbook.addWorksheet('К публикации');
     //создаем колонки
     worksheet2.columns = [
-      { header: 'Позиция в направлении', key: 'position', width: 10 },
+      { header: '123Позиция в направлении', key: 'position', width: 10 },
       { header: 'Студент', key: 'fullname', width: 32 },
       { header: 'Факультет', key: 'institute', width: 10 },
       { header: 'Группа', key: 'educationgroup', width: 10 },
@@ -299,7 +300,23 @@ class FinalListController {
       { header: 'Статус ПГАС', key: 'destination', width: 10 },
 
     ];
-    
+    worksheet2.columns.map(item => {
+      item.style={font:font}
+      item.border={
+        top: {style:'thin'},
+        left: {style:'thin'},
+        bottom: {style:'thin'},
+        right: {style:'thin'}
+      }
+    })
+
+    worksheet2.getRow(1).font=fontHeader;
+    worksheet2.getRow(1).height=45;
+    worksheet2.autoFilter = 'A1:L1';
+    worksheet2.getRow(1).alignment={ horizontal: 'center',vertical:'middle'}
+    worksheet2.getColumn(1).alignment={ wrapText:true, horizontal: 'center'}
+    worksheet2.getCell('A1').font ={name: 'Times New Roman', size:9,bold:true} ;
+    position=1;
     for (let i = 0; i < list2.length; i++) {
       var sum =0;
 
@@ -309,13 +326,14 @@ class FinalListController {
         sum=9300;
 
       worksheet2.addRow({ 
-        position: 1, 
+        position: position++, 
         fullname: list2[i].student.dataValues.fullname , 
         institute: list2[i].student.dataValues.institute,
         educationgroup: list2[i].student.dataValues.educationgroup,
         courses: list2[i].rating.dataValues.ratingcourse.dataValues.course.dataValues.title,
         points: list2[i].rating.dataValues.points,
-        level: list2[i].rating.ratingcourse.dataValues.courselevel.dataValues.level==0 ? "" : list2[i].rating.ratingcourse.dataValues.courselevel.dataValues.level,
+        level: list2[i].rating.ratingcourse.dataValues.courselevel.dataValues.level==0 ? "" :
+        list2[i].rating.ratingcourse.dataValues.courselevel.dataValues.level,
         destination: list2[i].destination ? "Назначить" : list2[i].destination,
       });
     }
@@ -329,3 +347,4 @@ class FinalListController {
   }
 }
 module.exports = new FinalListController();
+
