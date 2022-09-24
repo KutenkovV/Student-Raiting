@@ -65,7 +65,7 @@ class ListController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-               
+
               ],
             },
           },
