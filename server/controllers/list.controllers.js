@@ -3,9 +3,70 @@ const { Op } = require("sequelize");
 const { Sequelize } = require("../db");
 
 class ListController {
-  
+
+
   static async getWithOrder(title) {
-    let result = await models.StudentsRating.findAll({
+
+    function includeModel(model, params) {
+      return { model, ...params }
+    }
+
+    //make some decomposition
+    //rating decomposition
+
+    const courses = [
+      includeModel(models.Courses, {
+        where: {
+          title: title,
+        }
+      }),
+      includeModel(models.CourseLevels, { attributes: ["level"] })
+    ]
+
+
+    const ratingCourses = [
+      includeModel(models.RatingCourses, {
+        required: true,
+        include: courses,
+      }),
+    ]
+
+
+    const students = [
+      includeModel(models.Students, {
+        attributes: [
+          "studnumber",
+          "fullname",
+          "educationgroup",
+          "institute",
+          "sad",
+          "vacation",
+          "free",
+        ],
+      }),
+      includeModel(models.Rating,
+        {
+          attributes: ["points"],
+          required: true,
+          include: ratingCourses
+        }),
+
+      includeModel(models.DateTable, {
+        attributes: ["id", "date"],
+        required: true,
+        where: {
+          date: {
+            [Op.contains]: [
+              { value: new Date(), inclusive: true },
+              { value: new Date(), inclusive: true },
+
+            ],
+          },
+        },
+      }),
+    ]
+
+    const result = await models.StudentsRating.findAll({
       attributes: [
         "id",
         [Sequelize.literal('ROW_NUMBER() over (ORDER BY (select 0))'), 'rowNumber'],
@@ -13,7 +74,6 @@ class ListController {
         "cause",
       ],
       order: [
-        
         [ "destination", "DESC"],
         [ models.Students,"free", "ASC"],
         [ models.Students,"sad", "DESC"],
@@ -28,58 +88,7 @@ class ListController {
         ],
       ],
       required: true,
-      include: [
-        {
-          model: models.Students,
-          attributes: [
-            "studnumber",
-            "fullname",
-            "educationgroup",
-            "institute",
-            "sad",
-            "vacation",
-            "free",
-          ],
-        },
-        {
-          model: models.Rating,
-          attributes: ["points"],
-          required: true,
-          include: [
-            {
-              model: models.RatingCourses,
-              required: true,
-              include: [
-                {
-                  model: models.Courses,
-
-                  where: {
-                    title: title,
-                  },
-                },
-                {
-                  model: models.CourseLevels,
-                  attributes: ["level"],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          model: models.DateTable,
-          attributes: ["id", "date"],
-          required: true,
-          where: {
-            date: {
-              [Op.contains]: [
-                { value: new Date(), inclusive: true },
-                { value: new Date(), inclusive: true },
-
-              ],
-            },
-          },
-        },
-      ],
+      include: students,
     });
 
     //console.log(typeof(result))
@@ -118,7 +127,7 @@ class ListController {
   async getKtd(req, res) {
     return res.json(await ListController.getWithOrder("КТД"));
   }
-  
+
   async getNid(req, res) {
     return res.json(await ListController.getWithOrder("НИД"));
   }
@@ -126,7 +135,7 @@ class ListController {
   async getUd(req, res) {
     return res.json(await ListController.getWithOrder("УД"));
   }
-  
+
   async getSd(req, res) {
     return res.json(await ListController.getWithOrder("СД"));
   }
