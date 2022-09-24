@@ -3,14 +3,14 @@ const { Op } = require("sequelize");
 
 //класс отвечающий за сводку 
 
-class ReportController {
+ class ReportController {
   
-  async getReport(req, res) {        
+  static async getReport(req, res) {        
     // объект с данными для сводки
     var result = [
       {
         title: "Научно-исследовательская деятельность",
-        totalSubmitted: ( await ReportController.getTotalSubmitted("НИД") ),
+        totalSubmitted: ( await ReportController.getTotalSubmitted("НИД")),
         count: (await ReportController.getСount("НИД")),
         borderPoint: (await ReportController.getBorderPoint("НИД")),
         numberReceived: (await ReportController.getNumberReceived("НИД")),
@@ -241,4 +241,4 @@ class ReportController {
   }
 }
 
-module.exports = new ReportController();
+module.exports = ReportController;

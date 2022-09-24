@@ -344,7 +344,7 @@ class FinalListController {
   }
 
   //метод ,который возвращает готов ли финальный список
-  async getTheFinalFileIsReady(req, res) {
+   async getTheFinalFileIsReady(req, res) {
 
     //Получаем список студентов 
     const list = await models.Students.findAll({

@@ -84,6 +84,7 @@ class ListController {
           "level",
           "ASC",
         ],
+        [ models.Students,"fullname", "ASC"],
       ],
       required: true,
       include: students,

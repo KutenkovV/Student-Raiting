@@ -4,7 +4,7 @@ const { Op } = require("sequelize");
 class CalculateRatingController {
 
   //метод расчета рейтинговой стипендии
-  async calculation(req, res) {
+  static async calculation(req, res) {
     //чистим у всех поле получения стипендии и причину неполучения
     await CalculateRatingController.deleteCourse();
 
@@ -381,4 +381,4 @@ class CalculateRatingController {
     }
   }
 }
-module.exports = new CalculateRatingController();
+module.exports = CalculateRatingController;
