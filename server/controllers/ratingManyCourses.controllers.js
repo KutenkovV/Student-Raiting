@@ -2,6 +2,7 @@ const models = require("../models/models");
 const ApiError = require("../error/ApiError");
 const { Op } = require("sequelize");
 const CalculateRatingController = require("./calculateRating.controllers");
+const ModelService=require("../service/model.service");
 
 //класс отвечающий за студентов, которые подали на несколько направлений
 class RatingManyCoursesController {
@@ -319,7 +320,7 @@ class RatingManyCoursesController {
             );
           }
         }
-        await CalculateRatingController.updateVacation(
+        await ModelService.updateVacation(
           list[i].rating.dataValues.ratingcourse.dataValues.course.dataValues.title,
           lastPoint
         );

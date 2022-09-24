@@ -1,7 +1,7 @@
 const models = require("../models/models");
 const { Op } = require("sequelize");
 const Excel = require('exceljs');
-const ReportController=require("./report.controllers");
+const ModelService=require("../service/model.service");
 
 class FinalListController {
 
@@ -404,15 +404,15 @@ class FinalListController {
     }
 
     if (
-      await ReportController.getNumberReceived("ОД")!='0'
+      await ModelService.getNumberReceived("ОД")!='0'
       &&
-      await ReportController.getNumberReceived("НИД")!='0'
+      await ModelService.getNumberReceived("НИД")!='0'
       &&
-      await ReportController.getNumberReceived("КТД")!='0'
+      await ModelService.getNumberReceived("КТД")!='0'
       &&
-      await ReportController.getNumberReceived("СД")!='0'
+      await ModelService.getNumberReceived("СД")!='0'
       &&
-      await ReportController.getNumberReceived("УД")!='0'
+      await ModelService.getNumberReceived("УД")!='0'
       && 
       result == 0 
     ){

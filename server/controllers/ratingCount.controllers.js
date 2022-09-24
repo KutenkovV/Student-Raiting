@@ -2,6 +2,7 @@ const models = require("../models/models");
 const ApiError = require("../error/ApiError");
 const { Op } = require("sequelize");
 const calculateRatingController = require("./calculateRating.controllers");
+const ModelService=require("../service/model.service");
 
 //класс отвечающий за количество мест по направлениям
 
@@ -41,53 +42,16 @@ class RatingCountController {
   async update(req, res) {
     if (!req.body) return response.sendStatus(400);
 
-    await RatingCountController.updateCountCourse("НИД", parseInt(req.body.nidInput));
-    await RatingCountController.updateCountCourse("УД", parseInt(req.body.udInput));
-    await RatingCountController.updateCountCourse("СД", parseInt(req.body.sdInput));
-    await RatingCountController.updateCountCourse("ОД", parseInt(req.body.odInput));
-    await RatingCountController.updateCountCourse("КТД", parseInt(req.body.ktdInput));
+    await ModelService.updateCountCourse("НИД", parseInt(req.body.nidInput));
+    await ModelService.updateCountCourse("УД", parseInt(req.body.udInput));
+    await ModelService.updateCountCourse("СД", parseInt(req.body.sdInput));
+    await ModelService.updateCountCourse("ОД", parseInt(req.body.odInput));
+    await ModelService.updateCountCourse("КТД", parseInt(req.body.ktdInput));
 
 
     //после обновления количества мест нужно выполнить процедуру начисления рейтинговой стипендии заново
     calculateRatingController.calculation();
     res.send("ОК");
-  }
-
-  //метод изменения количества мест по одному направлению
-  static async updateCountCourse(title, count) {
-    //получаем id направления
-    const course = await models.RatingCount.findOne({
-      attributes: ["id"],
-      include: [
-        {
-          model: models.Courses,
-          where: {
-            title: title,
-          },
-        },
-        {
-          model: models.DateTable,
-          required: true,
-          where: {
-            date: {
-              [Op.contains]: [
-                { value: new Date(), inclusive: true },
-                { value: new Date(), inclusive: true },
-              ],
-            },
-          },
-        },
-      ],
-    });
-    //изменяем количество мест
-    await models.RatingCount.update(
-      { count: parseInt(count) },
-      {
-        where: {
-          id: course.id,
-        },
-      }
-    );
   }
 
   //метод возвращающий 10% от количества студентов получающих ГАС
