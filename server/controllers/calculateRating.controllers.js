@@ -1,6 +1,4 @@
 const models = require("../models/models");
-
-const ApiError = require("../error/ApiError");
 const { Op } = require("sequelize");
 
 class CalculateRatingController {
@@ -9,6 +7,83 @@ class CalculateRatingController {
   async calculation(req, res) {
     //чистим у всех поле получения стипендии и причину неполучения
     await CalculateRatingController.deleteCourse();
+
+    //отметили всех без ГАС и со свободным графиком
+    const listSadFalse = await models.StudentsRating.findAll({
+      attributes: ["id"],
+      required: true,
+      include: [
+        {
+          model: models.Students,
+          where:{
+            sad:false
+          },
+        },
+        {
+          model: models.DateTable,
+          attributes: ["id", "date"],
+          required: true,
+          where: {
+            date: {
+              [Op.contains]: [
+                { value: new Date(), inclusive: true },
+                { value: new Date(), inclusive: true },
+              
+              ],
+            },
+          },
+        },
+      ],
+    });
+    for (let i = 0; i < listSadFalse.length; i++) {
+      await models.StudentsRating.update(
+        { destination:false ,cause: "Нет академ. ст." },
+        {
+          where: {
+            id: listSadFalse[i].dataValues.id,
+          },
+        }
+      );
+    }
+
+    //отметили всех со свободным графиком
+    const listFreeTrue = await models.StudentsRating.findAll({
+      attributes: ["id"],
+      required: true,
+      include: [
+        {
+          model: models.Students,
+          where:{
+            free:true
+          },
+        },
+        {
+          model: models.DateTable,
+          attributes: ["id", "date"],
+          required: true,
+          where: {
+            date: {
+              [Op.contains]: [
+                { value: new Date(), inclusive: true },
+                { value: new Date(), inclusive: true },
+              
+              ],
+            },
+          },
+        },
+      ],
+    });
+    for (let i = 0; i < listFreeTrue.length; i++) { 
+      await models.StudentsRating.update(
+        { destination:false ,cause: "Свободный график" },
+        {
+          where: {
+            id: listFreeTrue[i].dataValues.id,
+          },
+        }
+      );
+    }
+
 
     await CalculateRatingController.calculationCourse("НИД");
     await CalculateRatingController.calculationCourse("УД");
@@ -87,81 +162,8 @@ class CalculateRatingController {
       count = counts[0].dataValues.count;
     }
 
-    //отметили всех без ГАС
-    const listSadFalse = await models.StudentsRating.findAll({
-      attributes: ["id", "destination"],
-      order: [
-        [models.Students, "sad", "DESC NULLS LAST"],
-        [models.Rating, "points", "DESC"],
-      ],
-      required: true,
-      include: [
-        {
-          model: models.Students,
-          where:{
-            sad:false
-          },
-          attributes: [
-            "studnumber",
-            "fullname",
-            "educationgroup",
-            "institute",
-            "sad",
-          ],
-        },
-        {
-          model: models.Rating,
-          attributes: ["points"],
-          required: true,
-          include: [
-            {
-              model: models.RatingCourses,
-              required: true,
-              include: [
-                {
-                  model: models.Courses,
-
-                  where: {
-                    title: title,
-                  },
-                },
-                {
-                  model: models.CourseLevels,
-                  attributes: ["level"],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          model: models.DateTable,
-          attributes: ["id", "date"],
-          required: true,
-          where: {
-            date: {
-              [Op.contains]: [
-                { value: new Date(), inclusive: true },
-                { value: new Date(), inclusive: true },
-               
-              ],
-            },
-          },
-        },
-      ],
-    });
-    for (let i = 0; i < listSadFalse.length; i++) {
-      await models.StudentsRating.update(
-        { cause: "Нет академ. ст." },
-        {
-          where: {
-            id: listSadFalse[i].dataValues.id,
-          },
-        }
-      );
-    }
-
-    //
-    const listSadTrueVacationFalse = await models.StudentsRating.findAll({
+    //список студентов по заданному направлению
+    const list = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
       order: [
         [models.Students, "sad", "DESC NULLS LAST"],
@@ -173,7 +175,8 @@ class CalculateRatingController {
           model: models.Students,
           where:{
             sad:true,
-            vacation:false
+            vacation:false,
+            free:false
           },
           attributes: [
             "studnumber",
@@ -181,6 +184,8 @@ class CalculateRatingController {
             "educationgroup",
             "institute",
             "sad",
+            "vacation",
+            "free"
           ],
         },
         {
@@ -216,64 +221,65 @@ class CalculateRatingController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-               
+                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
+                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
               ],
             },
           },
         },
       ],
     });
-    //счетчик в который кладется последний балл прошедшего студента
-    var lastPoint = 0;
+
+    //счетчик в который кладется послдений балл прошедшего студента
+    var c1 = 0;
     //счетчик на оставшиеся места
     var countRemained = count;
+
     //цикл на начисление стипендии по количеству мест
-    for (let i = 0; i < listSadTrueVacationFalse.length; i++) {
-      // если еще остались места, то назначить рейтинговую стипендию
-      if (countRemained > 0) {
-        await models.StudentsRating.update(
-          { destination: true ,cause: null},
-          {
-            where: {
-              id: listSadTrueVacationFalse[i].dataValues.id,
-            },
-          }
-        );
-        //обновление последнего балла
-        lastPoint = listSadTrueVacationFalse[i].rating.dataValues.points;
-        //уменьшение оставшихся мест
-        countRemained--;
-      }
-      //иначе пишем не достаточно баллов
-      else {
-        await models.StudentsRating.update(
-          { cause: "Не дост. баллов" },
-          {
-            where: {
-              id: listSadTrueVacationFalse[i].dataValues.id,
-            },
-          }
-        );
-      }
+    for (let i = 0; i < list.length; i++) {
+        // если еще остались места, то назначить рейтинговую стипендию
+        if (countRemained > 0) {
+          await models.StudentsRating.update(
+            { destination: true ,cause: null},
+            {
+              where: {
+                id: list[i].dataValues.id,
+              },
+            }
+          );
+          //обновление последнего балла
+          c1 = list[i].rating.dataValues.points;
+          //уменьшение оставшихся мест
+          countRemained--;
+        }
+        //иначе пишем не достаточно баллов
+        else {
+          await models.StudentsRating.update(
+            { cause: "Не дост. баллов" },
+            {
+              where: {
+                id: list[i].dataValues.id,
+              },
+            }
+          );
+        }
     }
     //цикл на начисление стипендии если после последнего прошедшего стоят люди с таким же количеством
-    for (let i = 0; i < listSadTrueVacationFalse.length; i++) {
+    for (let i = 0; i < list.length; i++) {
       if (
-        listSadTrueVacationFalse[i].rating.dataValues.points == lastPoint &&
-        listSadTrueVacationFalse[i].student.dataValues.sad == true
+        list[i].rating.dataValues.points == c1
       ) {
         await models.StudentsRating.update(
           { destination: true ,cause: null},
           {
             where: {
-              id: listSadTrueVacationFalse[i].dataValues.id,
+              id: list[i].dataValues.id,
             },
           }
         );
       }
     }
-
-    //список студентов каникулы
+     //список студентов по заданному направлению
     const listVacation = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
       order: [
@@ -284,9 +290,9 @@ class CalculateRatingController {
       include: [
         {
           model: models.Students,
-          where: {
-            sad: true,
-            vacation: true,
+          where:{
+            sad:true,
+            vacation:true
           },
           attributes: [
             "studnumber",
@@ -294,6 +300,8 @@ class CalculateRatingController {
             "educationgroup",
             "institute",
             "sad",
+            "vacation",
+            "free"
           ],
         },
         {
@@ -329,19 +337,21 @@ class CalculateRatingController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-              
+                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
+                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
               ],
             },
           },
         },
       ],
     });
-
+    //цикл на начисление стипендии каникулярным
     for (let i = 0; i < listVacation.length; i++) {
-      // 
-      if (listVacation[i].rating.dataValues.points >= lastPoint) {
+      if (
+        listVacation[i].rating.dataValues.points >= c1
+      ) {
         await models.StudentsRating.update(
-          { destination: true },
+          { destination: true ,cause: "Каникулы"},
           {
             where: {
               id: listVacation[i].dataValues.id,
@@ -352,16 +362,15 @@ class CalculateRatingController {
       //иначе пишем не достаточно баллов
       else {
         await models.StudentsRating.update(
-          { destination: false ,cause: "Не дост. баллов" },
+          { destination: false,cause: "Не дост. баллов" },
           {
             where: {
-              id: listSadTrueVacationFalse[i].dataValues.id,
+              id: listVacation[i].dataValues.id,
             },
           }
         );
       }
     }
-
   }
 }
 module.exports = new CalculateRatingController();

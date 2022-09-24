@@ -149,7 +149,6 @@ class RatingManyCoursesController {
   //метод для определения направления по которому студент будет получать стипендию 
   async updateStudentRatingManyCourses(req, res) {
     //надо что бы на вход был ID студента которого определяют и направление которое нужно поставить destination=true
-    console.log(req.body)
     //узнаем в каких направлениях нужно добавить студента в прошедшие
     const list = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],

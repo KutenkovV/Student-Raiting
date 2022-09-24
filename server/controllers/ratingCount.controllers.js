@@ -40,8 +40,6 @@ class RatingCountController {
   //метод изменения количества мест по направлениям
   async update(req, res) {
     if (!req.body) return response.sendStatus(400);
-    
-    console.log(req.body)
 
     await RatingCountController.updateCountCourse("НИД", parseInt(req.body.nidInput));
     await RatingCountController.updateCountCourse("УД", parseInt(req.body.udInput));

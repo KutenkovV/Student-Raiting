@@ -13,7 +13,10 @@ class ListController {
         "cause",
       ],
       order: [
+        
         [ "destination", "DESC"],
+        [ models.Students,"free", "ASC"],
+        [ models.Students,"sad", "DESC"],
         [ "cause", "DESC"],
         [models.Rating, "points", "DESC"],
         [
@@ -108,7 +111,6 @@ class ListController {
         result[i].student.dataValues.free ="Нет"
       }
     }
-
 
     return result;
   }
