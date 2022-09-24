@@ -18,7 +18,23 @@ function Sd() {
   return (
     <div>
       <h1 className="header">Спортивная деятельность</h1>
-      
+      <div className="row colorMap_container mt-4 mb-4">
+        <div className="colorMap colorMap_enoughPoints col">
+          <p>
+            Получают стипендию
+          </p>
+        </div>
+        <div className="colorMap colorMap_vacation col">
+          <p>
+            На каникулах
+          </p>
+        </div>
+        <div className="colorMap colorMap_free col">
+          <p>
+            Свободный график
+          </p>
+        </div>
+      </div>
       {/* блокс с промисом "загрузка..." */}
       {promiseInProgress
         ? <div class="spinner-border spinner-border-sm load_spinner" role="status">

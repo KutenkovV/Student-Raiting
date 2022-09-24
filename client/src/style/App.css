@@ -10,6 +10,10 @@
   --blue-action: #007bff;
   /*Для всех успешных действий*/
   --success-color: #b3f2dd;
+  /*Отмечаем студентов на каникулах*/
+  --vacation-color: #D5DBF0;
+   /*Отмечаем студентов со свободным графиком*/
+  --free-color: #ace3f3;
   /*Для успешно загруженных списков*/
   --check-success-color: #87A878;
   /*Цвет ошибок и провальных действий*/
@@ -81,4 +85,30 @@
 
 .load_spinner{
   color: var(--dark-grey);
+}
+
+.colorMap{
+  box-shadow: var(--default-shadow);
+  border-radius: var(--default-radius);
+  margin-top: 2rem;
+  height: 2.5rem;
+  margin-right: 1rem;
+  text-align: center;
+  padding-top: 0.6rem;
+  font-family: var(--main-font);
+  font-size: var(--default-font-size);
+  text-transform: uppercase;
+  font-weight:600;
+}
+
+.colorMap_enoughPoints{
+  background-color: var(--success-color);
+}
+
+.colorMap_vacation{
+  background-color: var(--vacation-color);
+}
+
+.colorMap_free{
+  background-color: var(--free-color);
 }
