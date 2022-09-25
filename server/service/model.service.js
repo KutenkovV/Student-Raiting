@@ -69,7 +69,7 @@ class ModelService {
         const result = await models.StudentsRating.findAll({
             attributes: [
                 "id",
-                [Sequelize.literal('ROW_NUMBER() over (ORDER BY (select 0))'), 'rowNumber'],
+                //[Sequelize.literal('ROW_NUMBER() over (ORDER BY (StudentsRating.id))'), 'rowNumber'],
                 "destination",
                 "cause",
             ],
@@ -94,6 +94,7 @@ class ModelService {
 
         //цикл на изменение true=>да, false=>нет
         for (let i = 0; i < result.length; i++) {
+          Object.assign(result[i].dataValues, {"rowNumber": i+1} );
             if (
                 result[i].student.dataValues.sad == true
             ) {
