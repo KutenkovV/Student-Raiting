@@ -1,60 +1,24 @@
 const models = require("../models/models");
-const ApiError = require("../error/ApiError");
 const { Op } = require("sequelize");
+const ModelService=require("../service/model.service");
 
 class CalculateRatingController {
-  async calculation(req, res) {
-    //вызовем 5 раз метод очистки и расчета для всех направлений
+
+  //метод расчета рейтинговой стипендии
+  static async calculation(req, res) {
+    //чистим у всех поле получения стипендии и причину неполучения
     await CalculateRatingController.deleteCourse();
 
-    await CalculateRatingController.calculationCourse("НИД");
-    await CalculateRatingController.calculationCourse("УД");
-    await CalculateRatingController.calculationCourse("СД");
-    await CalculateRatingController.calculationCourse("ОД");
-    await CalculateRatingController.calculationCourse("КТД");
-    
-
-    /*const result = await models.StudentsRating.findAll({
-      attributes: ["id", "destination"],
-      order: [
-        [models.Students, "sad", "DESC NULLS LAST"],
-        [models.Rating, "points", "DESC"],
-      ],
+    //отметили всех без ГАС и со свободным графиком
+    const listSadFalse = await models.StudentsRating.findAll({
+      attributes: ["id"],
       required: true,
       include: [
         {
           model: models.Students,
-          attributes: [
-            "studnumber",
-            "fullname",
-            "educationgroup",
-            "institute",
-            "sad",
-          ],
-        },
-        {
-          model: models.Rating,
-          attributes: ["points"],
-          required: true,
-          include: [
-            {
-              model: models.RatingCourses,
-              required: true,
-              include: [
-                {
-                  model: models.Courses,
-
-                  where: {
-                    title: "НИД",
-                  },
-                },
-                {
-                  model: models.CourseLevels,
-                  attributes: ["level"],
-                },
-              ],
-            },
-          ],
+          where:{
+            sad:false
+          },
         },
         {
           model: models.DateTable,
@@ -65,19 +29,72 @@ class CalculateRatingController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
+              
               ],
             },
           },
         },
       ],
     });
+    for (let i = 0; i < listSadFalse.length; i++) {
+      await models.StudentsRating.update(
+        { destination:false ,cause: "Нет академ. ст." },
+        {
+          where: {
+            id: listSadFalse[i].dataValues.id,
+          },
+        }
+      );
+    }
 
-    return res.json(result);*/
+    //отметили всех со свободным графиком
+    const listFreeTrue = await models.StudentsRating.findAll({
+      attributes: ["id"],
+      required: true,
+      include: [
+        {
+          model: models.Students,
+          where:{
+            free:true
+          },
+        },
+        {
+          model: models.DateTable,
+          attributes: ["id", "date"],
+          required: true,
+          where: {
+            date: {
+              [Op.contains]: [
+                { value: new Date(), inclusive: true },
+                { value: new Date(), inclusive: true },
+              
+              ],
+            },
+          },
+        },
+      ],
+    });
+    for (let i = 0; i < listFreeTrue.length; i++) { 
+      await models.StudentsRating.update(
+        { destination:false ,cause: "Свободный график" },
+        {
+          where: {
+            id: listFreeTrue[i].dataValues.id,
+          },
+        }
+      );
+    }
+
+
+    await CalculateRatingController.calculationCourse("НИД");
+    await CalculateRatingController.calculationCourse("УД");
+    await CalculateRatingController.calculationCourse("СД");
+    await CalculateRatingController.calculationCourse("ОД");
+    await CalculateRatingController.calculationCourse("КТД");
   }
-
+  //метод очистки полей
   static async deleteCourse() {
+    //получаем список всех заявок студентов текущего периода
     const list = await models.StudentsRating.findAll({
       attributes: ["id", "destination","cause"],
       required: true,
@@ -91,15 +108,13 @@ class CalculateRatingController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
               ],
             },
           },
         },
       ],
     });
-
+    //ставим значения destination: false, cause: null
     for (let i = 0; i < list.length; i++) {
       await models.StudentsRating.update(
         { destination: false, cause: null  },
@@ -120,7 +135,6 @@ class CalculateRatingController {
       include: [
         {
           model: models.Courses,
-
           where: {
             title: title,
           },
@@ -134,18 +148,21 @@ class CalculateRatingController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
               ],
             },
           },
         },
       ],
     });
+    let count = 0 ;
+    if ( ! counts[0].dataValues.count) {
+      res.status(400).send("Настройки не были загружены!");
+      return;
+    } else{
+      //получаю первое количество мест
+      count = counts[0].dataValues.count;
+    }
 
-    //получаю первое количество мест
-    const count = counts[0].dataValues.count;
-    //console.log(count);
     //список студентов по заданному направлению
     const list = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
@@ -157,12 +174,19 @@ class CalculateRatingController {
       include: [
         {
           model: models.Students,
+          where:{
+            sad:true,
+            vacation:false,
+            free:false
+          },
           attributes: [
             "studnumber",
             "fullname",
             "educationgroup",
             "institute",
             "sad",
+            "vacation",
+            "free"
           ],
         },
         {
@@ -208,14 +232,12 @@ class CalculateRatingController {
     });
 
     //счетчик в который кладется послдений балл прошедшего студента
-    var c1 = 0;
+    var lastPoint = 0;
     //счетчик на оставшиеся места
     var countRemained = count;
 
     //цикл на начисление стипендии по количеству мест
     for (let i = 0; i < list.length; i++) {
-      //если студент получает ГАС
-      if (list[i].student.dataValues.sad == true) {
         // если еще остались места, то назначить рейтинговую стипендию
         if (countRemained > 0) {
           await models.StudentsRating.update(
@@ -227,7 +249,7 @@ class CalculateRatingController {
             }
           );
           //обновление последнего балла
-          c1 = list[i].rating.dataValues.points;
+          lastPoint = list[i].rating.dataValues.points;
           //уменьшение оставшихся мест
           countRemained--;
         }
@@ -242,24 +264,11 @@ class CalculateRatingController {
             }
           );
         }
-      }
-      //иначе пишем нет академической стипендии
-      else {
-        await models.StudentsRating.update(
-          { cause: "Нет академ. ст." },
-          {
-            where: {
-              id: list[i].dataValues.id,
-            },
-          }
-        );
-      }
     }
     //цикл на начисление стипендии если после последнего прошедшего стоят люди с таким же количеством
     for (let i = 0; i < list.length; i++) {
       if (
-        list[i].rating.dataValues.points == c1 &&
-        list[i].student.dataValues.sad == true
+        list[i].rating.dataValues.points == lastPoint
       ) {
         await models.StudentsRating.update(
           { destination: true ,cause: null},
@@ -271,6 +280,13 @@ class CalculateRatingController {
         );
       }
     }
+
+    await ModelService.updateVacation(title,lastPoint);
+
+   
   }
+
+
+
 }
-module.exports = new CalculateRatingController();
+module.exports = CalculateRatingController;

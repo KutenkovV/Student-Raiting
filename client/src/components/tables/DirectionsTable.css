@@ -1,7 +1,31 @@
-.destinationTrue{
-    background-color: #b9e7cc;
+.destinationTrue {
+    background-color: var(--success-color);
 }
 
-.tdTrue{
-    background-color: #b9e7cc;
+.vacationTrue{
+    background-color: var(--vacation-color);
+}
+
+.freeTrue{
+    background-color: var(--free-color);
+}
+
+.tdTrue {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+    width: 3rem;
+    border-radius: 25%;
+    background-color: var(--success-color);
+}
+
+.tdFalse {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+    width: 3rem;
 }

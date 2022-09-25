@@ -1,0 +1,33 @@
+:root {
+  --box-bg: rgb(234, 234, 234);
+  --box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+} 
+
+.checkList{
+  padding: 1rem;
+  box-shadow: var(--default-shadow);
+  border-radius: var(--default-radius);
+  margin-left: 2.5rem;
+  margin-bottom: 2.5rem;
+  height: 20rem;
+}
+
+.checkText{
+  font-family: var(--main-font);
+  font-size: var(--default-font-size);
+  color: var(--dark-grey);
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.checkItem{
+  margin-left: 2rem;
+}
+
+.succesIcon{
+  color: var(--check-success-color);
+}
+
+.errorIcon{
+  color:var(--error-color);
+}

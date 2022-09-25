@@ -1,4 +1,4 @@
-import "./App.css";
+import "./style/App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 
@@ -27,7 +27,7 @@ function App() {
               className="burger-btn"
               onClick={() => setMenuActive(!menuActive)}
             >
-              <FontAwesomeIcon icon={faBars} size="2x" />
+              <FontAwesomeIcon icon={faBars} size="2x"/>
             </div>
             <Navbar active={menuActive} />
           </div>

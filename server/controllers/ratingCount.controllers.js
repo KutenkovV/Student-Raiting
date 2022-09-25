@@ -2,9 +2,14 @@ const models = require("../models/models");
 const ApiError = require("../error/ApiError");
 const { Op } = require("sequelize");
 const calculateRatingController = require("./calculateRating.controllers");
+const ModelService=require("../service/model.service");
+
+//класс отвечающий за количество мест по направлениям
 
 class RatingCountController {
-  async getAll(req, res) {
+  
+  //метод возвращающий количество мест по направлениям
+  async get(req, res) {
     const courseCount = await models.RatingCount.findAll({
       required: true,
       attributes: ["id", "count"],
@@ -22,8 +27,7 @@ class RatingCountController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
+               
               ],
             },
           },
@@ -34,55 +38,23 @@ class RatingCountController {
     return res.json(courseCount);
   }
 
+  //метод изменения количества мест по направлениям
   async update(req, res) {
     if (!req.body) return response.sendStatus(400);
-    console.log(req.body.nidInput)
-    
-    await RatingCountController.updateCountCourse("НИД", req.body.nidInput);
-    await RatingCountController.updateCountCourse("УД", req.body.udInput);
-    await RatingCountController.updateCountCourse("СД", req.body.sdInput);
-    await RatingCountController.updateCountCourse("ОД", req.body.odInput);
-    await RatingCountController.updateCountCourse("КТД", req.body.ktdInput);
 
-    ///////////ПОСЛЕ ОБНОВЛЕНИЯ НАДО ПЕРЕРАСЧИТЫВАТЬ МЕСТА И ПОЛУЧАЮЩИХ////////////
+    await ModelService.updateCountCourse("НИД", parseInt(req.body.nidInput));
+    await ModelService.updateCountCourse("УД", parseInt(req.body.udInput));
+    await ModelService.updateCountCourse("СД", parseInt(req.body.sdInput));
+    await ModelService.updateCountCourse("ОД", parseInt(req.body.odInput));
+    await ModelService.updateCountCourse("КТД", parseInt(req.body.ktdInput));
+
+
+    //после обновления количества мест нужно выполнить процедуру начисления рейтинговой стипендии заново
     calculateRatingController.calculation();
     res.send("ОК");
   }
-  static async updateCountCourse(title1, count1) {
-    const list = await models.RatingCount.findOne({
-      attributes: ["id"],
-      include: [
-        {
-          model: models.Courses,
-          where: {
-            title: title1,
-          },
-        },
-        {
-          model: models.DateTable,
-          required: true,
-          where: {
-            date: {
-              [Op.contains]: [
-                { value: new Date(), inclusive: true },
-                { value: new Date(), inclusive: true },
-              ],
-            },
-          },
-        },
-      ],
-    });
 
-    await models.RatingCount.update(
-      { count: parseInt(count1) },
-      {
-        where: {
-          id: list.id,
-        },
-      }
-    );
-    
-  }
+  //метод возвращающий 10% от количества студентов получающих ГАС
   async getCountFromSad(req, res) {
     const list = await models.StudentsSAD.findAll({
       required: true,
@@ -96,15 +68,12 @@ class RatingCountController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-                //{ value: new Date(Date.UTC(2022, 7, 1)), inclusive: true },
-                //{ value: new Date(Date.UTC(2023, 1, 31)), inclusive: true }
               ],
             },
           },
         },
       ],
     });
-
     return res.json(list.length * 0.1);
   }
 }

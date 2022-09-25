@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../LoadTable/LoadTable.css";
 import usePagination from "../../hooks/usePagination";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,33 +12,52 @@ const DirectionsTable = ({ data, itemsPerPage, startFrom }) => {
   const { slicedData, pagination, prevPage, nextPage, changePage } =
     usePagination({ itemsPerPage, data, startFrom });
 
+  var countTd = 0;
+
+  if (data.length === 0) return <div>Загрузите данные</div>; // Сюда по хорошему заглушку какую-нибудь
+
   return (
     <>
       <table className="DirectionsTable">
         <thead>
           <tr>
+            <th>№</th>
             <th>Номер студента</th>
             <th>Баллы</th>
             <th>ФИО</th>
             <th>Институт</th>
             <th>Группа</th>
             <th>Причина</th>
+            <th>ГАС</th>
+            <th>Каникулы</th>
+            <th>Свободный график</th>
           </tr>
         </thead>
         <tbody>
           {slicedData.map((item) => (
-            <tr key={item.id} className={item.destination ? "destinationTrue" : "destinationFalse"}>
-               <td>{item.student.studnumber}</td>
+            <tr
+              key={item.id}
+              className={studentStatus(
+                item.destination,
+                item.student.vacation,
+                item.student.free
+              )}
+            >
+              <td>{item.rowNumber}</td>
+              <td>{item.student.studnumber}</td>
               <td>{item.rating.points}</td>
               <td>{item.student.fullname}</td>
               <td>{item.student.institute}</td>
               <td>{item.student.educationgroup}</td>
               <td>{item.cause}</td>
+              <td>{item.student.sad}</td>
+              <td>{item.student.vacation}</td>
+              <td>{item.student.free}</td>
             </tr>
           ))}
         </tbody>
       </table>
-      
+
       {/* блок с пагинацией */}
       <nav className="pagination nav-pagination mt-3">
         {/* Кнопка "<< Назад" */}
@@ -102,6 +121,21 @@ const DirectionsTable = ({ data, itemsPerPage, startFrom }) => {
       </nav>
     </>
   );
+
+  function studentStatus(destination, vacation, free) {
+    if (destination === true) {
+      if (vacation === "Да") {
+        return "vacationTrue";
+      }
+      if (free === "Да") {
+        return "freeTrue";
+      } else {
+        return "destinationTrue";
+      }
+    } else {
+      return "loadTr destinationFalse";
+    }
+  }
 };
 
 export default DirectionsTable;

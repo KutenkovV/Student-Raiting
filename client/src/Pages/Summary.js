@@ -1,15 +1,17 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import SummaryTable from "../components/tables/SummaryTable";
+import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import axios from "axios";
 
 function Summary() {
   document.title = "Сводка";
 
   const [items, setItems] = useState([]);
+  const { promiseInProgress } = usePromiseTracker();
 
-  //Гет запроса на список
+  //Гет запрос на список "Сводка"
   useEffect(() => {
-    axios.get('http://localhost:8080/api/report')
+    trackPromise(axios.get('http://localhost:8080/api/report'))
       .then(response => setItems(response.data))
       .catch(error => console.log(error));
   }, []);
@@ -18,8 +20,14 @@ function Summary() {
     <>
       <div>
         <h1 className="header">Сводка</h1>
+
+        {/* блокс с промисом "загрузка..." */}
+        {promiseInProgress
+          ? <div class="spinner-border spinner-border-sm load_spinner" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div> : <SummaryTable data={items} itemsPerPage={10} />
+        }
       </div>
-      <SummaryTable data={items} itemsPerPage={10}  />
     </>
   );
 }

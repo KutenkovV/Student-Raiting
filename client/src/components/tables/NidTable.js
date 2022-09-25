@@ -14,11 +14,14 @@ const NidTable = ({ data, itemsPerPage, startFrom }) => {
   const { slicedData, pagination, prevPage, nextPage, changePage } =
     usePagination({ data, itemsPerPage, startFrom });
 
+  if (data.length === 0) return <div>Загрузите данные</div>; // Сюда по хорошему заглушку какую-нибудь
+
   return (
     <>
       <table className="NidTable">
         <thead>
           <tr>
+            <th>№</th>
             <th>Номер студента</th>
             <th>Баллы</th>
             <th>Уровень</th>
@@ -26,11 +29,22 @@ const NidTable = ({ data, itemsPerPage, startFrom }) => {
             <th>Институт</th>
             <th>Группа</th>
             <th>Причина</th>
+            <th>ГАС</th>
+            <th>Каникулы</th>
+            <th>Свободный график</th>
           </tr>
         </thead>
         <tbody>
           {slicedData.map((item) => (
-            <tr key={item.id} className={item.destination ? "destinationTrue" : "destinationFalse"}>
+            <tr
+              key={item.id}
+              className={studentStatus(
+                item.destination,
+                item.student.vacation,
+                item.student.free
+              )}
+            >
+              <td>{item.rowNumber}</td>
               <td>{item.student.studnumber}</td>
               <td>{item.rating.points}</td>
               <td>{item.rating.ratingcourse.courselevel.level}</td>
@@ -38,11 +52,14 @@ const NidTable = ({ data, itemsPerPage, startFrom }) => {
               <td>{item.student.institute}</td>
               <td>{item.student.educationgroup}</td>
               <td>{item.cause}</td>
+              <td>{item.student.sad}</td>
+              <td>{item.student.vacation}</td>
+              <td>{item.student.free}</td>
             </tr>
           ))}
         </tbody>
       </table>
-      
+
       {/* блок с пагинацией */}
       <nav className="pagination nav-pagination mt-3">
         {/* Кнопка "<< Назад" */}
@@ -107,5 +124,20 @@ const NidTable = ({ data, itemsPerPage, startFrom }) => {
     </>
   );
 };
+
+function studentStatus(destination, vacation, free) {
+  if (destination === true) {
+    if (vacation === "Да") {
+      return "vacationTrue";
+    }
+    if (free === "Да") {
+      return "freeTrue";
+    } else {
+      return "destinationTrue";
+    }
+  } else {
+    return "loadTr destinationFalse";
+  }
+}
 
 export default NidTable;

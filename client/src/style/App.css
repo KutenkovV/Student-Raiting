@@ -1,0 +1,114 @@
+:root{
+  /*Палитра*/
+  /*Цвет фона навбара*/
+  --light-blue: #f3f7f9;
+  /*Цвет шрифта навбара*/
+  --font-grey: #92a2b5;
+  /*Цвет бургер-меню, названий вкладок и тд*/
+  --dark-grey: #576372;
+  /*Цвет кнопок, взаимодействия*/
+  --blue-action: #007bff;
+  /*Для всех успешных действий*/
+  --success-color: #b3f2dd;
+  /*Отмечаем студентов на каникулах*/
+  --vacation-color: #D5DBF0;
+   /*Отмечаем студентов со свободным графиком*/
+  --free-color: #ace3f3;
+  /*Для успешно загруженных списков*/
+  --check-success-color: #87A878;
+  /*Цвет ошибок и провальных действий*/
+  --error-color: #F39B6D;
+  /*Белый цвет*/
+  --default-white: #fff;
+  /*Задний фон дропфайла*/
+  --dropFile-bgc: #ecf2fe;
+  /*Цвет иконок файлов*/
+  --excel-file: #14CC60;
+
+
+  /*Шрифт*/
+  /*Основной шрифт*/
+  --main-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+  Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  /*Размер шрифта*/
+  --default-font-size: 0.8rem;
+  /*Размер заголовков*/
+  --header-font-size: 1.2rem;
+
+  /*Верстка*/
+  /*Дефолтная тень для блоков*/
+  --default-shadow: 2px 2px 5px 2px rgb(219, 219, 219);
+  /*Стандартный отступ*/
+  --default-indent: 2.5rem;
+  /*Стандартный отступ для навбара (сверху и для символов)*/
+  --default-navbar-indent: 1rem;
+  /*Стандартный отступ слева*/
+  --default-left-indent: 6rem;
+  /*Стандартный скругление*/
+  --default-radius: 1rem;
+}
+
+.App {
+  text-align: center;
+  height: 100vh;
+}
+
+.content {
+  display: flex;
+}
+
+.sidebar {
+  background-color: var(--light-blue);
+  min-height: 100vh;
+}
+
+.pageContent {
+  width: 100%;
+  padding-top: var(--default-indent);
+  padding-inline: var(--default-left-indent);
+}
+
+.burger-btn {
+  color: var(--dark-grey);
+  margin-top: var(--default-indent);
+  margin-left: var(--default-indent);
+  cursor: pointer;
+}
+
+.header {
+  text-transform: uppercase;
+  font-size: var(--header-font-size);
+  color: var(--dark-grey);
+  font-weight: bold;
+  cursor: default;
+}
+
+.load_spinner{
+  color: var(--dark-grey);
+}
+
+.colorMap{
+  box-shadow: var(--default-shadow);
+  border-radius: var(--default-radius);
+  margin-top: 2rem;
+  height: 2.5rem;
+  margin-right: 1rem;
+  text-align: center;
+  padding-top: 0.6rem;
+  font-family: var(--main-font);
+  font-size: var(--default-font-size);
+  text-transform: uppercase;
+  font-weight:600;
+}
+
+.colorMap_enoughPoints{
+  background-color: var(--success-color);
+}
+
+.colorMap_vacation{
+  background-color: var(--vacation-color);
+}
+
+.colorMap_free{
+  background-color: var(--free-color);
+}

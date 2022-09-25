@@ -1,0 +1,103 @@
+.drop-file-input {
+    position: relative;
+    width: auto;
+    height: 10rem;
+    border: 4px dashed var(--font-grey);
+    border-radius: 16px;
+    background: var(--default-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.drop-file-input input {        
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.drop-file-input:hover,
+.drop-file-input.dragover {
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.drop-file-input__label {
+    text-align: center;
+    font-weight: 600;
+    padding: 10px;
+}
+
+.drop-file-preview__item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 1rem;
+    border-radius: 15px;
+    background-color:#ecf2fe;
+}
+
+
+.drop-file-preview__item__del {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    opacity: 0;
+    text-align: center;
+    transition: opacity 0.3s ease;
+    background-color: #c7c7c7;
+}
+
+.drop-file-preview__item:hover .drop-file-preview__item__del {
+    opacity: 1;
+}
+
+.file_icon {
+    color: var(--excel-file);
+    margin: 1rem;
+    margin-right: 2rem;
+}
+
+.drop-file-preview__title{
+    font-family: var(--main-font);
+    font-size: var(--default-font-size);
+    color: var(--dark-grey);
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+.cloud_icon{
+    color: #92a2b5;
+}
+
+.load_text{
+    color: #92a2b5;
+}
+
+.fileLoad_container{
+    padding: 1rem;
+    box-shadow: var(--default-shadow);
+    border-radius: var(--default-radius);
+    margin-bottom: 2.5rem;
+}
+
+.fileName{
+    font-family: var(--main-font);
+    font-size: var(--default-font-size);
+    color: var(--dark-grey);
+    margin-top: var(--default-navbar-indent);
+    text-transform: uppercase;
+    font-weight: bold;
+}
