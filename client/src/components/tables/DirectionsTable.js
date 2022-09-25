@@ -14,8 +14,7 @@ const DirectionsTable = ({ data, itemsPerPage, startFrom }) => {
 
   var countTd = 0;
 
-  if (data.length === 0)
-    return <div>Загрузите данные</div> // Сюда по хорошему заглушку какую-нибудь
+  if (data.length === 0) return <div>Загрузите данные</div>; // Сюда по хорошему заглушку какую-нибудь
 
   return (
     <>
@@ -35,7 +34,14 @@ const DirectionsTable = ({ data, itemsPerPage, startFrom }) => {
         </thead>
         <tbody>
           {slicedData.map((item) => (
-            <tr key={item.id} className={studentStatus}>
+            <tr
+              key={item.id}
+              className={studentStatus(
+                item.destination,
+                item.student.vacation,
+                item.student.free
+              )}
+            >
               <td>{item.student.studnumber}</td>
               <td>{item.rating.points}</td>
               <td>{item.student.fullname}</td>
@@ -114,15 +120,18 @@ const DirectionsTable = ({ data, itemsPerPage, startFrom }) => {
     </>
   );
 
-  function studentStatus() {
-    if(item.destination){
-        return "destinationTrue"
-    } else if (item.student.vacation){
-        return "vacationTrue"
-    } else if (item.student.free){
-        return "freeTrue"
+  function studentStatus(destination, vacation, free) {
+    if (destination === true) {
+      if (vacation === "Да") {
+        return "vacationTrue";
+      }
+      if (free === "Да") {
+        return "freeTrue";
+      } else {
+        return "destinationTrue";
+      }
     } else {
-        return "loadTr destinationFalse"
+      return "loadTr destinationFalse";
     }
   }
 };
