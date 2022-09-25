@@ -21,6 +21,7 @@ const DirectionsTable = ({ data, itemsPerPage, startFrom }) => {
       <table className="DirectionsTable">
         <thead>
           <tr>
+            <th>№</th>
             <th>Номер студента</th>
             <th>Баллы</th>
             <th>ФИО</th>
@@ -42,6 +43,7 @@ const DirectionsTable = ({ data, itemsPerPage, startFrom }) => {
                 item.student.free
               )}
             >
+              <td>{item.rowNumber}</td>
               <td>{item.student.studnumber}</td>
               <td>{item.rating.points}</td>
               <td>{item.student.fullname}</td>
