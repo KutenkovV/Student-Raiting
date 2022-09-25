@@ -21,6 +21,7 @@ const NidTable = ({ data, itemsPerPage, startFrom }) => {
       <table className="NidTable">
         <thead>
           <tr>
+            <th>№</th>
             <th>Номер студента</th>
             <th>Баллы</th>
             <th>Уровень</th>
@@ -43,6 +44,7 @@ const NidTable = ({ data, itemsPerPage, startFrom }) => {
                 item.student.free
               )}
             >
+              <td>{item.rowNumber}</td>
               <td>{item.student.studnumber}</td>
               <td>{item.rating.points}</td>
               <td>{item.rating.ratingcourse.courselevel.level}</td>
