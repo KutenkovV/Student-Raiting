@@ -1,99 +1,28 @@
 const models = require("../models/models");
 const { Op } = require("sequelize");
+const { Sequelize } = require("../db");
+const ModelService=require("../service/model.service");
 
 class ListController {
-  
-  static async getWithOrder(title) {
-    const result = await models.StudentsRating.findAll({
-      attributes: ["id", "destination","cause"],
-      order: [
-        [ "destination", "DESC"],
-        [ "cause", "DESC"],
-        [models.Rating, "points", "DESC"],
-        [
-          models.Rating,
-          models.RatingCourses,
-          { model: models.CourseLevels },
-          "level",
-          "ASC",
-        ],
-      ],
-      required: true,
-      include: [
-        {
-          model: models.Students,
-          attributes: [
-            "studnumber",
-            "fullname",
-            "educationgroup",
-            "institute",
-            "sad",
-            "vacation",
-            "free",
-          ],
-        },
-        {
-          model: models.Rating,
-          attributes: ["points"],
-          required: true,
-          include: [
-            {
-              model: models.RatingCourses,
-              required: true,
-              include: [
-                {
-                  model: models.Courses,
-
-                  where: {
-                    title: title,
-                  },
-                },
-                {
-                  model: models.CourseLevels,
-                  attributes: ["level"],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          model: models.DateTable,
-          attributes: ["id", "date"],
-          required: true,
-          where: {
-            date: {
-              [Op.contains]: [
-                { value: new Date(), inclusive: true },
-                { value: new Date(), inclusive: true },
-
-              ],
-            },
-          },
-        },
-      ],
-    });
-
-    return result;
-  }
 
   async getKtd(req, res) {
-    return res.json(await ListController.getWithOrder("КТД"));
+    return res.json(await ModelService.getWithOrder("КТД"));
   }
-  
+
   async getNid(req, res) {
-    return res.json(await ListController.getWithOrder("НИД"));
+    return res.json(await ModelService.getWithOrder("НИД"));
   }
 
   async getUd(req, res) {
-    return res.json(await ListController.getWithOrder("УД"));
+    return res.json(await ModelService.getWithOrder("УД"));
   }
-  
+
   async getSd(req, res) {
-    return res.json(await ListController.getWithOrder("СД"));
+    return res.json(await ModelService.getWithOrder("СД"));
   }
 
   async getOd(req, res) {
-    return res.json(await ListController.getWithOrder("ОД"));
+    return res.json(await ModelService.getWithOrder("ОД"));
   }
 }
 module.exports = new ListController();
