@@ -35,7 +35,7 @@ const DirectionsTable = ({ data, itemsPerPage, startFrom }) => {
         </thead>
         <tbody>
           {slicedData.map((item) => (
-            <tr key={item.id} className={item.destination ? "destinationTrue" : "loadTr destinationFalse"}>
+            <tr key={item.id} className={studentStatus}>
               <td>{item.student.studnumber}</td>
               <td>{item.rating.points}</td>
               <td>{item.student.fullname}</td>
@@ -113,6 +113,18 @@ const DirectionsTable = ({ data, itemsPerPage, startFrom }) => {
       </nav>
     </>
   );
+
+  function studentStatus() {
+    if(item.destination){
+        return "destinationTrue"
+    } else if (item.student.vacation){
+        return "vacationTrue"
+    } else if (item.student.free){
+        return "freeTrue"
+    } else {
+        return "loadTr destinationFalse"
+    }
+  }
 };
 
 export default DirectionsTable;
