@@ -9,7 +9,7 @@
   /*Цвет кнопок, взаимодействия*/
   --blue-action: #007bff;
   /*Для всех успешных действий*/
-  --success-color: #b3f2dd;
+  --success-color: #c8f5e6;
   /*Отмечаем студентов на каникулах*/
   --vacation-color: #D5DBF0;
    /*Отмечаем студентов со свободным графиком*/
@@ -17,7 +17,7 @@
   /*Для успешно загруженных списков*/
   --check-success-color: #87A878;
   /*Цвет ошибок и провальных действий*/
-  --error-color: #F39B6D;
+  --error-color: #ffb9b4;
   /*Белый цвет*/
   --default-white: #fff;
   /*Задний фон дропфайла*/
@@ -111,4 +111,11 @@
 
 .colorMap_free{
   background-color: var(--free-color);
+}
+
+.pleaseDistribute{
+  text-align: center;
+  border-radius: 5px;
+  padding: 0.5rem;
+  background-color: var(--error-color);
 }

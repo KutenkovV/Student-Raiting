@@ -12,7 +12,7 @@
   height: 20rem;
 }
 
-.checkText{
+.checkText{ 
   font-family: var(--main-font);
   font-size: var(--default-font-size);
   color: var(--dark-grey);
