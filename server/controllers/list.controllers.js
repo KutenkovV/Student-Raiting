@@ -2,6 +2,7 @@ const models = require("../models/models");
 const { Op } = require("sequelize");
 const { NUMERIC } = require("sequelize");
 const { NUMBER } = require("sequelize");
+const { Sequelize } = require("../db");
 
 class ListController {
 
