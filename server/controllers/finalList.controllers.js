@@ -361,8 +361,8 @@ class FinalListController {
     }
     worksheet2.insertRows(1, "1");
     worksheet2.mergeCells('A1:H1');
-    worksheet2.getCell('A1').value = "Перечень обучающихся ФГБОУ ВО \"ИРНИТУ\", подавших достижения к оценке для назначения повышенной государственной академической стипендии по итогам рейтинга №XXX. Июнь 2022."
-    worksheet2.getCell('A1').font = {size:20, bold:true};
+    worksheet2.getCell('A1').value = "Перечень обучающихся ФГБОУ ВО \"ИРНИТУ\", подавших достижения к оценке для назначения повышенной государственной академической стипендии по итогам рейтинга №XX. XXXXX XXXXг."
+    worksheet2.getCell('A1').font = { name: 'Times New Roman',size:20, bold:true};
     worksheet2.getRow(1).height = 100;
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     res.setHeader("Content-Disposition", "attachment; filename=" + "rating.xlsx");
