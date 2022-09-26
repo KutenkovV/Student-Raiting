@@ -14,7 +14,7 @@ class FinalListController {
           models.Rating,
           models.RatingCourses,
           { model: models.Courses },
-          "id",
+          "title",
           "ASC",
         ],
 
@@ -199,8 +199,6 @@ class FinalListController {
     worksheet.getCell('A1').font ={name: 'Times New Roman', size:9,bold:true} ;
     let position=1;
     for (let i = 0; i < list1.length; i++) {
-
-
       var sum =0;
 
       (list1[i].rating.ratingcourse.dataValues.courselevel.dataValues.level ==1 ) ? sum=12500 :
@@ -210,7 +208,6 @@ class FinalListController {
 
       list1[i].rating.dataValues.ratingcourse.dataValues.course.dataValues.title != list1[i-1]?.rating.dataValues.ratingcourse.dataValues.course.dataValues.title
        ? position=1 : position ++;
-
 
       worksheet.addRow({ 
         position: list1[i].student.dataValues.vacation==true? "" : position, 
@@ -242,7 +239,7 @@ class FinalListController {
     const list2 = await models.StudentsRating.findAll({
       attributes: ["id", "destination", "cause"],
       where: {
-        destination: true,
+        //destination: true,
       },
       order: [
         [
@@ -252,7 +249,6 @@ class FinalListController {
           "title",
           "ASC",
         ],
-        [models.Students, "vacation","ASC",],
         [models.Rating, "points","DESC",],
       ],
       required: true,
@@ -344,8 +340,10 @@ class FinalListController {
         (list2[i].rating.ratingcourse.dataValues.courselevel.dataValues.level ==3) ? sum=10000 :
         sum=9300;
 
+        list2[i].rating.dataValues.ratingcourse.dataValues.course.dataValues.title != list2[i-1]?.rating.dataValues.ratingcourse.dataValues.course.dataValues.title
+       ? position=1 : position ++;
       worksheet2.addRow({ 
-        position: position++, 
+        position: position, 
         fullname: list2[i].student.dataValues.fullname , 
         institute: list2[i].student.dataValues.institute,
         educationgroup: list2[i].student.dataValues.educationgroup,
@@ -353,13 +351,13 @@ class FinalListController {
         points: list2[i].rating.dataValues.points,
         level: list2[i].rating.ratingcourse.dataValues.courselevel.dataValues.level==0 ? "" :
         list2[i].rating.ratingcourse.dataValues.courselevel.dataValues.level,
-        destination: list2[i].destination ? "Назначить" : list2[i].destination,
+        destination: list2[i].destination ? "Назначить" : list2[i].cause,
       });
     }
     worksheet2.insertRows(1, "1");
     worksheet2.mergeCells('A1:H1');
-    worksheet2.getCell('A1').value = "Перечень обучающихся ФГБОУ ВО \"ИРНИТУ\", подавших достижения к оценке для назначения повышенной государственной академической стипендии по итогам рейтинга №XXX. Июнь 2022."
-    worksheet2.getCell('A1').font = {size:20, bold:true};
+    worksheet2.getCell('A1').value = "Перечень обучающихся ФГБОУ ВО \"ИРНИТУ\", подавших достижения к оценке для назначения повышенной государственной академической стипендии по итогам рейтинга №XX. XXX XXXXг. ."
+    worksheet2.getCell('A1').font = {name: 'Times New Roman',size:20, bold:true};
     worksheet2.getRow(1).height = 100;
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     res.setHeader("Content-Disposition", "attachment; filename=" + "rating.xlsx");
