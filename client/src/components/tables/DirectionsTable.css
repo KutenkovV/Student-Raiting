@@ -2,6 +2,14 @@
     background-color: var(--success-color);
 }
 
+.vacationTrue{
+    background-color: var(--vacation-color);
+}
+
+.freeTrue{
+    background-color: var(--free-color);
+}
+
 .tdTrue {
     margin: auto;
     display: flex;
