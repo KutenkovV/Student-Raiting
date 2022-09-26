@@ -310,7 +310,7 @@ class FinalListController {
 
 
     worksheet2.columns = [
-      { header: 'Позиция в направлении', key: 'position', width: 10 },
+      { header: 'Позиция в направлении', key: 'position', width: 19 },
       { header: 'Студент', key: 'fullname', width: 32 },
       { header: 'Факультет', key: 'institute', width: 16 },
       { header: 'Группа', key: 'educationgroup', width: 12 },
@@ -330,15 +330,11 @@ class FinalListController {
       }
     })
 
-
-
-
     worksheet2.getRow(1).font=fontHeader;
     worksheet2.getRow(1).height=45;
     worksheet2.autoFilter = 'A2:H2';
     worksheet2.getRow(1).alignment={ horizontal: 'center',vertical:'middle'}
-    worksheet2.getColumn(1).alignment={ wrapText:true, horizontal: 'center'}
-    worksheet2.getCell('A2').font ={name: 'Times New Roman', size:9,bold:true} ;
+    worksheet2.getColumn(1).alignment={ wrapText:true, horizontal: 'center', vertical: 'middle'}
     position=1;
     for (let i = 0; i < list2.length; i++) {
       var sum =0;
@@ -361,6 +357,10 @@ class FinalListController {
       });
     }
     worksheet2.insertRows(1, "1");
+    worksheet2.mergeCells('A1:H1');
+    worksheet2.getCell('A1').value = "Перечень обучающихся ФГБОУ ВО \"ИРНИТУ\", подавших достижения к оценке для назначения повышенной государственной академической стипендии по итогам рейтинга №XXX. Июнь 2022."
+    worksheet2.getCell('A1').font = {size:20, bold:true};
+    worksheet2.getRow(1).height = 100;
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     res.setHeader("Content-Disposition", "attachment; filename=" + "rating.xlsx");
     workbook.xlsx.write(res)
