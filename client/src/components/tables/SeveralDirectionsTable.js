@@ -53,8 +53,8 @@ const SeveralDirectionsTable = ({ data, itemsPerPage, startFrom }) => {
                 //Ниже проверяем по каким направлениям есть стипуха и то добавляем в массив 
                 if(item.nid.destination === true) {setDirections(Array => [...Array, "НАУЧНАЯ ДЕЯТЕЛЬНОСТЬ"])}
                 if(item.ud.destination === true) {setDirections(Array => [...Array, "УЧЕБНАЯ ДЕЯТЕЛЬНОСТЬ"])}
-                if(item.sd.destination === true) {setDirections(Array => [...Array, "ОБЩЕСТВЕННАЯ ДЕЯТЕЛЬНОСТЬ"])}
-                if(item.od.destination === true) {setDirections(Array => [...Array, "СПОРТИВНАЯ ДЕЯТЕЛЬНОСТЬ"])}
+                if(item.sd.destination === true) {setDirections(Array => [...Array, "СПОРТИВНАЯ ДЕЯТЕЛЬНОСТЬ"])}
+                if(item.od.destination === true) {setDirections(Array => [...Array, "ОБЩЕСТВЕННАЯ ДЕЯТЕЛЬНОСТЬ"])}
                 if(item.ktd.destination === true) {setDirections(Array => [...Array, "КУЛЬТУРНО-ТВОРЧЕСКАЯ ДЕЯТЕЛЬНОСТЬ"])}
               }}>
                 <StudentMenu stNum={cellValue} StudentDirections={directions} items={slicedData} />

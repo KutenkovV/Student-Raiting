@@ -89,7 +89,7 @@ class ListLoadController {
             }
           }
         );
-        setTimeout(() => resolve(m), files[i].name=="ГАС.csv"? 4000 : 1000)
+        setTimeout(() => resolve(m), files[i].name=="ГАС.csv"? 4000 : 2000)
         })
       
       message.push( await promise); // будет ждать, пока промис не выполнится (*)
@@ -229,8 +229,7 @@ class ListLoadController {
           );
         }
       }
-    }
-    
+    } 
   }
 }
 

@@ -21,6 +21,7 @@ const NidTable = ({ data, itemsPerPage, startFrom }) => {
       <table className="NidTable">
         <thead>
           <tr>
+            <th>№</th>
             <th>Номер студента</th>
             <th>Баллы</th>
             <th>Уровень</th>
@@ -37,10 +38,13 @@ const NidTable = ({ data, itemsPerPage, startFrom }) => {
           {slicedData.map((item) => (
             <tr
               key={item.id}
-              className={
-                item.destination ? "destinationTrue" : "loadTr destinationFalse"
-              }
+              className={studentStatus(
+                item.destination,
+                item.student.vacation,
+                item.student.free
+              )}
             >
+              <td>{item.rowNumber}</td>
               <td>{item.student.studnumber}</td>
               <td>{item.rating.points}</td>
               <td>{item.rating.ratingcourse.courselevel.level}</td>
@@ -120,5 +124,20 @@ const NidTable = ({ data, itemsPerPage, startFrom }) => {
     </>
   );
 };
+
+function studentStatus(destination, vacation, free) {
+  if (destination === true) {
+    if (vacation === "Да") {
+      return "vacationTrue";
+    }
+    if (free === "Да") {
+      return "freeTrue";
+    } else {
+      return "destinationTrue";
+    }
+  } else {
+    return "loadTr destinationFalse";
+  }
+}
 
 export default NidTable;

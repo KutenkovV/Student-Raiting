@@ -1,6 +1,8 @@
 const models = require("../models/models");
 const ApiError = require("../error/ApiError");
 const { Op } = require("sequelize");
+const CalculateRatingController = require("./calculateRating.controllers");
+const ModelService=require("../service/model.service");
 
 //класс отвечающий за студентов, которые подали на несколько направлений
 class RatingManyCoursesController {
@@ -10,6 +12,10 @@ class RatingManyCoursesController {
     //Получаем список студентов 
     const list = await models.Students.findAll({
       attributes: ["id"],
+      where: {
+        sad: true,
+        free: false,
+      },
     });
     var result = [];
 
@@ -146,11 +152,11 @@ class RatingManyCoursesController {
 
     return res.json(result);
   }
+
   //метод для определения направления по которому студент будет получать стипендию 
   async updateStudentRatingManyCourses(req, res) {
     //надо что бы на вход был ID студента которого определяют и направление которое нужно поставить destination=true
-    console.log(req.body)
-    //узнаем в каких направлениях нужно добавить студента в прошедшие
+    //узнаем в каких направлениях нужно нужно поставить destination=true
     const list = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
       include: [
@@ -204,13 +210,17 @@ class RatingManyCoursesController {
         const listStudentsRating = await models.StudentsRating.findAll({
           attributes: ["id", "destination"],
           order: [
-            [models.Students, "sad", "DESC NULLS LAST"],
             [models.Rating, "points", "DESC"],
           ],
 
           include: [
             {
               model: models.Students,
+              where:{
+                sad:true  ,
+                vacation:false,
+                free:false
+              },
               attributes: [
                 "studnumber",
                 "fullname",
@@ -266,25 +276,23 @@ class RatingManyCoursesController {
           }
         );
         //балл последнего кто прошел
-        var p = listStudentsRating[0].rating.dataValues.points;
+        var lastPoint= listStudentsRating[0].rating.dataValues.points;
         //запускаем цикл на завки одного из направлений
         for (let y = 0; y < listStudentsRating.length; y++) {
           //в цикле находим последнего кто прошел
           if (
-            listStudentsRating[y].rating.dataValues.points < p &&
-            listStudentsRating[y].student.dataValues.sad == true &&
+            listStudentsRating[y].rating.dataValues.points < lastPoint&&
             listStudentsRating[y].destination == true
           ) {
-            p = listStudentsRating[y].rating.dataValues.points;
+            lastPoint= listStudentsRating[y].rating.dataValues.points;
           } //смотрим имеет ли следующий чел стипендию
           else if (
-            listStudentsRating[y].rating.dataValues.points < p &&
-            listStudentsRating[y].student.dataValues.sad == true &&
+            listStudentsRating[y].rating.dataValues.points < lastPoint&&
             listStudentsRating[y].destination == false
           ) {
             //если стипендия есть то назначить ему рейтинговую стипендию
             //выход из цикла
-            p = listStudentsRating[y].rating.dataValues.points;
+            lastPoint= listStudentsRating[y].rating.dataValues.points;
             await models.StudentsRating.update(
               { destination: true, cause: null },
               {
@@ -299,7 +307,7 @@ class RatingManyCoursesController {
         //цикл на начисление стипендии если после последнего прошедшего стоят люди с таким же количеством
         for (let i = 0; i < listStudentsRating.length; i++) {
           if (
-            listStudentsRating[i].rating.dataValues.points == p &&
+            listStudentsRating[i].rating.dataValues.points == lastPoint &&
             listStudentsRating[i].student.dataValues.sad == true
           ) {
             await models.StudentsRating.update(
@@ -312,6 +320,10 @@ class RatingManyCoursesController {
             );
           }
         }
+        await ModelService.updateVacation(
+          list[i].rating.dataValues.ratingcourse.dataValues.course.dataValues.title,
+          lastPoint
+        );
       }
     }
 

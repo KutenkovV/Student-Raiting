@@ -33,6 +33,8 @@ router.put("/studentRatingManyCourses", ratingManyCoursesController.updateStuden
 //маршрут для сводки
 router.get("/report", reportController.getReport);
 
+//маршрут для проверки готов ли финальный список
+router.get("/getTheFinalFileIsReady", finallistController.getTheFinalFileIsReady);
 
 //маршрут для итогового списка
 router.get("/finalList", finallistController.getFinal);

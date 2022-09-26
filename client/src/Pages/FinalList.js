@@ -1,18 +1,28 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import FinalTable from "../components/tables/FinalTable";
+import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 
 function FinalList() {
   document.title = "Итоговый список";
   const [items, setItems] = useState([]);
-
+  const [distributed, setDistributed] = useState(false);
+  const { promiseInProgress } = usePromiseTracker();
 
   //Гет запрос на список
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/finalList")
+    //Запрос на финальный список
+    trackPromise(axios.get("http://localhost:8080/api/finalList"))
       .then((response) => setItems(response.data))
       .catch((error) => console.log(error));
+  }, []);
+
+  useEffect(() => {
+    //Запрос на проверку все ли студенты распределены
+    trackPromise(axios.get("http://localhost:8080/api/getTheFinalFileIsReady"))
+      .then((response) => setDistributed(response.data))
+      .catch((error) => console.log(error));
+    console.log(distributed);
   }, []);
 
   //обработка кнопки
@@ -36,12 +46,27 @@ function FinalList() {
   return (
     <div>
       <h1 className="header">Итоговый список</h1>
-      <FinalTable data={items} itemsPerPage={10} />
+      {promiseInProgress ? (
+        <div
+          class="spinner-border spinner-border-sm load_spinner"
+          role="status"
+        >
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      ) : (
+        <FinalTable data={items} itemsPerPage={10} />
+      )}
 
       {/* Ниже форма с кнопкой которая делает запрос */}
       <form method="get" action="#" id="#" onSubmit={onSubmit}>
         <div className="row d-flex justify-content-end">
-          <button class="btn btn-primary col-2 m-4">Скачать список</button>
+          {promiseInProgress ? (
+            <p></p>
+          ) : distributed ? (
+            <button class="btn btn-primary col-2 m-4">Скачать список</button>
+          ) : (
+            <p className="col-2 m-4">Распределите всех студентов</p>
+          )}
         </div>
       </form>
     </div>
