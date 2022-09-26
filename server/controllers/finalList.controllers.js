@@ -242,7 +242,7 @@ class FinalListController {
     const list2 = await models.StudentsRating.findAll({
       attributes: ["id", "destination", "cause"],
       where: {
-        destination: true,
+        //destination: true,
       },
       order: [
         [
@@ -344,8 +344,11 @@ class FinalListController {
         (list2[i].rating.ratingcourse.dataValues.courselevel.dataValues.level ==3) ? sum=10000 :
         sum=9300;
 
+        list2[i].rating.dataValues.ratingcourse.dataValues.course.dataValues.title != list2[i-1]?.rating.dataValues.ratingcourse.dataValues.course.dataValues.title
+        ? position=1 : position ++;
+
       worksheet2.addRow({ 
-        position: position++, 
+        position: position, 
         fullname: list2[i].student.dataValues.fullname , 
         institute: list2[i].student.dataValues.institute,
         educationgroup: list2[i].student.dataValues.educationgroup,
@@ -353,7 +356,7 @@ class FinalListController {
         points: list2[i].rating.dataValues.points,
         level: list2[i].rating.ratingcourse.dataValues.courselevel.dataValues.level==0 ? "" :
         list2[i].rating.ratingcourse.dataValues.courselevel.dataValues.level,
-        destination: list2[i].destination ? "Назначить" : list2[i].destination,
+        destination: list2[i].destination ? "Назначить" : list2[i].cause,
       });
     }
     worksheet2.insertRows(1, "1");
