@@ -14,7 +14,7 @@ const DirectionsTable = ({ data, itemsPerPage, startFrom }) => {
 
   var countTd = 0;
 
-  if (data.length === 0) return <div>Загрузите данные</div>; // Сюда по хорошему заглушку какую-нибудь
+  if (data.length === 0) return <div className="pleaseLoad col-2">Загрузите данные</div>; // Сюда по хорошему заглушку какую-нибудь
 
   return (
     <>
