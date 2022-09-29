@@ -17,9 +17,6 @@ const SeveralDirectionsTable = ({ data, itemsPerPage, startFrom, onChange }) => 
 
   onChange(selected);
   console.log(selected);
-  // useEffect(() => {
-  //   setSelected()
-  // }, [selected]);
 
   // Функция, которая получает строку
   const getCellValue = (cell) => {
