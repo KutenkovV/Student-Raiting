@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import "./StudentMenu.css";
 import axios from "axios";
 
-function StudentMenu({ StudentDirections, stNum, items }) {
+function StudentMenu({ StudentDirections, stNum, items, onClick }) {
 
   const [selected, setSelected] = useState();
 
@@ -29,6 +29,9 @@ function StudentMenu({ StudentDirections, stNum, items }) {
   const onSubmit = async (idd, selected) => {
     var id = idd
     var course = selected
+
+    //крч долго объяснять, тут я передаю данные от grandchild компонента к parent компоненту
+    onClick(selected);
 
     if (course === "НАУЧНАЯ ДЕЯТЕЛЬНОСТЬ") { course = "НИД" }
     else if (course === "УЧЕБНАЯ ДЕЯТЕЛЬНОСТЬ") { course = "УД" }
