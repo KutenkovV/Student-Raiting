@@ -1,4 +1,6 @@
 const models = require("../models/models");
+const sequelize = require("../db");
+const { Sequelize } = require("sequelize");
 const ApiError = require("../error/ApiError");
 const { Op } = require("sequelize");
 const CalculateRatingController = require("./calculateRating.controllers");
@@ -6,328 +8,205 @@ const ModelService=require("../service/model.service");
 
 //класс отвечающий за студентов, которые подали на несколько направлений
 class RatingManyCoursesController {
+
   //метод ,который возвращает студентов,которые подали на несколько направлений
   async getStudentRatingManyCourses(req, res) {
+  
+    try {
+      var result = [];
 
-    //Получаем список студентов 
-    const list = await models.Students.findAll({
-      attributes: ["id"],
-      where: {
-        sad: true,
-        free: false,
-      },
-    });
-    var result = [];
+      const listStudent = await sequelize.query(
+        `		   
+        SELECT sr.studentid, s.studnumber , s.fullname , s.educationgroup , s.institute
+        FROM studentsrating sr
+        left JOIN students s ON s.id = sr.studentid
+        where sr.destination = true
+        group by sr.studentid,s.studnumber , s.fullname,s.educationgroup , s.institute
+        HAVING
+          COUNT (*) > 1
+      `);
 
-    //цикл на поиск студентов с несколькими направлениями
-    for (let i = 0; i < list.length; i++) {
-      //получаю список заявок студента
-      const listStudentRating = await models.StudentsRating.findAll({
-        attributes: ["id", "destination"],
-        where: {
-          destination: true,
-        },
-        include: [
-          {
-            model: models.Students,
-            where: {
-              id: list[i].dataValues.id,
+      const listCourse = await sequelize.query(
+        `WITH result as (
+          SELECT sr.studentid, s.studnumber , s.fullname , s.educationgroup , s.institute
+                FROM studentsrating sr
+                left JOIN students s ON s.id = sr.studentid
+                where sr.destination = true
+                group by sr.studentid,s.studnumber , s.fullname,s.educationgroup , s.institute
+                HAVING
+                  COUNT (*) > 1
+        )
+              
+        SELECT sr.studentid, sr.destination, courses.title ,r.points
+                  FROM studentsrating sr
+              LEFT JOIN result ON result.studentid = sr.studentid
+              LEFT JOIN students s ON s.id = sr.studentid
+                  LEFT JOIN rating r ON r.id = sr.reatingid
+                  LEFT JOIN ratingcourses rc ON rc.id = r.ratingcoursesid
+                  LEFT jOIN courses ON courses.id = rc.courseid
+                  where sr.studentid = result.studentid  `
+      );
+
+      listStudent[0].forEach((item) => {
+          var stud = {
+            id: item.studentid,
+            studnumber: item.studnumber,
+            fullname: item.fullname,
+            educationgroup: item.educationgroup,
+            institute: item.institute,
+            nid: {
+              point: 0,
+              destination: false,
             },
-            attributes: [
-              "id",
-              "studnumber",
-              "fullname",
-              "educationgroup",
-              "institute",
-              "sad",
-            ],
-          },
-          {
-            model: models.Rating,
-            attributes: ["points"],
-            required: true,
-            include: [
-              {
-                model: models.RatingCourses,
-                required: true,
-                include: [
-                  {
-                    model: models.Courses,
-                    attributes: ["title"],
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            model: models.DateTable,
-            attributes: ["id", "date"],
-            required: true,
-            where: {
-              date: {
-                [Op.contains]: [
-                  { value: new Date(), inclusive: true },
-                  { value: new Date(), inclusive: true },
-                ],
-              },
+            od: {
+              point: 0,
+              destination: false,
             },
-          },
-        ],
-      });
-      //если количество заявок больше чем 1
-      if (listStudentRating.length > 1) {
-        //переменная с инфой о студенте
-        var stud = {
-          id: listStudentRating[0].student.dataValues.id,
-          studnumber: listStudentRating[0].student.dataValues.studnumber,
-          fullname: listStudentRating[0].student.dataValues.fullname,
-          educationgroup:
-            listStudentRating[0].student.dataValues.educationgroup,
-          institute: listStudentRating[0].student.dataValues.institute,
-          sad: listStudentRating[0].student.dataValues.sad,
-          nid: {
-            point: 0,
-            destination: false,
-          },
-          od: {
-            point: 0,
-            destination: false,
-          },
-          sd: {
-            point: 0,
-            destination: false,
-          },
-          ktd: {
-            point: 0,
-            destination: false,
-          },
-          ud: {
-            point: 0,
-            destination: false,
-          },
-        };
-        //счетчик на количество заявок с которыми стдуент прошел
-        var countDestinationTrue = 0;
-        
-        //цикл на перебор заявок стдуента
-        for (let y = 0; y < listStudentRating.length; y++) {
-          //если заявка прошла то увеличить счетчик
-          if (listStudentRating[y].destination == true) {
-            countDestinationTrue++;
-            //добавление инфы из заявки в переменную stud
-            switch (
-            listStudentRating[y].rating.dataValues.ratingcourse.dataValues
-              .course.dataValues.title
-            ) {
-              case "НИД":
-                stud.nid.point = listStudentRating[y].rating.dataValues.points;
-                stud.nid.destination = listStudentRating[y].destination;
-                break;
-              case "КТД":
-                stud.ktd.point = listStudentRating[y].rating.dataValues.points;
-                stud.ktd.destination = listStudentRating[y].destination;
-                break;
-              case "ОД":
-                stud.od.point = listStudentRating[y].rating.dataValues.points;
-                stud.od.destination = listStudentRating[y].destination;
-                break;
-              case "СД":
-                stud.sd.point = listStudentRating[y].rating.dataValues.points;
-                stud.sd.destination = listStudentRating[y].destination;
-                break;
-              case "УД":
-                stud.ud.point = listStudentRating[y].rating.dataValues.points;
-                stud.ud.destination = listStudentRating[y].destination;
-                break;
+            sd: {
+              point: 0,
+              destination: false,
+            },
+            ktd: {
+              point: 0,
+              destination: false,
+            },
+            ud: {
+              point: 0,
+              destination: false,
+            },
+          };
+         
+          listCourse[0].forEach((itemCourse,index,array) => {
+            if (itemCourse.studentid==item.studentid) {
+              switch (itemCourse.title) {
+                case 'НИД':
+                  stud.nid.point = itemCourse.points;
+                  stud.nid.destination = itemCourse.destination;
+                  break;
+                case 'КТД':
+                  stud.ktd.point = itemCourse.points;
+                  stud.ktd.destination = itemCourse.destination;
+                  break;
+                case 'ОД':
+                  stud.od.point = itemCourse.points;
+                  stud.od.destination = itemCourse.destination;
+                  break;
+                case 'СД':
+                  stud.sd.point = itemCourse.points;
+                  stud.sd.destination = itemCourse.destination;
+                  break;
+                case 'УД':
+                  stud.ud.point = itemCourse.points;
+                  stud.ud.destination = itemCourse.destination;
+                  break;
+              }
+            } else {
+              return;
             }
-          }
-        }
-
-        if (countDestinationTrue > 1) {
-
-          result.push(stud);
-        }
-      }
+          })
+        
+        result.push(stud);
+      });
+      
+      return res.json(result);
+    } catch (error) {
+      return res.send(error);
     }
-
-    return res.json(result);
   }
 
-  //метод для определения направления по которому студент будет получать стипендию 
   async updateStudentRatingManyCourses(req, res) {
-    //надо что бы на вход был ID студента которого определяют и направление которое нужно поставить destination=true
-    //узнаем в каких направлениях нужно нужно поставить destination=true
-    const list = await models.StudentsRating.findAll({
-      attributes: ["id", "destination"],
-      include: [
+    if (!req.body) return response.sendStatus(400);
+    try {
+      await sequelize.query(
+        `		   
+        WITH t as (
+          SELECT sr.id, courses.title 
+          FROM studentsrating sr
+          LEFT JOIN rating r ON r.id = sr.reatingid
+          LEFT JOIN ratingcourses rc ON rc.id = r.ratingcoursesid
+          LEFT jOIN courses ON courses.id = rc.courseid
+          where sr.studentid = ?
+        ) 
+        UPDATE studentsrating
+        SET 
+        destination = CASE WHEN t.title = ? THEN True ELSE False END,
+        cause = 'Другое направление' 
+        FROM t
+        WHERE studentsrating.id = t.id
+      `,
+      {
+        replacements: [req.body.id,req.body.course],
+        type: Sequelize.QueryTypes.SELECT,
+      } 
+      );
+      const listCourse = await sequelize.query(
+        `		   
+        SELECT courses.id 
+          FROM studentsrating sr
+          LEFT JOIN rating r ON r.id = sr.reatingid
+          LEFT JOIN ratingcourses rc ON rc.id = r.ratingcoursesid
+          LEFT jOIN courses ON courses.id = rc.courseid
+          where sr.studentid = ? and destination=false
+      `,
+      {
+        replacements: [req.body.id],
+        type: Sequelize.QueryTypes.SELECT,
+      } 
+      );
+      
+      listCourse[0].forEach(async (item) => {
+        const point = await sequelize.query(
+          `		   
+          SELECT max(r.points)
+            FROM studentsrating sr
+            LEFT JOIN students s ON s.id = sr.studentid
+            LEFT JOIN rating r ON r.id = sr.reatingid
+            LEFT JOIN ratingcourses rc ON rc.id = r.ratingcoursesid
+            LEFT jOIN courses ON courses.id = rc.courseid
+            where courses.id = ? and sr.destination=false and s.sad=true and s.vacation=false and s.free=false
+        `,
         {
-          model: models.Students,
-          where: {
-            id: req.body.id,
-          },
-        },
-        {
-          model: models.Rating,
-          attributes: ["points"],
-          required: true,
-          include: [
-            {
-              model: models.RatingCourses,
-              required: true,
-              include: [
-                {
-                  model: models.Courses,
-                  attributes: ["title"],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          model: models.DateTable,
-          attributes: ["id", "date"],
-          required: true,
-          where: {
-            date: {
-              [Op.contains]: [
-                { value: new Date(), inclusive: true },
-                { value: new Date(), inclusive: true },
-              ],
-            },
-          },
-        },
-      ],
-    });
+          replacements: [item.id],
+          type: Sequelize.QueryTypes.SELECT,
+        } 
+        );
 
-    //перебираем заявки студента
-    for (let i = 0; i < list.length; i++) {
-      if (
-        list[i].rating.dataValues.ratingcourse.dataValues.course.dataValues
-          .title != req.body.course &&
-        list[i].destination == true
-      ) {
-        //получаем все заявки одного из направлений
-        const listStudentsRating = await models.StudentsRating.findAll({
-          attributes: ["id", "destination"],
-          order: [
-            [models.Rating, "points", "DESC"],
-          ],
-
-          include: [
-            {
-              model: models.Students,
-              where:{
-                sad:true  ,
-                vacation:false,
-                free:false
-              },
-              attributes: [
-                "studnumber",
-                "fullname",
-                "educationgroup",
-                "institute",
-                "sad",
-              ],
-            },
-            {
-              model: models.Rating,
-              attributes: ["points"],
-              required: true,
-              include: [
-                {
-                  model: models.RatingCourses,
-                  required: true,
-                  include: [
-                    {
-                      model: models.Courses,
-                      attributes: ["title"],
-                      where: {
-                        title:
-                          list[i].rating.dataValues.ratingcourse.dataValues
-                            .course.dataValues.title,
-                      },
-                    },
-                  ],
-                },
-              ],
-            },
-            {
-              model: models.DateTable,
-              attributes: ["id", "date"],
-              required: true,
-              where: {
-                date: {
-                  [Op.contains]: [
-                    { value: new Date(), inclusive: true },
-                    { value: new Date(), inclusive: true },
-                  ],
-                },
-              },
-            },
-          ],
-        });
-        //ставим студенту отметку destination=false где надо
-        await models.StudentsRating.update(
-          { destination: false, cause: "Другое направление" },
+        const listId = await sequelize.query(
+          `		   
+          select sr.id from studentsrating sr
+            LEFT JOIN students s ON s.id = sr.studentid
+            LEFT JOIN rating r ON r.id = sr.reatingid
+            LEFT JOIN ratingcourses rc ON rc.id = r.ratingcoursesid
+            LEFT jOIN courses ON courses.id = rc.courseid
+            where courses.id = ? and sr.destination=false and s.sad=true and s.free=false and r.points>=?
+        `,
+        {
+          replacements: [item.id,point],
+          type: Sequelize.QueryTypes.SELECT,
+        } 
+        );
+  
+        listId[0].forEach(async (itemId) => {
+          await sequelize.query(
+            `		   
+            UPDATE studentsrating
+            SET 
+            destination = True ,
+            cause = ''
+            WHERE studentsrating.id = ?
+          `,
           {
-            where: {
-              id: list[i].dataValues.id,
-            },
-          }
-        );
-        //балл последнего кто прошел
-        var lastPoint= listStudentsRating[0].rating.dataValues.points;
-        //запускаем цикл на завки одного из направлений
-        for (let y = 0; y < listStudentsRating.length; y++) {
-          //в цикле находим последнего кто прошел
-          if (
-            listStudentsRating[y].rating.dataValues.points < lastPoint&&
-            listStudentsRating[y].destination == true
-          ) {
-            lastPoint= listStudentsRating[y].rating.dataValues.points;
-          } //смотрим имеет ли следующий чел стипендию
-          else if (
-            listStudentsRating[y].rating.dataValues.points < lastPoint&&
-            listStudentsRating[y].destination == false
-          ) {
-            //если стипендия есть то назначить ему рейтинговую стипендию
-            //выход из цикла
-            lastPoint= listStudentsRating[y].rating.dataValues.points;
-            await models.StudentsRating.update(
-              { destination: true, cause: null },
-              {
-                where: {
-                  id: listStudentsRating[y].dataValues.id,
-                },
-              }
-            );
-            break;
-          }
-        }
-        //цикл на начисление стипендии если после последнего прошедшего стоят люди с таким же количеством
-        for (let i = 0; i < listStudentsRating.length; i++) {
-          if (
-            listStudentsRating[i].rating.dataValues.points == lastPoint &&
-            listStudentsRating[i].student.dataValues.sad == true
-          ) {
-            await models.StudentsRating.update(
-              { destination: true, cause: null },
-              {
-                where: {
-                  id: listStudentsRating[i].dataValues.id,
-                },
-              }
-            );
-          }
-        }
-        await ModelService.updateVacation(
-          list[i].rating.dataValues.ratingcourse.dataValues.course.dataValues.title,
-          lastPoint
-        );
-      }
-    }
+            replacements: [itemId],
+            type: Sequelize.QueryTypes.SELECT,
+          } 
+          );
+        })
+      })
 
-    return res.send("ОК");;
+      return res.send("OK");
+    } catch (error) {
+      return res.send(error);
+    }
   }
 }
 

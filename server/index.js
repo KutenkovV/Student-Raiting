@@ -7,10 +7,13 @@ const sequelize = require("./db");
 const router = require("./routes/routes");
 const fileUpload = require('express-fileupload');
 const PORT = process.env.PORT || 8080;
+const username = process.env.USERNAME;
+const password = process.env.PASSWORD;
 const app = express();
 
 const sync = async () => await sequelize.sync({alter:true})
 sync()
+//app.use(express.basicAuth(username,password));
 app.use(morgan('tiny'))
 app.use(cors());
 app.use(fileUpload());
