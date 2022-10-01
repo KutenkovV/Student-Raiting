@@ -10,13 +10,13 @@ const SeveralDirectionsTable = ({ data, itemsPerPage, startFrom, onChange }) => 
   const [cellValue, setCellValue] = useState(); // Здесь лежит строка с таблицы которую мы хотим "Определить"
   const [directions, setDirections] = useState([]); // Здесь храним массив направлений по которым нужно определить студента
 
-  const [selected, setSelected] = useState('');
+  const [selected, setSelected] = useState();
   const handle = (selected) => {
     setSelected(selected);
   }
 
+  //Callback в SeveralDirectionList
   onChange(selected);
-  console.log(selected);
 
   // Функция, которая получает строку
   const getCellValue = (cell) => {
@@ -112,7 +112,7 @@ const SeveralDirectionsTable = ({ data, itemsPerPage, startFrom, onChange }) => 
                 }}
               >
                 <StudentMenu
-                  onClick={handle}
+                  onChange={handle}
                   stNum={cellValue}
                   StudentDirections={directions}
                   items={slicedData}
