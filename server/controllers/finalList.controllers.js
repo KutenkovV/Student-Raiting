@@ -341,7 +341,12 @@ class FinalListController {
         sum=9300;
 
         list2[i].rating.dataValues.ratingcourse.dataValues.course.dataValues.title != list2[i-1]?.rating.dataValues.ratingcourse.dataValues.course.dataValues.title
+<<<<<<< HEAD
        ? position=1 : position ++;
+=======
+        ? position=1 : position ++;
+
+>>>>>>> 68beee44c13c1a49febd7d68692b237d84b4df03
       worksheet2.addRow({ 
         position: position, 
         fullname: list2[i].student.dataValues.fullname , 
@@ -356,8 +361,13 @@ class FinalListController {
     }
     worksheet2.insertRows(1, "1");
     worksheet2.mergeCells('A1:H1');
+<<<<<<< HEAD
     worksheet2.getCell('A1').value = "Перечень обучающихся ФГБОУ ВО \"ИРНИТУ\", подавших достижения к оценке для назначения повышенной государственной академической стипендии по итогам рейтинга №XX. XXX XXXXг. ."
     worksheet2.getCell('A1').font = {name: 'Times New Roman',size:20, bold:true};
+=======
+    worksheet2.getCell('A1').value = "Перечень обучающихся ФГБОУ ВО \"ИРНИТУ\", подавших достижения к оценке для назначения повышенной государственной академической стипендии по итогам рейтинга №XX. XXXXX XXXXг."
+    worksheet2.getCell('A1').font = { name: 'Times New Roman',size:20, bold:true};
+>>>>>>> 68beee44c13c1a49febd7d68692b237d84b4df03
     worksheet2.getRow(1).height = 100;
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     res.setHeader("Content-Disposition", "attachment; filename=" + "rating.xlsx");
