@@ -130,12 +130,12 @@ class RatingManyCoursesController {
         UPDATE studentsrating
         SET 
         destination = CASE WHEN t.title = ? THEN True ELSE False END,
-        cause = 'Другое направление' 
+        cause = CASE WHEN t.title = ? THEN null ELSE 'Другое направление' END 
         FROM t
         WHERE studentsrating.id = t.id
-      `,
+      `,  
       {
-        replacements: [req.body.id,req.body.course],
+        replacements: [req.body.id,req.body.course,req.body.course],
         type: Sequelize.QueryTypes.SELECT,
       } 
       );
@@ -185,13 +185,13 @@ class RatingManyCoursesController {
           type: Sequelize.QueryTypes.SELECT,
         } 
         );
-  
+        console.log(listId[0])
         listId[0].forEach(async (itemId) => {
           await sequelize.query(
             `		   
             UPDATE studentsrating
             SET 
-            destination = True ,
+            destination = true ,
             cause = ''
             WHERE studentsrating.id = ?
           `,
