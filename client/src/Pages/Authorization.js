@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
-function Authorization() {
+const Authorization = () => {
     return (
         <div className="col-6 container authorizationContainer">
             <div class="mb-3 m-3">
@@ -18,4 +18,4 @@ function Authorization() {
     );
   }
   
-  export default Authorization;
+export default Authorization;
