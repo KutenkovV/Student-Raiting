@@ -280,13 +280,7 @@ class CalculateRatingController {
         );
       }
     }
-
     await ModelService.updateVacation(title,lastPoint);
-
-   
   }
-
-
-
 }
 module.exports = CalculateRatingController;

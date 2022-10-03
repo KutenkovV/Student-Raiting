@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import "./StudentMenu.css";
 import axios from "axios";
 
-function StudentMenu({ StudentDirections, stNum, items, onClick }) {
+function StudentMenu({ StudentDirections, stNum, items, onChange }) {
   const [selected, setSelected] = useState();
 
   const btnRef = useRef(); // специальный хук, который передает нам состояние (или даже путь) отрендеренного объекта
@@ -25,12 +25,21 @@ function StudentMenu({ StudentDirections, stNum, items, onClick }) {
     };
   });
 
-  const onSubmit = async (idd, selected) => {
-    var id = idd;
+  const onSubmit = async (e) => {
+    var id;
     var course = selected;
 
-    //крч долго объяснять, тут я передаю данные от grandchild компонента к parent компоненту
-    onClick(selected);
+    items.map((item) => {
+      if (item.studnumber === stNum) {
+        id = item.id;
+      }
+    });
+
+    // Эта строчка делает что-то умное
+    e.preventDefault();
+
+    console.log(id);
+    console.log(course);
 
     if (course === "НАУЧНАЯ ДЕЯТЕЛЬНОСТЬ") {
       course = "НИД";
@@ -45,21 +54,17 @@ function StudentMenu({ StudentDirections, stNum, items, onClick }) {
     }
 
     //пут запрос
-    await axios
-      .put("http://localhost:8080/api/studentRatingManyCourses/", {
-        id: id,
-        course: course,
-      })
-      .then(() => {
-        console.log("Success!");
-      })
-      .catch((e) => {
-        console.error("Error!", e);
-      });
+    await axios.put("http://localhost:8080/api/studentRatingManyCourses/", {
+      id: id,
+      course: course,
+    });
+
+    //крч долго объяснять, тут я передаю данные от grandchild компонента к parent компоненту
+    onChange(selected);
   };
 
   return (
-    <form method="put" action="#" id="#" onSubmit={onSubmit}>
+    <form onSubmit={onSubmit}>
       <div className="studentMenu">
         <div
           class="btn"
@@ -87,18 +92,7 @@ function StudentMenu({ StudentDirections, stNum, items, onClick }) {
               </div>
             ))}
             <div className="studentMenu-define">
-              <button
-                onClick={() => {
-                  items.map((item) => {
-                    if (item.studnumber === stNum) {
-                      onSubmit(item.id, selected);
-                    }
-                  });
-                }}
-                class="btn btn-primary"
-              >
-                Определить
-              </button>
+              <button class="btn btn-primary">Определить</button>
             </div>
           </div>
         )}

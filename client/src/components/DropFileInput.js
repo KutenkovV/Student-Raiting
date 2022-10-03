@@ -66,9 +66,7 @@ const DropFileInput = props => {
         for (let i = 0; i < fileList.length; i++) {
             formatData.append("files", fileList[i]);
         }
-        console.log("Значения таргета ниже:");
-        console.log(fileList);
-
+        
         e.preventDefault();
 
         //сам пост запрос
