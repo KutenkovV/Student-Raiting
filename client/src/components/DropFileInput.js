@@ -124,7 +124,7 @@ const DropFileInput = props => {
                 {/* Ниже форма с кнопкой которая делает запрос */}
                 <form method="post" action="#" id="#" onSubmit={onSubmit}>
                     <div className="row d-flex justify-content-end">
-                        <button class="btn btn-primary col-2 m-4">
+                        <button class="btn btn-primary col-3 m-4">
                             Загрузить
                         </button>
                     </div>

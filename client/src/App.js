@@ -10,6 +10,7 @@ import Od from "./Pages/Od";
 import Sd from "./Pages/Sd";
 import Ktd from "./Pages/Ktd";
 import Summary from "./Pages/Summary";
+import Authorization from "./Pages/Authorization";
 import SeveralDirectionsList from "./Pages/SeveralDirectionsList";
 import FinalList from "./Pages/FinalList";
 import { useState } from "react";
@@ -42,6 +43,7 @@ function App() {
               <Route path="/sd" component={Sd} />
               <Route path="/ktd" component={Ktd} />
               <Route path="/summary" component={Summary} />
+              <Route path="/" component={Authorization} />
               <Route
                 path="/severalDirectionsList"
                 component={SeveralDirectionsList}
