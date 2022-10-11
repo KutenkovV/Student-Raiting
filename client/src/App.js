@@ -36,6 +36,7 @@ function App() {
           <div className="pageContent">
             <Switch>
               {/* Это наш роутинг */}
+              <Route path="/" component={Authorization} />
               <Route path="/listload" exact component={ListLoad} />
               <Route path="/settings" component={Settings} />
               <Route path="/nid" component={Nid} />
