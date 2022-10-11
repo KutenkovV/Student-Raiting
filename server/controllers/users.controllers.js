@@ -49,8 +49,6 @@ class UsersController {
 
             //Check if password matches
             const passwordMatch = await matchPassword(user.password, req.body.user.password)
-            console.log(user.password)
-            console.log(req.body.user.password)
 
             if (!passwordMatch) {
                 res.status(401)
