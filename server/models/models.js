@@ -3,6 +3,26 @@ const { DataTypes } = require("sequelize");
 //Тут лежат все модели данных для работы с БД
 //Сначала написаны сущности, потом связи между ними
 
+const User = sequelize.define('User',{
+  email:{
+      type: DataTypes.STRING,
+      allowNull: false,
+      primaryKey: true
+  },
+  username:{
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+  },
+  password: {
+      type: DataTypes.STRING,
+      allowNull: false
+  }
+},{
+  timestamps: false
+})
+
+
 const Courses = sequelize.define(
   "courses",
   {
@@ -233,7 +253,7 @@ DateTable.hasMany(StudentsRating, {
 StudentsRating.belongsTo(DateTable, {
   foreignKey: "dateid",
 });
-module.exports = {
+module.exports = {User,
   Courses,
   CourseLevels,
   DateTable,

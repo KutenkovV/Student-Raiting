@@ -6,6 +6,12 @@ const reportController = require("../controllers/report.controllers");
 const listController = require("../controllers/list.controllers");
 const finallistController = require("../controllers/finalList.controllers");
 const ratingManyCoursesController = require("../controllers/ratingManyCourses.controllers");
+const usersController = require("../controllers/users.controllers");
+
+
+router.post('/users/login',usersController.loginUser) 
+
+router.post('/users/create',usersController.createUser) 
 
 //маршруты для загрузки списков
 router.post("/listLoad/all", listLoadController.loadFile);
