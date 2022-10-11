@@ -11,7 +11,7 @@ const usersController = require("../controllers/users.controllers");
 
 router.post('/users/login',usersController.loginUser) 
 
-router.post('/users/create',usersController.createUser) 
+// router.post('/users/create',usersController.createUser) 
 
 //маршруты для загрузки списков
 router.post("/listLoad/all", listLoadController.loadFile);
