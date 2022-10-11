@@ -1,3 +1,5 @@
+const { decode } = require("jsonwebtoken");
+
 module.exports.authByToken = async (req,res,next) => {
     
     //Check for Authorization header

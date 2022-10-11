@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
 import "./StudentMenu.css";
-import axios from "axios";
+import axios from "../../http/index";
 
 function StudentMenu({ StudentDirections, stNum, items, onChange }) {
   const [selected, setSelected] = useState();

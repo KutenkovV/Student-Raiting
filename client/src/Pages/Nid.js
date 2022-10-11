@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../http/index"
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
 import NidTable from "../components/tables/NidTable";
 
@@ -7,6 +7,7 @@ function Nid() {
   document.title = "Научная";
   const [items, setItems] = useState([]);
   const { promiseInProgress } = usePromiseTracker();
+
 
   //Гет запрос на список "Научная деятельность"
   useEffect(() => {

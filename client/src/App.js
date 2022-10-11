@@ -19,6 +19,7 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 function App() {
   const [menuActive, setMenuActive] = useState(false);
+
   return (
     <>
       <div className="content">
@@ -43,7 +44,6 @@ function App() {
               <Route path="/sd" component={Sd} />
               <Route path="/ktd" component={Ktd} />
               <Route path="/summary" component={Summary} />
-              <Route path="/" component={Authorization} />
               <Route
                 path="/severalDirectionsList"
                 component={SeveralDirectionsList}
