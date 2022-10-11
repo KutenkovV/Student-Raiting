@@ -12,6 +12,7 @@ const username = process.env.USERNAME;
 const password = process.env.PASSWORD;
 const app = express();
 
+// const bodyParser = require("body-parser");
 
 const sync = async () => await sequelize.sync({alter:true})
 sync()
@@ -20,6 +21,9 @@ sync()
 // app.use(basicAuth({
 //   users: { [username]: password }
 // }))
+
+// app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(morgan('tiny'))
 app.use(cors());
