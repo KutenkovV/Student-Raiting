@@ -36,7 +36,6 @@ function App() {
           <div className="pageContent">
             <Switch>
               {/* Это наш роутинг */}
-              <Route path="/" component={Authorization} />
               <Route path="/listload" exact component={ListLoad} />
               <Route path="/settings" component={Settings} />
               <Route path="/nid" component={Nid} />
@@ -50,6 +49,7 @@ function App() {
                 component={SeveralDirectionsList}
               />
               <Route path="/finalList" component={FinalList} />
+              <Route path="/" component={Authorization} />
             </Switch>
           </div>
         </Router>
