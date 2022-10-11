@@ -6,6 +6,7 @@ import "../style/DropFileInput.css";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
+
 const DropFileInput = props => {
 
     const wrapperRef = useRef(null);
@@ -13,6 +14,7 @@ const DropFileInput = props => {
     const onDragEnter = () => wrapperRef.current.classList.add('dragover');
     const onDragLeave = () => wrapperRef.current.classList.remove('dragover');
     const onDrop = () => wrapperRef.current.classList.remove('dragover');
+    const [spin, setspinValue] = useState(false)
 
     //Константа в которую кидаем файлы из дропзоны
     const onFileDrop = (e) => {
@@ -61,14 +63,12 @@ const DropFileInput = props => {
 
     //обработка кнопки
     const onSubmit = async (e) => {
-
         const formatData = new FormData();
         for (let i = 0; i < fileList.length; i++) {
             formatData.append("files", fileList[i]);
         }
         
         e.preventDefault();
-
         //сам пост запрос
         await axios({
             method: "POST",
@@ -79,13 +79,13 @@ const DropFileInput = props => {
             }
         })
             .then(response => setStatus(response.data))
+            setspinValue(!spin)
 
             //Вот так чистим содержимое, что загружали  
             setFileList([]);
     }
 
     console.log(status);
-
     return (
         <div className="row">
             <div className="col-md-6 fileLoad_container">
@@ -104,8 +104,11 @@ const DropFileInput = props => {
                 {
                     fileList.length > 0 ? (
                         <div className="drop-file-preview">
-                            <p className="drop-file-preview__title">Готовы к загрузке</p> {
-                                fileList.map((item, index) => (
+                        {spin?
+                            <div class="spinner-border text-primary mb-3 mt-3" role="status">
+                            </div> : <p className="drop-file-preview__title me-3">Готовы к загрузке</p>
+                        }
+                             {fileList.map((item, index) => (
                                     <div key={index} className="drop-file-preview__item">
                                         <FontAwesomeIcon size="2x" className="file_icon" icon={faFileCsv} />
                                         <div className="drop-file-preview__item__info">
@@ -124,7 +127,7 @@ const DropFileInput = props => {
                 {/* Ниже форма с кнопкой которая делает запрос */}
                 <form method="post" action="#" id="#" onSubmit={onSubmit}>
                     <div className="row d-flex justify-content-end">
-                        <button class="btn btn-primary col-3 m-4">
+                        <button class="btn btn-primary col-3 m-4" onClick={() => setspinValue(!spin)}>
                             Загрузить
                         </button>
                     </div>
