@@ -7,8 +7,15 @@ const listController = require("../controllers/list.controllers");
 const finallistController = require("../controllers/finalList.controllers");
 const ratingManyCoursesController = require("../controllers/ratingManyCourses.controllers");
 
+//authorization
+require("./auth.routes")(router);
+require("./user.routes")(router);
+
+//authorization
+
 //маршруты для загрузки списков
 router.post("/listLoad/all", listLoadController.loadFile);
+
 
 //маршрут количества мест рейтинга
 router.get("/ratingCount", ratingCountController.get);
