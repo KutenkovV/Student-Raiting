@@ -15,10 +15,11 @@ const app = express();
 
 const sync = async () => await sequelize.sync({alter:true})
 sync()
-//app.use(express.basicAuth(username,password));
-app.use(basicAuth({
-  users: { username: password }
-}))
+// //app.use(express.basicAuth(username,password));
+// // app.use(basicAuth({
+// //   users: { username: password }
+// // }))
+// root
 app.use(morgan('tiny'))
 app.use(cors());
 app.use(fileUpload());

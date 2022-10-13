@@ -14,37 +14,37 @@ router.post('/users/login',usersController.loginUser)
 //router.post('/users/create',usersController.createUser) 
 
 //маршруты для загрузки списков
-router.post("/listLoad/all", listLoadController.loadFile);
+router.post("/listLoad/all", authByToken,listLoadController.loadFile);
 
 //маршрут количества мест рейтинга
-router.get("/ratingCount", ratingCountController.get);
+router.get("/ratingCount",authByToken, ratingCountController.get);
 //маршрут 10% от количества студентов получающих ГАС
-router.get("/ratingCountFromSAD", ratingCountController.getCountFromSad);
+router.get("/ratingCountFromSAD",authByToken, ratingCountController.getCountFromSad);
 //маршрут изменения количества мест
-router.put("/ratingCount", ratingCountController.update);
+router.put("/ratingCount",authByToken, ratingCountController.update);
 
 //маршруты для списков по направлениям
-router.get("/ktd", listController.getKtd);
-router.get("/nid", listController.getNid);
-router.get("/sd", listController.getSd);
-router.get("/od", listController.getOd);
-router.get("/ud", listController.getUd);
+router.get("/ktd",authByToken, listController.getKtd);
+router.get("/nid",authByToken, listController.getNid);
+router.get("/sd",authByToken, listController.getSd);
+router.get("/od",authByToken, listController.getOd);
+router.get("/ud",authByToken, listController.getUd);
 
 //маршрут для списка студентов которые подали на несколько направлений
-router.get("/studentRatingManyCourses", ratingManyCoursesController.getStudentRatingManyCourses);
+router.get("/studentRatingManyCourses",authByToken, ratingManyCoursesController.getStudentRatingManyCourses);
 
 //маршрут для опеределения направления по которому будет получать студент стипендию
-router.put("/studentRatingManyCourses", ratingManyCoursesController.updateStudentRatingManyCourses);
+router.put("/studentRatingManyCourses",authByToken, ratingManyCoursesController.updateStudentRatingManyCourses);
 
 //маршрут для сводки
-router.get("/report", reportController.getReport);
+router.get("/report",authByToken, reportController.getReport);
 
 //маршрут для проверки готов ли финальный список
-router.get("/getTheFinalFileIsReady", finallistController.getTheFinalFileIsReady);
+router.get("/getTheFinalFileIsReady",authByToken, finallistController.getTheFinalFileIsReady);
 
 //маршрут для итогового списка
-router.get("/finalList", finallistController.getFinal);
+router.get("/finalList",authByToken, finallistController.getFinal);
 //маршрут для итогового файла
-router.get("/finalListFile", finallistController.getFinalFile);
+router.get("/finalListFile",authByToken, finallistController.getFinalFile);
 
 module.exports = router;

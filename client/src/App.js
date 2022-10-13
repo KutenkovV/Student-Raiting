@@ -16,12 +16,24 @@ import FinalList from "./Pages/FinalList";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import useToken from "./hooks/useToken";
 
 function App() {
   const [menuActive, setMenuActive] = useState(false);
+  const { token, setToken } = useToken(); // Хук для работы с токеном
+  // там мы его сохроняем и и "получаем"
+
+  // если токена нету, то выводим форм с авторизацией
+  if(!token) {
+    return (
+      <Authorization setToken={setToken} />
+    )
+  }
+
   return (
     <>
       <div className="content">
+        
         <Router>
           <div className="sidebar">
             <div
@@ -43,7 +55,6 @@ function App() {
               <Route path="/sd" component={Sd} />
               <Route path="/ktd" component={Ktd} />
               <Route path="/summary" component={Summary} />
-              <Route path="/" component={Authorization} />
               <Route
                 path="/severalDirectionsList"
                 component={SeveralDirectionsList}
