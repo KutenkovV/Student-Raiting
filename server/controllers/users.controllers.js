@@ -3,7 +3,7 @@ const { Op } = require("sequelize");
 const {hashPassword,matchPassword} = require('../utils/password')
 const {sign,decode} = require('../utils/jwt')
 
-//класс отвечающий за сводку 
+//
 class UsersController {
 
     async createUser (req,res) {
