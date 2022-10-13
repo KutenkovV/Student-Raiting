@@ -3,7 +3,7 @@ const { DataTypes } = require("sequelize");
 //Тут лежат все модели данных для работы с БД
 //Сначала написаны сущности, потом связи между ними
 
-<
+
 const User = sequelize.define('User',{
   email:{
       type: DataTypes.STRING,
