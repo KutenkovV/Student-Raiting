@@ -119,3 +119,9 @@
   padding: 0.5rem;
   background-color: var(--error-color);
 }
+
+.authorizationContainer{
+  box-shadow: var(--default-shadow);
+  border-radius: var(--default-radius);
+  padding: 2rem;
+}

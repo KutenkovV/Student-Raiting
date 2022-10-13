@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../style/Settings.css";
-import axios from "axios";
+import axios from "../http/api";
 
 const Settings = () => {
   document.title = "Вакансии";
@@ -20,7 +20,8 @@ const Settings = () => {
       .then(response => setItems(response.data))
       .catch(error => console.log(error));
   }, []);
- 
+
+
   // Если уже есть настройки в ответе items, то вводим их значения
   useEffect(() => {
     items.map((item) => {
