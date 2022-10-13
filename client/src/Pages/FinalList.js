@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "../http/index";
+import axios from "../http/api";
 import FinalTable from "../components/tables/FinalTable";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 

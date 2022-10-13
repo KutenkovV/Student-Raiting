@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SeveralDirectionsTable from "../components/tables/SeveralDirectionsTable";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
-import axios from "../http/index";
+import axios from "../http/api";
 
 function SeveralDirectionsList() {
   document.title = "Несколько направлений";

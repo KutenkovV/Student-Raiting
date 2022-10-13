@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SummaryTable from "../components/tables/SummaryTable";
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
-import axios from "../http/index";
+import axios from "../http/api";
 
 function Summary() {
   document.title = "Сводка";

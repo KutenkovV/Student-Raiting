@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../style/Settings.css";
-import axios from "../http/index";
+import axios from "../http/api";
 
 const Settings = () => {
   document.title = "Вакансии";

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCloudArrowUp, faFileCsv, faXmark } from "@fortawesome/free-solid-svg-icons";
 import "../style/DropFileInput.css";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
-import axios from "../http/index";
+import axios from "../http/api";
 
 
 const DropFileInput = props => {
