@@ -54,7 +54,7 @@ function StudentMenu({ StudentDirections, stNum, items, onChange }) {
     }
 
     //пут запрос
-    await axios.put("http://localhost:8080/api/studentRatingManyCourses/", {
+    await axios.put("/api/studentRatingManyCourses/", {
       id: id,
       course: course,
     });
