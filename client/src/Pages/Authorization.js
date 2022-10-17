@@ -13,7 +13,7 @@ const Authorization = ({ setToken }) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "api/users/login",
+        "/api/users/login",
         {
           user: {
             email: email,

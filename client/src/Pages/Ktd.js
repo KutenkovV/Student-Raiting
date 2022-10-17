@@ -10,7 +10,7 @@ function Ktd() {
   const { promiseInProgress } = usePromiseTracker();
 
   useEffect(() => {
-    trackPromise(axios.get("api/ktd"))
+    trackPromise(axios.get("/api/ktd"))
       .then((response) => setItems(response.data))
       .catch((error) => console.log(error));
   }, []);

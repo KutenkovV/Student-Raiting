@@ -17,7 +17,7 @@ const Settings = () => {
   // Гет-запрос на настройки
   useEffect(() => {
     axios
-      .get("api/ratingCount")
+      .get("/api/ratingCount")
       .then((response) => setItems(response.data))
       .catch((error) => console.log(error));
   }, []);

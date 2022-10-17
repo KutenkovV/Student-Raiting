@@ -72,7 +72,7 @@ const DropFileInput = props => {
         //сам пост запрос
         await axios({
             method: "POST",
-            url: "api/listLoad/all",
+            url: "/api/listLoad/all",
             data: formatData,
             headers: {
                 "Content-Type": "multipart/form-data"

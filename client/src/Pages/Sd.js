@@ -10,7 +10,7 @@ function Sd() {
   const { promiseInProgress } = usePromiseTracker();
 
   useEffect(() => {
-    trackPromise(axios.get("api/sd"))
+    trackPromise(axios.get("/api/sd"))
       .then((response) => setItems(response.data))
       .catch((error) => console.log(error));
   }, []);

@@ -12,14 +12,14 @@ function FinalList() {
   //Гет запрос на список
   useEffect(() => {
     //Запрос на финальный список
-    trackPromise(axios.get("api/finalList"))
+    trackPromise(axios.get("/api/finalList"))
       .then((response) => setItems(response.data))
       .catch((error) => console.log(error));
   }, []);
 
   useEffect(() => {
     //Запрос на проверку все ли студенты распределены
-    trackPromise(axios.get("api/getTheFinalFileIsReady"))
+    trackPromise(axios.get("/api/getTheFinalFileIsReady"))
       .then((response) => setDistributed(response.data))
       .catch((error) => console.log(error));
     console.log(distributed);
@@ -30,7 +30,7 @@ function FinalList() {
     e.preventDefault();
 
     //сам пост запрос
-    const response = await fetch("api/finalListFile");
+    const response = await fetch("/api/finalListFile");
     if (response.status === 200) {
       const blob = await response.blob();
       const downloadUrl = window.URL.createObjectURL(blob);

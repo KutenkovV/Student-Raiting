@@ -11,7 +11,7 @@ function Od() {
 
   //Гет-запрос на список "Общественная деятельность"
   useEffect(() => {
-    trackPromise(axios.get("api/od"))
+    trackPromise(axios.get("/api/od"))
       .then((response) => setItems(response.data))
       .catch((error) => console.log(error));
   }, []);

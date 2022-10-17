@@ -10,7 +10,7 @@ function Nid() {
 
   //Гет запрос на список "Научная деятельность"
   useEffect(() => {
-    trackPromise(axios.get("api/nid"))
+    trackPromise(axios.get("/api/nid"))
       .then((response) => setItems(response.data))
       .catch((error) => console.log(error));
   }, []);
