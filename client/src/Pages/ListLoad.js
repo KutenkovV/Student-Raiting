@@ -17,7 +17,7 @@ function ListLoad() {
 
   return (
     <>
-      <div className="row">
+      <div className="row fileLoad_container">
         <DropFileInput onChange={(e) => onInputChange(e)} onFileChange={(files) => onFileChange(files)} />
       </div>
     </>

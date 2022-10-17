@@ -2,6 +2,7 @@ import "./style/App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 
+import Start from "./Pages/Start";
 import ListLoad from "./Pages/ListLoad";
 import Settings from "./Pages/Settings";
 import Nid from "./Pages/Nid";
@@ -19,21 +20,18 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import useToken from "./hooks/useToken";
 
 function App() {
-  const [menuActive, setMenuActive] = useState(false);
+  const [menuActive, setMenuActive] = useState(true);
   const { token, setToken } = useToken(); // Хук для работы с токеном
-  // там мы его сохроняем и и "получаем"
+  // там мы его сохроняем и "получаем"
 
   // если токена нету, то выводим форм с авторизацией
-  if(!token) {
-    return (
-      <Authorization setToken={setToken} />
-    )
+  if (!token) {
+    return <Authorization setToken={setToken} />;
   }
 
   return (
     <>
       <div className="content">
-        
         <Router>
           <div className="sidebar">
             <div
@@ -47,7 +45,8 @@ function App() {
           <div className="pageContent">
             <Switch>
               {/* Это наш роутинг */}
-              <Route path="/listload" exact component={ListLoad} />
+              <Route path="/" exact component={Start} />
+              <Route path="/listload" component={ListLoad} />
               <Route path="/settings" component={Settings} />
               <Route path="/nid" component={Nid} />
               <Route path="/ud" component={Ud} />

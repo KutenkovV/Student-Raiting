@@ -87,8 +87,8 @@ const DropFileInput = props => {
 
     console.log(status);
     return (
-        <div className="row">
-            <div className="col-md-6 fileLoad_container">
+        <>
+            <div className="col-md-6">
                 <div className="drop-file-input"
                     ref={wrapperRef}
                     onDragEnter={onDragEnter}
@@ -105,7 +105,9 @@ const DropFileInput = props => {
                     fileList.length > 0 ? (
                         <div className="drop-file-preview">
                         {spin?
-                            <div class="spinner-border text-primary mb-3 mt-3" role="status">
+                            <div className="d-flex mb-3 mt-3">
+                                <div class="spinner-border text-primary" role="status" />
+                                <p className="m-1">Идет загрузка...</p>
                             </div> : <p className="drop-file-preview__title me-3">Готовы к загрузке</p>
                         }
                              {fileList.map((item, index) => (
@@ -127,7 +129,7 @@ const DropFileInput = props => {
                 {/* Ниже форма с кнопкой которая делает запрос */}
                 <form method="post" action="#" id="#" onSubmit={onSubmit}>
                     <div className="row d-flex justify-content-end">
-                        <button class="btn btn-primary col-3 m-4" onClick={() => setspinValue(!spin)}>
+                        <button class="btn btn-primary col-auto m-4" onClick={() => setspinValue(!spin)}>
                             Загрузить
                         </button>
                     </div>
@@ -135,57 +137,57 @@ const DropFileInput = props => {
             </div>
 
             {/* Чек-листы, которые загрузили/не загрузили */}
-            <div className="checkList col">
-                <div className="checkItem row">
-                    <FontAwesomeIcon icon={nidValue ? faCheck : faXmark} className={nidValue ? "col-1 succesIcon" : "col-1 errorIcon"} />
-                    <p className="checkText col">
+            <div className="col">
+                <div className="checkItem row d-flex align-items-center">
+                    <FontAwesomeIcon size="2x" icon={nidValue ? faCheck : faXmark} className={nidValue ? "col-1 succesIcon" : "col-1 errorIcon"} />
+                    <p className="checkText col m-2">
                         Научная деятельность
                     </p>
                 </div>
-                <div className="checkItem row">
-                    <FontAwesomeIcon icon={udValue ? faCheck : faXmark} className={udValue ? "col-1 succesIcon" : "col-1 errorIcon"} />
-                    <p className="checkText col">
+                <div className="checkItem row d-flex align-items-center">
+                    <FontAwesomeIcon size="2x" icon={udValue ? faCheck : faXmark} className={udValue ? "col-1 succesIcon" : "col-1 errorIcon"} />
+                    <p className="checkText col m-2">
                         Учебная деятельность
                     </p>
                 </div>
-                <div className="checkItem row">
-                    <FontAwesomeIcon icon={odValue ? faCheck : faXmark} className={odValue ? "col-1 succesIcon" : "col-1 errorIcon"} />
-                    <p className="checkText col">
+                <div className="checkItem row d-flex align-items-center">
+                    <FontAwesomeIcon size="2x" icon={odValue ? faCheck : faXmark} className={odValue ? "col-1 succesIcon" : "col-1 errorIcon"} />
+                    <p className="checkText col m-2">
                         Общественная деятельность
                     </p>
                 </div>
-                <div className="checkItem row">
-                    <FontAwesomeIcon icon={sdValue ? faCheck : faXmark} className={sdValue ? "col-1 succesIcon" : "col-1 errorIcon"} />
-                    <p className="checkText col">
+                <div className="checkItem row d-flex align-items-center">
+                    <FontAwesomeIcon size="2x" icon={sdValue ? faCheck : faXmark} className={sdValue ? "col-1 succesIcon" : "col-1 errorIcon"} />
+                    <p className="checkText col m-2">
                         Спортивная деятельность
                     </p>
                 </div>
-                <div className="checkItem row">
-                    <FontAwesomeIcon icon={ktdValue ? faCheck : faXmark} className={ktdValue ? "col-1 succesIcon" : "col-1 errorIcon"} />
-                    <p className="checkText col">
+                <div className="checkItem row d-flex align-items-center">
+                    <FontAwesomeIcon size="2x" icon={ktdValue ? faCheck : faXmark} className={ktdValue ? "col-1 succesIcon" : "col-1 errorIcon"} />
+                    <p className="checkText col m-2">
                         Культурно-творческая деятельность
                     </p>
                 </div>
-                <div className="checkItem row">
-                    <FontAwesomeIcon icon={freeValue ? faCheck : faXmark} className={freeValue ? "col-1 succesIcon" : "col-1 errorIcon"} />
-                    <p className="checkText col">
+                <div className="checkItem row d-flex align-items-center">
+                    <FontAwesomeIcon size="2x" icon={freeValue ? faCheck : faXmark} className={freeValue ? "col-1 succesIcon" : "col-1 errorIcon"} />
+                    <p className="checkText col m-2">
                         Студенты со свободным графиком
                     </p>
                 </div>
-                <div className="checkItem row">
-                    <FontAwesomeIcon icon={vacationValue ? faCheck : faXmark} className={vacationValue ? "col-1 succesIcon" : "col-1 errorIcon"} />
-                    <p className="checkText col">
+                <div className="checkItem row d-flex align-items-center">
+                    <FontAwesomeIcon size="2x" icon={vacationValue ? faCheck : faXmark} className={vacationValue ? "col-1 succesIcon" : "col-1 errorIcon"} />
+                    <p className="checkText col m-2">
                         Студенты на каникулах
                     </p>
                 </div>
-                <div className="checkItem row">
-                    <FontAwesomeIcon icon={gasValue ? faCheck : faXmark} className={gasValue ? "col-1 succesIcon" : "col-1 errorIcon"} />
-                    <p className="checkText col">
+                <div className="checkItem row d-flex align-items-center">
+                    <FontAwesomeIcon size="2x" icon={gasValue ? faCheck : faXmark} className={gasValue ? "col-1 succesIcon" : "col-1 errorIcon"} />
+                    <p className="checkText col m-2">
                         Студенты, получающие государственную академическую стипендию
                     </p>
                 </div>
-            </div>
-        </div>
+            </div>   
+        </>
     )
 }
 

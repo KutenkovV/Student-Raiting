@@ -17,7 +17,7 @@
   /*Для успешно загруженных списков*/
   --check-success-color: #87A878;
   /*Цвет ошибок и провальных действий*/
-  --error-color: #ffb9b4;
+  --error-color: #fd9c96;
   /*Белый цвет*/
   --default-white: #fff;
   /*Задний фон дропфайла*/
@@ -37,15 +37,15 @@
 
   /*Верстка*/
   /*Дефолтная тень для блоков*/
-  --default-shadow: 2px 2px 5px 2px rgb(219, 219, 219);
+  --default-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   /*Стандартный отступ*/
   --default-indent: 2.5rem;
   /*Стандартный отступ для навбара (сверху и для символов)*/
   --default-navbar-indent: 1rem;
   /*Стандартный отступ слева*/
-  --default-left-indent: 6rem;
+  --default-left-indent: 3rem;
   /*Стандартный скругление*/
-  --default-radius: 1rem;
+  --default-radius: 10px;
 }
 
 .App {

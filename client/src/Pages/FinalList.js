@@ -65,7 +65,9 @@ function FinalList() {
           ) : distributed ? (
             <button class="btn btn-primary col-2 m-4">Скачать список</button>
           ) : (
-            <p className="col-2 m-4 pleaseDistribute">Распределите всех студентов!</p>
+            <div class="alert alert-danger" role="alert">
+              Распределите всех студентов!
+            </div>
           )}
         </div>
       </form>

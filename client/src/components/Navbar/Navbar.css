@@ -2,7 +2,7 @@
 .mainMenu {
   width: 7rem;
   transform: translateX(-200%);
-  transition: 150ms;
+  transition: 350ms;
 }
 
 .active {

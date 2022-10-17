@@ -87,11 +87,10 @@
 }
 
 .fileLoad_container{
-    padding: 1rem;
+    padding: 2rem;
     box-shadow: var(--default-shadow);
     border-radius: var(--default-radius);
     margin-bottom: 2.5rem;
-    padding: 2rem;
 }
 
 .fileName{
