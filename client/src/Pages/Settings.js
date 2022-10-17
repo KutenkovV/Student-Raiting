@@ -17,7 +17,7 @@ const Settings = () => {
   // Гет-запрос на настройки
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/ratingCount")
+      .get("api/ratingCount")
       .then((response) => setItems(response.data))
       .catch((error) => console.log(error));
   }, []);
@@ -60,7 +60,7 @@ const Settings = () => {
     dataSettings.append("ktdInput", ktdInput);
 
     await axios
-      .put(`http://localhost:8080/api/ratingCount`, dataSettings)
+      .put(`api/ratingCount`, dataSettings)
       .then(() => {
         console.log("Success!");
       })

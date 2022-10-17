@@ -19,7 +19,7 @@ function SeveralDirectionsList() {
   //Гет запрос на список "Несколько направлений"
   useEffect(() => {
     trackPromise(
-      axios.get("http://localhost:8080/api/studentRatingManyCourses")
+      axios.get("api/studentRatingManyCourses")
     )
       .then((response) => setItems(response.data))
       .catch((error) => console.log(error));

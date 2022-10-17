@@ -11,7 +11,7 @@ function Summary() {
 
   //Гет запрос на список "Сводка"
   useEffect(() => {
-    trackPromise(axios.get('http://localhost:8080/api/report'))
+    trackPromise(axios.get('api/report'))
       .then(response => setItems(response.data))
       .catch(error => console.log(error));
   }, []);

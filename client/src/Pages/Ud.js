@@ -10,7 +10,7 @@ function Ud() {
   const { promiseInProgress } = usePromiseTracker();
 
   useEffect(() => {
-    trackPromise(axios.get('http://localhost:8080/api/ud'))
+    trackPromise(axios.get('api/ud'))
       .then(response => setItems(response.data))
       .catch(error => console.log(error));
   }, []);
