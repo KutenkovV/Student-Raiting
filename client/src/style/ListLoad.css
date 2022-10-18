@@ -17,9 +17,6 @@
   text-transform: uppercase;
   font-weight: bold;
 }
-.checkItem{
-  margin-left: 2rem;
-}
 
 .succesIcon{
   color: var(--check-success-color);

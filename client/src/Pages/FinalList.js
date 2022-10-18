@@ -22,7 +22,6 @@ function FinalList() {
     trackPromise(axios.get("/api/getTheFinalFileIsReady"))
       .then((response) => setDistributed(response.data))
       .catch((error) => console.log(error));
-    console.log(distributed);
   }, []);
 
   //обработка кнопки
@@ -46,6 +45,22 @@ function FinalList() {
   return (
     <div>
       <h1 className="header">Итоговый список</h1>
+
+      {/* Ниже форма с кнопкой которая делает запрос */}
+      <form method="get" action="#" id="#" onSubmit={onSubmit}>
+        <div className="row d-flex text-center justify-content-start">
+          {promiseInProgress ? (
+            <p></p>
+          ) : distributed ? (
+            <button class="btn btn-primary col-2 m-4">Скачать список</button>
+          ) : (
+            <div class="alert alert-danger col-auto mt-2" role="alert">
+              Распределите всех студентов!
+            </div>
+          )}
+        </div>
+      </form>
+
       {promiseInProgress ? (
         <div
           class="spinner-border spinner-border-sm load_spinner"
@@ -56,21 +71,6 @@ function FinalList() {
       ) : (
         <FinalTable data={items} itemsPerPage={10} />
       )}
-
-      {/* Ниже форма с кнопкой которая делает запрос */}
-      <form method="get" action="#" id="#" onSubmit={onSubmit}>
-        <div className="row d-flex justify-content-end">
-          {promiseInProgress ? (
-            <p></p>
-          ) : distributed ? (
-            <button class="btn btn-primary col-2 m-4">Скачать список</button>
-          ) : (
-            <div class="alert alert-danger" role="alert">
-              Распределите всех студентов!
-            </div>
-          )}
-        </div>
-      </form>
     </div>
   );
 }

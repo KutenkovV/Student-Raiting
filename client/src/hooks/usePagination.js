@@ -20,8 +20,6 @@ const usePagination = (initialState) => {
   // если следующее значение будет равно предыдущему, рендерится будет старый элемент
   // комментарий: спустя тыщу лет вроде работает нормально
 
-  console.log(slicedData);
-
   let ellipsisLeft = false;
   let ellipsisRight = false;
   for (let i = 1; i <= pages; i++) {

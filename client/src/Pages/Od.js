@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "../http/api";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import DirectionsTable from "../components/tables/DirectionsTable";
+import ColorMap from "../components/ColorMap";
 
 function Od() {
   document.title = "Общественная";
@@ -19,17 +20,8 @@ function Od() {
   return (
     <div>
       <h1 className="header">Общественная деятельность</h1>
-      <div className="row colorMap_container mt-4 mb-4">
-        <div className="colorMap colorMap_enoughPoints col">
-          <p>Получают стипендию</p>
-        </div>
-        <div className="colorMap colorMap_vacation col">
-          <p>На каникулах</p>
-        </div>
-        <div className="colorMap colorMap_free col">
-          <p>Свободный график</p>
-        </div>
-      </div>
+      <ColorMap />
+
       {/* блок с промисом "загрузка..." */}
       {promiseInProgress ? (
         <div

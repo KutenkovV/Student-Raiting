@@ -37,7 +37,7 @@ const Authorization = ({ setToken }) => {
   };
 
   return (
-    <div className="col-4 container authorizationContainer mt-4">
+    <div className="col-lg-4 col-sm-6 container authorizationContainer mt-4">
       <form onSubmit={handleSubmit}>
         <p className="alert alert-primary" role="alert">
           Для работы в системе авторизуйтесь
@@ -73,7 +73,7 @@ const Authorization = ({ setToken }) => {
           />
         </div>
         <div class="col-auto m-3 d-flex justify-content-end">
-          <button type="submit" class="btn btn-primary mt-3 col-3">
+          <button type="submit" class="btn btn-primary mt-3 col-auto">
             Вход
           </button>
         </div>

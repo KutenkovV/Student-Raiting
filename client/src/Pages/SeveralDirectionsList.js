@@ -18,9 +18,7 @@ function SeveralDirectionsList() {
 
   //Гет запрос на список "Несколько направлений"
   useEffect(() => {
-    trackPromise(
-      axios.get("/api/studentRatingManyCourses")
-    )
+    trackPromise(axios.get("/api/studentRatingManyCourses"))
       .then((response) => setItems(response.data))
       .catch((error) => console.log(error));
   }, [selected]); //Ставим зависимость обновлять данные по изменению значений в Selected
@@ -29,17 +27,20 @@ function SeveralDirectionsList() {
     <div>
       <h1 className="header">Подавшие на несколько направлений</h1>
 
-      {/* {promiseInProgress
-        ? <div class="spinner-border spinner-border-sm load_spinner" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>  : <SeveralDirectionsTable onChange={handlSelectedChange} data={items} itemsPerPage={10} />
-      } */}
-
-      <SeveralDirectionsTable
-        onChange={handlSelectedChange}
-        data={items}
-        itemsPerPage={10}
-      />
+      {promiseInProgress ? (
+        <div
+          class="spinner-border spinner-border-sm load_spinner"
+          role="status"
+        >
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      ) : (
+        <SeveralDirectionsTable
+          onChange={handlSelectedChange}
+          data={items}
+          itemsPerPage={10}
+        />
+      )}
     </div>
   );
 }

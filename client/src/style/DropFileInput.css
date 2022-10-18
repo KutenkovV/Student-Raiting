@@ -1,7 +1,7 @@
 .drop-file-input {
     position: relative;
     width: auto;
-    height: 10rem;
+    height: auto;
     border: 4px dashed var(--font-grey);
     border-radius: 16px;
     background: var(--default-white);

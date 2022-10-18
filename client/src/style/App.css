@@ -90,11 +90,7 @@
 .colorMap{
   box-shadow: var(--default-shadow);
   border-radius: var(--default-radius);
-  margin-top: 2rem;
-  height: 2.5rem;
   margin-right: 1rem;
-  text-align: center;
-  padding-top: 0.6rem;
   font-family: var(--main-font);
   font-size: var(--default-font-size);
   text-transform: uppercase;

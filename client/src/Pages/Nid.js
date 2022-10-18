@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "../http/api";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import NidTable from "../components/tables/NidTable";
+import ColorMap from "../components/ColorMap";
 
 function Nid() {
   document.title = "Научная";
@@ -18,17 +19,7 @@ function Nid() {
   return (
     <div>
       <h1 className="header">Научная деятельность</h1>
-      <div className="row colorMap_container mt-4 mb-4">
-        <div className="colorMap colorMap_enoughPoints col">
-          <p>Получают стипендию</p>
-        </div>
-        <div className="colorMap colorMap_vacation col">
-          <p>На каникулах</p>
-        </div>
-        <div className="colorMap colorMap_free col">
-          <p>Свободный график</p>
-        </div>
-      </div>
+      <ColorMap />
 
       {/* блокс с промисом "загрузка..." */}
       {promiseInProgress ? (
