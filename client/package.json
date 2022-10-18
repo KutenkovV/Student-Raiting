@@ -1,5 +1,6 @@
 {
   "name": "magnum-opus",
+  "proxy": "http://rating.ovz1.j37315531.m1yvm.vps.myjino.ru",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

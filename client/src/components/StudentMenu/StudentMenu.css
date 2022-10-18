@@ -24,6 +24,8 @@
 .studentMenu .studentMenu-content {
   align-items: flex-start;
   position: absolute;
+  height: auto;
+  width: auto;
   right: 7%;
   padding: 5px;
   background: #fff;
@@ -43,6 +45,13 @@
 .studentMenu .studentMenu-content .studentMenu-item:hover {
   background: #f4f4f4;
 }
+
+.studentMenu .studentMenu-content .studentMenu-item:focus {
+  border-radius: 10px;
+  background: #98dfff;
+  color: #333;
+}
+
 
 .studentMenu-define {
   padding-top: 5px;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SummaryTable from "../components/tables/SummaryTable";
 import { trackPromise, usePromiseTracker } from 'react-promise-tracker';
-import axios from "axios";
+import axios from "../http/api";
 
 function Summary() {
   document.title = "Сводка";
@@ -11,7 +11,7 @@ function Summary() {
 
   //Гет запрос на список "Сводка"
   useEffect(() => {
-    trackPromise(axios.get('http://localhost:8080/api/report'))
+    trackPromise(axios.get('api/report'))
       .then(response => setItems(response.data))
       .catch(error => console.log(error));
   }, []);

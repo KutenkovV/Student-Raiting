@@ -9,7 +9,7 @@
   /*Цвет кнопок, взаимодействия*/
   --blue-action: #007bff;
   /*Для всех успешных действий*/
-  --success-color: #b3f2dd;
+  --success-color: #c8f5e6;
   /*Отмечаем студентов на каникулах*/
   --vacation-color: #D5DBF0;
    /*Отмечаем студентов со свободным графиком*/
@@ -17,7 +17,7 @@
   /*Для успешно загруженных списков*/
   --check-success-color: #87A878;
   /*Цвет ошибок и провальных действий*/
-  --error-color: #F39B6D;
+  --error-color: #fd9c96;
   /*Белый цвет*/
   --default-white: #fff;
   /*Задний фон дропфайла*/
@@ -37,15 +37,15 @@
 
   /*Верстка*/
   /*Дефолтная тень для блоков*/
-  --default-shadow: 2px 2px 5px 2px rgb(219, 219, 219);
+  --default-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   /*Стандартный отступ*/
   --default-indent: 2.5rem;
   /*Стандартный отступ для навбара (сверху и для символов)*/
   --default-navbar-indent: 1rem;
   /*Стандартный отступ слева*/
-  --default-left-indent: 6rem;
+  --default-left-indent: 3rem;
   /*Стандартный скругление*/
-  --default-radius: 1rem;
+  --default-radius: 10px;
 }
 
 .App {
@@ -90,11 +90,7 @@
 .colorMap{
   box-shadow: var(--default-shadow);
   border-radius: var(--default-radius);
-  margin-top: 2rem;
-  height: 2.5rem;
   margin-right: 1rem;
-  text-align: center;
-  padding-top: 0.6rem;
   font-family: var(--main-font);
   font-size: var(--default-font-size);
   text-transform: uppercase;
@@ -111,4 +107,17 @@
 
 .colorMap_free{
   background-color: var(--free-color);
+}
+
+.pleaseDistribute{
+  text-align: center;
+  border-radius: 5px;
+  padding: 0.5rem;
+  background-color: var(--error-color);
+}
+
+.authorizationContainer{
+  box-shadow: var(--default-shadow);
+  border-radius: var(--default-radius);
+  padding: 2rem;
 }

@@ -4,7 +4,6 @@ const { Sequelize } = require("../db");
 const ModelService=require("../service/model.service");
 
 class ListController {
-
   async getKtd(req, res) {
     return res.json(await ModelService.getWithOrder("КТД"));
   }

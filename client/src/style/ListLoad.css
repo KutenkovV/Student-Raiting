@@ -7,21 +7,15 @@
   padding: 1rem;
   box-shadow: var(--default-shadow);
   border-radius: var(--default-radius);
-  margin-left: 2.5rem;
   margin-bottom: 2.5rem;
-  height: 20rem;
 }
 
-.checkText{
+.checkText{ 
   font-family: var(--main-font);
   font-size: var(--default-font-size);
   color: var(--dark-grey);
   text-transform: uppercase;
   font-weight: bold;
-}
-
-.checkItem{
-  margin-left: 2rem;
 }
 
 .succesIcon{

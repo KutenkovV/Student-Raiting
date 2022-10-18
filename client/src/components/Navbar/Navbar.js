@@ -5,14 +5,28 @@ import {
   SidebarReports,
 } from "../SidebarData";
 import "./Navbar.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTasks,
+  faEdit,
+  faList,
+  faIdCard, faCopy,
+} from "@fortawesome/free-solid-svg-icons";
 
-function Navbar({active}) { //обернул в {}
+function Navbar({ active }) {
+  //обернул в {}
   const location = useLocation();
   const isActive = location.pathname;
 
   return (
     <div className={active ? "mainMenu active" : "mainMenu"}>
       <ul className="nav-menu-items">
+        <li className="nav-text" id={isActive == "/" ? "active" : ""}>
+          <Link to="/">
+            <span class="icon"><FontAwesomeIcon icon={faTasks} size="2x" /></span>
+            <span class="item">ГЛАВНАЯ</span>
+          </Link>
+        </li>
         {/* ЗАГРУЗКА СПИСКОВ */}
         <p>Работа со списками</p>
         {SidebarlistWork.map((item, index) => {
