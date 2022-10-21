@@ -121,3 +121,20 @@
   border-radius: var(--default-radius);
   padding: 2rem;
 }
+
+.instruction1{
+    box-shadow: var(--default-shadow);
+    border-radius: 20px;
+    padding: 2rem;
+    height: auto;
+    font-family: var(--main-font);
+    color: var(--dark-grey);
+}
+
+.instrH{
+  font-size: 1.5rem;
+}
+
+.instrH2{
+  font-weight: bold;
+}
