@@ -22,6 +22,9 @@ class ListLoadController {
     let message = [];
 
     for (let i = 0; i < files.length; i++) {
+
+      let promises = []
+
       let uploadPath = "./uploads/" + files[i].name;
       //перемещаем файл из запроса в папку uploads
       files[i].mv(uploadPath, function (err) {
@@ -91,10 +94,10 @@ class ListLoadController {
           }
         );
       })
-      message.push(await promise); // будет ждать, пока промис не выполнится (*)
-      ListLoadController.updateFreeVacationSAD();
+      promises.push(promise) // будет ждать, пока промис не выполнится (*)
     }
-
+    message = await Promise.All(promises)
+    ListLoadController.updateFreeVacationSAD();
     res.send(message);
   }
 
