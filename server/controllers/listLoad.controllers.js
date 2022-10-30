@@ -69,7 +69,7 @@ class ListLoadController {
         execFile(
           //путь к файлу exe
           path.resolve(
-            "../server/parserApp/parserApp/bin/Debug/net6.0/parserApp.exe"
+            "../server/parserApp/parserApp/bin/Debug/net6.0/parserApp"
           ),
           //ключ + сам файл excel
           [key, path.resolve("../server/uploads/" + files[i].name)],
