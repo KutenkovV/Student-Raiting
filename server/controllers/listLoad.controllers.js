@@ -95,7 +95,7 @@ class ListLoadController {
       })
       promises.push(promise) // будет ждать, пока промис не выполнится (*)
     }
-    message = await Promise.All(promises)
+    message = await Promise.all(promises)
     ListLoadController.updateFreeVacationSAD();
     res.send(message);
   }
