@@ -62,37 +62,33 @@ class ListLoadController {
             continue;
         }
 
-      let promise = new Promise((resolve, reject) => {
-        let m={};
-        //запуск exe файла парсера
-        const { execFile } = require("child_process");
-        execFile(
-          //путь к файлу exe
+        let promise = new Promise((resolve, reject) => {
+          let m = {};
+          //запуск exe файла парсера
+          const {execFileSync} = require("child_process"); // тут execFileSync
+          execFileSync( // тут тоже execFileSync
           path.resolve(
-            "../server/parserApp/parserApp/bin/Debug/net6.0/parserApp"
+          "../server/parserApp/parserApp/bin/Debug/net6.0/parserApp"
           ),
-          //ключ + сам файл excel
           [key, path.resolve("../server/uploads/" + files[i].name)],
           (err, stdout, stderr) => {
-            console.log(stdout)
-            if (err) {
-              m={
-                title: files[i].name,
-                status: err
-              };
-              return;
-            }
-            else {
-              m={
-                title: files[i].name,
-                status: "OK"
-              };
-            }
+          if (err) {
+          m = {
+          title: files[i].name,
+          status: err
+          };
+          return;
+          } else {
+          m = {
+          title: files[i].name,
+          status: "OK"
+          };
           }
-        );
-        setTimeout(() => resolve(m), files[i].name=="ГАС.csv"? 4000 : 2000)
-        })
-      
+          }
+          );
+          resolve(m); // просто resolve
+          // setTimeout(() => resolve(m), files[i].name == "ГАС.csv" ? 4000 : 2000)
+          })
       message.push( await promise); // будет ждать, пока промис не выполнится (*)
       ListLoadController.updateFreeVacationSAD();
     }
