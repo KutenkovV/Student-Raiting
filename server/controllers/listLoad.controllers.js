@@ -7,22 +7,22 @@ const { Op } = require("sequelize");
 //Класс отвечающий за загрузку файлов и последующий запуск парсера
 //Файлы загружаются в папку uploads
 //Перед запуском проекта обязательно собрать и запустить один раз парсер(что бы получился файл exe),который находится в папке parserApp
-  
+
 
 class ListLoadController {
 
-  async loadFile(req, res) { 
+  async loadFile(req, res) {
     if (!req.files || Object.keys(req.files.files).length === 0) {
       res.status(400).send("Не удалось загрузить файлы");
       return;
     }
 
-    let files= Array.isArray(req.files.files) ? req.files.files :  [req.files.files];
-    
-    let message=[];
+    let files = Array.isArray(req.files.files) ? req.files.files : [req.files.files];
+
+    let message = [];
 
     for (let i = 0; i < files.length; i++) {
-      let uploadPath ="./uploads/" + files[i].name;
+      let uploadPath = "./uploads/" + files[i].name;
       //перемещаем файл из запроса в папку uploads
       files[i].mv(uploadPath, function (err) {
         if (err) {
@@ -33,63 +33,65 @@ class ListLoadController {
         }
       });
 
-      var key="";
+      var key = "";
       switch (
-        files[i].name
-        ) {
-          case "НИД.csv":
-          case "КТД.csv":
-          case "ОД.csv":
-          case "СД.csv":
-          case "УД.csv":
-            key="-s";
-            break;
-          case "Свободный график.csv":
-            key="-f";
-            break;
-          case "Каникулы.csv":
-            key="-v";
-            break;
-          case "ГАС.csv":
-            key="-g";
-            break;
-          default:
-            
-            message.push( {
-              title: files[i].name,
-              status: "Проверьте название файла"
-            });
-            continue;
-        }
+      files[i].name
+      ) {
+        case "НИД.csv":
+        case "КТД.csv":
+        case "ОД.csv":
+        case "СД.csv":
+        case "УД.csv":
+          key = "-s";
+          break;
+        case "Свободный график.csv":
+          key = "-f";
+          break;
+        case "Каникулы.csv":
+          key = "-v";
+          break;
+        case "ГАС.csv":
+          key = "-g";
+          break;
+        default:
 
-        let promise = new Promise((resolve, reject) => {
-          let m = {};
-          //запуск exe файла парсера
-          const {execFileSync} = require("child_process"); // тут execFileSync
-          execFileSync( // тут тоже execFileSync
+          message.push({
+            title: files[i].name,
+            status: "Проверьте название файла"
+          });
+          continue;
+      }
+
+      let promise = new Promise((resolve, reject) => {
+        let m = {};
+        //запуск exe файла парсера
+        const { execFile } = require("child_process");
+        execFile(
+          //путь к файлу exe
           path.resolve(
-          "../server/parserApp/parserApp/bin/Debug/net6.0/parserApp"
+            "../server/parserApp/parserApp/bin/Debug/net6.0/parserApp"
           ),
+          //ключ + сам файл excel
           [key, path.resolve("../server/uploads/" + files[i].name)],
           (err, stdout, stderr) => {
-          if (err) {
-          m = {
-          title: files[i].name,
-          status: err
-          };
-          return;
-          } else {
-          m = {
-          title: files[i].name,
-          status: "OK"
-          };
+            console.log(stdout)
+            if (err) {
+              m = {
+                title: files[i].name,
+                status: err
+              };
+            }
+            else {
+              m = {
+                title: files[i].name,
+                status: "OK"
+              };
+            }
+            resolve(m)
           }
-          }
-          );
-          resolve(m); // просто resolve
-          // setTimeout(() => resolve(m), files[i].name == "ГАС.csv" ? 4000 : 2000)
-          })
-      message.push( await promise); // будет ждать, пока промис не выполнится (*)
+        );
+      })
+      message.push(await promise); // будет ждать, пока промис не выполнится (*)
       ListLoadController.updateFreeVacationSAD();
     }
 
@@ -97,7 +99,7 @@ class ListLoadController {
   }
 
   //метод обновления полей каникулы,свободный график и ГАС после загрузки любого списка
-  static async updateFreeVacationSAD () {
+  static async updateFreeVacationSAD() {
     //получаем все заявки студентов на текущий период
     const list = await models.StudentsRating.findAll({
       attributes: ["id", "destination"],
@@ -135,7 +137,7 @@ class ListLoadController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-               
+
               ],
             },
           },
@@ -155,7 +157,7 @@ class ListLoadController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-               
+
               ],
             },
           },
@@ -175,7 +177,7 @@ class ListLoadController {
               [Op.contains]: [
                 { value: new Date(), inclusive: true },
                 { value: new Date(), inclusive: true },
-             
+
               ],
             },
           },
@@ -226,7 +228,7 @@ class ListLoadController {
           );
         }
       }
-    } 
+    }
   }
 }
 
