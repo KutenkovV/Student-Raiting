@@ -20,10 +20,9 @@ class ListLoadController {
     let files = Array.isArray(req.files.files) ? req.files.files : [req.files.files];
 
     let message = [];
+    let promises = [];
 
     for (let i = 0; i < files.length; i++) {
-
-      let promises = []
 
       let uploadPath = "./uploads/" + files[i].name;
       //перемещаем файл из запроса в папку uploads
