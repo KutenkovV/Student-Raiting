@@ -74,6 +74,7 @@ class ListLoadController {
           //ключ + сам файл excel
           [key, path.resolve("../server/uploads/" + files[i].name)],
           (err, stdout, stderr) => {
+            console.log(stdout)
             if (err) {
               m={
                 title: files[i].name,
