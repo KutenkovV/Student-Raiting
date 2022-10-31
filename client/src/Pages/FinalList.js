@@ -29,7 +29,7 @@ function FinalList() {
     e.preventDefault();
 
     //сам пост запрос
-    const response = await fetch("/api/finalListFile");
+    const response = await axios.get("/api/finalListFile");
     if (response.status === 200) {
       const blob = await response.blob();
       const downloadUrl = window.URL.createObjectURL(blob);
