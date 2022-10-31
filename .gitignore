@@ -1,5 +1,6 @@
 node_modules
 #Удалить строчки ниже если что-то сломается
+test_data
 server/.env
 server/parserApp/.vs/parserApp/DesignTimeBuild/.dtbcache.v2
 server/parserApp/.vs/parserApp/v17/.suo

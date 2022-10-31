@@ -29,10 +29,11 @@ function FinalList() {
     e.preventDefault();
 
     //сам пост запрос
-    const response = await axios.get("/api/finalListFile");
+    const response = await axios.get("/api/finalListFile", {
+      responseType: 'blob'
+    });
     if (response.status === 200) {
-      const blob = await response.blob();
-      const downloadUrl = window.URL.createObjectURL(blob);
+      const downloadUrl = window.URL.createObjectURL(response.data);
       const link = document.createElement("a");
       link.href = downloadUrl;
       link.download = "Рейтинг";
