@@ -2,9 +2,11 @@
   background-size: 20px;
   cursor: pointer;
   border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 2rem;
   height: 2rem;
-  padding-top: 6px; /* очень тупая строчка */
 }
 
 .studentMenu .studentMenu-fontBtn {
