@@ -59,7 +59,7 @@ const LoadTable = ({ data, startForm }) => {
             aria-label="Previous"
             onClick={prevPage}
           >
-            <span aria-hidden="true" className=" arrow">
+            <span aria-hidden="true" className="arrow">
               <FontAwesomeIcon icon={faChevronLeft} />
             </span>
           </a>

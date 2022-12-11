@@ -29,10 +29,10 @@ function SeveralDirectionsList() {
 
       {promiseInProgress ? (
         <div
-          class="spinner-border spinner-border-sm load_spinner"
+          className="mt-4 spinner-border spinner-border-sm load_spinner"
           role="status"
         >
-          <span class="visually-hidden">Loading...</span>
+          <span className="visually-hidden">Loading...</span>
         </div>
       ) : (
         <SeveralDirectionsTable

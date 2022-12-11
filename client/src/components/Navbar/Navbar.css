@@ -1,12 +1,12 @@
 /* сам блок сайдбара */
 .mainMenu {
-  width: 7rem;
-  transform: translateX(-200%);
-  transition: 350ms;
+  width: 15vh;
+  transform: translateX(-500%);
+  transition: all 0.3s ease;
 }
 
-.active {
-  width: auto;
+.active-menu {
+  width: 40vh;
   transform: translateX(0);
 }
 
@@ -15,7 +15,7 @@
   padding-left: 0%;
 }
 
-/* сами блоки, ну которые "загрузить списки", "настройка рейтинга" итд */
+/* сами блоки, ну которые "загрузить списки", "настройка рейтинга" и тд */
 .nav-text a {
   display: flex;
   align-items: center;

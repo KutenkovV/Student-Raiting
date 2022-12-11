@@ -45,12 +45,12 @@ const Authorization = ({ setToken }) => {
         <p className={valid ? "alert alert-danger" : ""} role="alert">
           {errMsg}
         </p>
-        <div class="mb-3 m-3">
-          <label for="loginInput" class="form-label">
+        <div className="mb-3 m-3">
+          <label htmlFor="loginInput" className="form-label">
             Логин
           </label>
           <input
-            class="form-control"
+            className="form-control"
             id="loginInput"
             value={email}
             placeholder="Логин"
@@ -58,13 +58,13 @@ const Authorization = ({ setToken }) => {
             required
           />
         </div>
-        <div class="mb-3 m-3">
-          <label for="inputPassword" class="form-label">
+        <div className="mb-3 m-3">
+          <label htmlFor="inputPassword" className="form-label">
             Пароль
           </label>
           <input
             type="password"
-            class="form-control"
+            className="form-control"
             id="inputPassword"
             value={password}
             placeholder="Пароль"
@@ -72,8 +72,8 @@ const Authorization = ({ setToken }) => {
             required
           />
         </div>
-        <div class="col-auto m-3 d-flex justify-content-end">
-          <button type="submit" class="btn btn-primary mt-3 col-auto">
+        <div className="col-auto m-3 d-flex justify-content-end">
+          <button type="submit" className="btn btn-primary mt-3 col-auto">
             Вход
           </button>
         </div>

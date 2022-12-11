@@ -5,7 +5,7 @@ function Start() {
 
   return (
     <div className="col">
-      <div className="row instruction1">
+      <div className="row instruction1 m-0">
         <p className="instrH">Шаг 1 - Загрузите списки</p>
         <p className="instrH2">Убедитесь, что файлы названы правильно:</p>
         <p>Студенты, получающие государственную академическую стипендию - ГАС</p>
@@ -18,21 +18,21 @@ function Start() {
         <p>Спортивная деятельность - СД</p>
         <p>Учебная деятельность - УД</p>
       </div>
-      <div className="row instruction1 mt-4">
+      <div className="row instruction1 m-0 mt-4">
         <p className="instrH">Шаг 2 - Примените настройки</p>
         <p>Доля получающих рейтинговую стипендию - 10% от количества получающих государственную академическую стипендию</p>
       </div>
-      <div className="row instruction1 mt-4">
+      <div className="row instruction1 m-0 mt-4">
         <p className="instrH">Шаг 3 - Проверьте сводку</p>
         <p>В сводке собрана статистическая информация о списках, полученных после применения настроек</p>
       </div>
-      <div className="row instruction1 mt-4">
+      <div className="row instruction1 m-0 mt-4">
         <p className="instrH">Шаг 4 - Распределите студентов, прошедших на нексолько направлений</p>
         <p>Система не разрешит выгрузить итоговые списки, пока остаются неопределенные студенты</p>
       </div>
-      <div className="row instruction1 mt-4 mb-4">
+      <div className="row instruction1 m-0 mt-4 mb-4">
         <p className="instrH">Шаг 5 - Выгрузите итоговый список</p>
-        <p>После распределения студентов, прошедших на несколько напрвлений, появится возможность выгрузить итоговый список на компьютер</p>
+        <p>После распределения студентов, прошедших на несколько направлений, появится возможность выгрузить итоговый список на компьютер</p>
       </div>
     </div>
   );

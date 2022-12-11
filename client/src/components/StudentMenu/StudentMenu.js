@@ -35,11 +35,7 @@ function StudentMenu({ StudentDirections, stNum, items, onChange }) {
       }
     });
 
-    // Эта строчка делает что-то умное
     e.preventDefault();
-
-    console.log(id);
-    console.log(course);
 
     if (course === "НАУЧНАЯ ДЕЯТЕЛЬНОСТЬ") {
       course = "НИД";
@@ -67,9 +63,8 @@ function StudentMenu({ StudentDirections, stNum, items, onChange }) {
     <form onSubmit={onSubmit}>
       <div className="studentMenu">
         <div
-          class="btn"
           tabIndex={1}
-          className="studentMenu-btn"
+          className="btn studentMenu-btn"
           onClick={() => setIsActive(!isActive)}
         >
           <FontAwesomeIcon
@@ -92,7 +87,7 @@ function StudentMenu({ StudentDirections, stNum, items, onChange }) {
               </div>
             ))}
             <div className="studentMenu-define">
-              <button class="btn btn-primary">Определить</button>
+              <button className="btn btn-primary">Определить</button>
             </div>
           </div>
         )}

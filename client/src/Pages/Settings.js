@@ -92,93 +92,93 @@ const Settings = () => {
   return (
     <div>
       <h1 className="header">Вакансии</h1>
-      <form action="#" id="#" method="put" onSubmit={onSubmit}>
-        <div class="mainSettings row mt-4">
-          <div class="col">
-            <div class="col m-4">
-              <label for="nidInput" class="form-label">
+      <form method="put" onSubmit={onSubmit}>
+        <div className="mainSettings row m-0 mt-4">
+          <div className="col">
+            <div className="col m-4">
+              <label htmlFor="nidInput" className="form-label">
                 Научная деятельность
               </label>
               <input
                 min={0}
                 onPaste={preventPasteNegative}
                 onKeyPress={preventMinus}
-                class="form-control"
+                className="form-control"
                 type="number"
                 id="nidInput"
                 onClick={() => setSaveActive(false)}
-                value={nidValue}
+                defaultValue={nidValue}
                 onChange={(event) => setnidValue(event.target.value)}
               />
             </div>
-            <div class="col m-4">
-              <label for="udInput" class="form-label">
+            <div className="col m-4">
+              <label htmlFor="udInput" className="form-label">
                 Учебная деятельность
               </label>
               <input
                 min={0}
                 onPaste={preventPasteNegative}
                 onKeyPress={preventMinus}
-                class="form-control"
+                className="form-control"
                 type="number"
                 id="udInput"
                 onClick={() => setSaveActive(false)}
-                value={udValue}
+                defaultValue={udValue}
                 onChange={(event) => setudValue(event.target.value)}
               />
             </div>
-            <div class="col m-4">
-              <label for="sdInput" class="form-label">
+            <div className="col m-4">
+              <label htmlFor="sdInput" className="form-label">
                 Спортивная деятельность
               </label>
               <input
                 min={0}
                 onPaste={preventPasteNegative}
                 onKeyPress={preventMinus}
-                class="form-control"
+                className="form-control"
                 type="number"
                 id="sdInput"
                 onClick={() => setSaveActive(false)}
-                value={sdValue}
+                defaultValue={sdValue}
                 onChange={(event) => setsdValue(event.target.value)}
               />
             </div>
           </div>
-          <div class="col">
-            <div class="col m-4">
-              <label for="odInput" class="form-label">
+          <div className="col">
+            <div className="col m-4">
+              <label htmlFor="odInput" className="form-label">
                 Общественная деятельность
               </label>
               <input
                 min={0}
                 onPaste={preventPasteNegative}
                 onKeyPress={preventMinus}
-                class="form-control"
+                className="form-control"
                 type="number"
                 id="odInput"
                 onClick={() => setSaveActive(false)}
-                value={odValue}
+                defaultValue={odValue}
                 onChange={(event) => setodValue(event.target.value)}
               />
             </div>
-            <div class="col m-4">
-              <label for="ktdInput" class="form-label">
+            <div className="col m-4">
+              <label htmlFor="ktdInput" className="form-label">
                 Культурно-творческая деятельность
               </label>
               <input
                 min={0}
                 onPaste={preventPasteNegative}
                 onKeyPress={preventMinus}
-                class="form-control"
+                className="form-control"
                 type="number"
                 id="ktdInput"
                 onClick={() => setSaveActive(false)}
-                value={ktdValue}
+                defaultValue={ktdValue}
                 onChange={(event) => setktdValue(event.target.value)}
               />
             </div>
             <div className="col m-4">
-              <div class="mt-5 d-flex flex-row-reverse">
+              <div className="mt-5 d-flex flex-row-reverse">
                 <div
                   className={
                     saveActive ? "settingSafe activeSafe" : "settingSafe"
@@ -190,10 +190,10 @@ const Settings = () => {
             </div>
           </div>
         </div>
-        <div className="row d-flex justify-content-end">
+        <div className="d-flex justify-content-end">
           <button
             type="submit"
-            class="btn btn-primary col-auto mt-4"
+            className="btn btn-primary col-auto mt-4"
             onClick={() => setSaveActive(!saveActive)}
           >
             Сохранить

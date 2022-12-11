@@ -9,7 +9,7 @@
   /*Цвет кнопок, взаимодействия*/
   --blue-action: #007bff;
   /*Для всех успешных действий*/
-  --success-color: #c8f5e6;
+  --success-color: #b0f0c3;
   /*Отмечаем студентов на каникулах*/
   --vacation-color: #D5DBF0;
    /*Отмечаем студентов со свободным графиком*/
@@ -45,7 +45,7 @@
   /*Стандартный отступ слева*/
   --default-left-indent: 3rem;
   /*Стандартный скругление*/
-  --default-radius: 10px;
+  --default-radius: 5px;
 }
 
 .App {
@@ -90,11 +90,23 @@
 .colorMap{
   box-shadow: var(--default-shadow);
   border-radius: var(--default-radius);
-  margin-right: 1rem;
+  padding-block: 0.8rem;
   font-family: var(--main-font);
   font-size: var(--default-font-size);
   text-transform: uppercase;
   font-weight:600;
+}
+
+.colorMap_container :first-child {
+  margin-right: 1rem;
+}
+
+.colorMap_container :last-child {
+  margin-left: 1rem;
+}
+
+.colorMap > p{
+  margin: 0;
 }
 
 .colorMap_enoughPoints{

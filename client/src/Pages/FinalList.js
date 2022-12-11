@@ -30,7 +30,7 @@ function FinalList() {
 
     //сам пост запрос
     const response = await axios.get("/api/finalListFile", {
-      responseType: 'blob'
+      responseType: "blob",
     });
     if (response.status === 200) {
       const downloadUrl = window.URL.createObjectURL(response.data);
@@ -48,14 +48,16 @@ function FinalList() {
       <h1 className="header">Итоговый список</h1>
 
       {/* Ниже форма с кнопкой которая делает запрос */}
-      <form method="get" action="#" id="#" onSubmit={onSubmit}>
-        <div className="row d-flex text-center justify-content-start">
+      <form method="get" onSubmit={onSubmit}>
+        <div className="d-flex text-center justify-content-start">
           {promiseInProgress ? (
             <p></p>
           ) : distributed ? (
-            <button class="btn btn-primary col-2 m-4">Скачать список</button>
+            <button className="btn btn-primary col-auto mt-2">
+              Скачать список
+            </button>
           ) : (
-            <div class="alert alert-danger col-auto mt-2" role="alert">
+            <div className="alert alert-danger col-auto mt-3" role="alert">
               Распределите всех студентов!
             </div>
           )}
@@ -64,10 +66,10 @@ function FinalList() {
 
       {promiseInProgress ? (
         <div
-          class="spinner-border spinner-border-sm load_spinner"
+          className="spinner-border spinner-border-sm load_spinner"
           role="status"
         >
-          <span class="visually-hidden">Loading...</span>
+          <span className="visually-hidden">Loading...</span>
         </div>
       ) : (
         <FinalTable data={items} itemsPerPage={10} />

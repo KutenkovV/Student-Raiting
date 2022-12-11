@@ -23,8 +23,8 @@ function Summary() {
 
         {/* блокс с промисом "загрузка..." */}
         {promiseInProgress
-          ? <div class="spinner-border spinner-border-sm load_spinner" role="status">
-          <span class="visually-hidden">Loading...</span>
+          ? <div className="mt-4 spinner-border spinner-border-sm load_spinner" role="status">
+          <span className="visually-hidden">Loading...</span>
         </div> : <SummaryTable data={items} itemsPerPage={10} />
         }
       </div>

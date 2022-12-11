@@ -105,7 +105,7 @@ const DropFileInput = props => {
                         <div className="drop-file-preview">
                         {spin?
                             <div className="d-flex mb-3 mt-3">
-                                <div class="spinner-border text-primary" role="status" />
+                                <div className="spinner-border text-primary" role="status" />
                                 <p className="m-1">Идет загрузка...</p>
                             </div> : <p className="drop-file-preview__title me-3">Готовы к загрузке</p>
                         }
@@ -126,9 +126,9 @@ const DropFileInput = props => {
                 }
 
                 {/* Ниже форма с кнопкой которая делает запрос */}
-                <form method="post" action="#" id="#" onSubmit={onSubmit}>
+                <form method="post" onSubmit={onSubmit}>
                     <div className="row d-flex justify-content-end">
-                        <button class="btn btn-primary col-auto m-4" onClick={() => setspinValue(!spin)}>
+                        <button className="btn btn-primary col-auto m-4" onClick={() => setspinValue(!spin)}>
                             Загрузить
                         </button>
                     </div>

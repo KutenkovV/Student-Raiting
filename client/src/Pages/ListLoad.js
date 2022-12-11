@@ -19,7 +19,7 @@ function ListLoad() {
   return (
     <>
       <h1 className="header">Загрузка списков</h1>
-      <div className="row mt-4 fileLoad_container">
+      <div className="row m-0 mt-4 fileLoad_container">
         <DropFileInput
           onChange={(e) => onInputChange(e)}
           onFileChange={(files) => onFileChange(files)}

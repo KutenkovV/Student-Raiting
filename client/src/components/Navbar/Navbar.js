@@ -19,12 +19,12 @@ function Navbar({ active }) {
   const isActive = location.pathname;
 
   return (
-    <div className={active ? "mainMenu active" : "mainMenu"}>
+    <div className={active ? "mainMenu active-menu" : "mainMenu"}>
       <ul className="nav-menu-items">
         <li className="nav-text" id={isActive == "/" ? "active" : ""}>
           <Link to="/">
-            <span class="icon"><FontAwesomeIcon icon={faTasks} size="2x" /></span>
-            <span class="item">ГЛАВНАЯ</span>
+            <span className="icon"><FontAwesomeIcon icon={faTasks} size="2x" /></span>
+            <span className="item">ГЛАВНАЯ</span>
           </Link>
         </li>
         {/* ЗАГРУЗКА СПИСКОВ */}
@@ -38,8 +38,8 @@ function Navbar({ active }) {
               id={isActive == item.path ? "active" : ""}
             >
               <Link to={item.path}>
-                <span class="icon">{item.icon}</span>
-                <span class="item">{item.title}</span>
+                <span className="icon">{item.icon}</span>
+                <span className="item">{item.title}</span>
               </Link>
             </li>
           );
@@ -55,8 +55,8 @@ function Navbar({ active }) {
               id={isActive == item.path ? "active" : ""}
             >
               <Link to={item.path}>
-                <span class="icon">{item.icon}</span>
-                <span class="item">{item.title}</span>
+                <span className="icon">{item.icon}</span>
+                <span className="item">{item.title}</span>
               </Link>
             </li>
           );
@@ -72,8 +72,8 @@ function Navbar({ active }) {
               id={isActive == item.path ? "active" : ""}
             >
               <Link to={item.path}>
-                <span class="icon">{item.icon}</span>
-                <span class="item">{item.title}</span>
+                <span className="icon">{item.icon}</span>
+                <span className="item">{item.title}</span>
               </Link>
             </li>
           );
