@@ -2,3 +2,5 @@ parserApp/parserApp
 parserApp
 .env
 test_data
+.package-lock.json
+node_modules

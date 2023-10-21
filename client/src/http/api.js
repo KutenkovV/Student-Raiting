@@ -1,14 +1,13 @@
 import axios from 'axios'
 
-export const API_URL = `http://localhost:8080/`
 
-const $api = axios.create({
-    
+const axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_PROXY
 })
 
-$api.interceptors.request.use((config) => {
+axiosInstance.interceptors.request.use((config) => {
     config.headers.authorization = `Token ${localStorage.getItem('token')}`;
     return config;
 })
 
-export default $api;
+export default axiosInstance;

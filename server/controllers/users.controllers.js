@@ -36,6 +36,7 @@ class UsersController {
 
 
     async loginUser (req, res) {
+
         try {
             if (!req.body.user.email) throw new Error("Требуется электронная почта")
             if (!req.body.user.password) throw new Error("Требуется ввести пароль")

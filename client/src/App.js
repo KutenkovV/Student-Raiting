@@ -20,6 +20,7 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import useToken from "./hooks/useToken";
 
 function App() {
+  localStorage.clear();
   const [menuActive, setMenuActive] = useState(true);
   const { token, setToken } = useToken(); // Хук для работы с токеном
   // там мы его сохроняем и "получаем"
